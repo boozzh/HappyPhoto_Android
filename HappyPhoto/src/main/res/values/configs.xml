@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="config_siteid">1</string>
+
+    <string name="config_site_url">
+        <![CDATA[http://hp.mysense.cn]]>
+    </string>
+    <string name="config_default_intro_pics_url">
+        <![CDATA[http://hp.mysense.cn/index.php?&a=doc&f=news&m=listformobile&p=1&ps=5&cid=2]]>
+    </string>
+    <string name="config_user_login_url">
+        <![CDATA[http://hp.mysense.cn/index.php?&a=user&f=asyncloginforclient&username={username}&userpass={userpass}&siteid={siteid}]]>
+    </string>
+    <string name="config_user_album_create_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=user&f=useralbum&m=client_create]]>
+    </string>
+    <string name="config_user_album_pic_create_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=user&f=useralbumpic&m=client_create]]>
+    </string>
+    <string name="config_user_album_type_getlist_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=user&f=useralbumtype&m=client_getlist&siteid={siteid}]]>
+    </string>
+    <string name="config_user_album_getlist_ofall_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=user&f=useralbum&m=client_list_of_all]]>
+    </string>
+    <string name="config_user_album_getlist_of_one_type_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=user&f=useralbum&m=client_list_of_one_type&useralbumtypeid={useralbumtypeid}]]>
+    </string>
+    <string name="config_user_album_getlist_ofmine_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=user&f=useralbum&m=client_list_of_one_user&userid={userid}]]>
+    </string>
+    <string name="config_user_album_pic_getlist_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=user&f=useralbumpic&m=client_list]]>
+    </string>
+    <string name="config_user_album_upload_pic_filepath">/happyphoto/temp/</string>
+    <string name="config_user_album_upload_pic_source_filename">source_camera_photo</string>
+    <string name="config_user_album_upload_pic_thumb_filename">thumb_camera_photo</string>
+    <string name="config_user_album_upload_pic_fileex">jpg</string>
+</resources>

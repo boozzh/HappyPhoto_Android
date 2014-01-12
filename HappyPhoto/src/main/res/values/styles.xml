@@ -5,4 +5,36 @@
         <!-- Customize your theme here. -->
     </style>
 
+
+    <style name="TitleBackground">
+        <item name="android:background">#111d49</item>
+    </style>
+    <style name="ViewPicTitleBackground">
+        <item name="android:background">#000000</item>
+    </style>
+
+    <style name="ButtonStyle">
+        <item name="android:background">#4364D3</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="ViewPicStyle" parent="AppTheme">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTitleSize">50dp</item>
+        <item name="android:windowTitleBackgroundStyle">@style/ViewPicTitleBackground</item>
+    </style>
+
+    <style name="StartTheme" parent="AppTheme">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTitleSize">40dp</item>
+        <item name="android:windowTitleBackgroundStyle">@style/TitleBackground</item>
+    </style>
+
+    <style name="UserTheme" parent="AppTheme">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTitleSize">40dp</item>
+        <item name="android:windowTitleBackgroundStyle">@style/TitleBackground</item>
+    </style>
+
+
 </resources>

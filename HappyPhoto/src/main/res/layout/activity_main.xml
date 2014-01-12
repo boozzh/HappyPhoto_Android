@@ -1,0 +1,180 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:ignore="MergeRootFrame">
+
+
+    <ViewFlipper android:id="@+id/viewFlipper1"
+        android:layout_width="fill_parent"
+        android:layout_height="165dp"
+        android:persistentDrawingCache="animation"
+        android:inAnimation="@anim/push_left_in"
+        android:outAnimation="@anim/push_left_out"
+        android:background="#111d49">
+
+    </ViewFlipper>
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="165dp"
+        android:background="@drawable/main_bg">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:baselineAligned="false"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp">
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:id="@+id/btnUserAlbumShow"
+                android:background="@drawable/main_bg1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/default_block_1_name"
+                    android:textSize="20dp"
+                    android:textColor="#CBD1D1"
+                    android:layout_gravity="center|top"
+                    android:layout_marginTop="25dp" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/btnTakeAndUpload"
+                android:background="@drawable/main_bg2">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/default_block_2_name_2"
+                    android:textSize="20dp"
+                    android:textColor="#CBD1D1"
+                    android:layout_gravity="center|top"
+                    android:layout_marginTop="25dp" />
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:baselineAligned="false"
+            android:layout_marginTop="110dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/btnGotoGame"
+                android:background="@drawable/main_bg3">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/default_block_3_name"
+                    android:textSize="20dp"
+                    android:textColor="#CBD1D1"
+                    android:layout_gravity="center|top"
+                    android:layout_marginTop="25dp" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/btnMyPhoto"
+                android:background="@drawable/main_bg4">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/default_block_4_name"
+                    android:textSize="20dp"
+                    android:textColor="#CBD1D1"
+                    android:layout_gravity="center|top"
+                    android:layout_marginTop="25dp" />
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:baselineAligned="false"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="210dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/btnOldGame"
+                android:background="@drawable/main_bg5">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/default_block_5_name"
+                    android:layout_gravity="center|top"
+                    android:textSize="20dp"
+                    android:textColor="#CBD1D1"
+                    android:layout_marginTop="25dp" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/btnMoney"
+                android:background="@drawable/main_bg6">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/default_block_6_name"
+                    android:layout_gravity="center|top"
+                    android:textSize="20dp"
+                    android:textColor="#CBD1D1"
+                    android:layout_marginTop="25dp" />
+            </FrameLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</FrameLayout>

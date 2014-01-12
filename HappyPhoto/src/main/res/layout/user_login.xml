@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#999999">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/relativeLayout">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:inputType="numberSigned"
+            android:ems="10"
+            android:id="@+id/user_login_txtUserName"
+            android:numeric="integer"
+            android:background="@drawable/edittext_bg"
+            android:textColor="#666666"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/textView2" />
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/user_login_edittext_username_defaultvalue"
+            android:singleLine="true"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="true"
+            android:background="#FFFFFF"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentBottom="true"
+            android:textColor="#666666"
+            android:id="@+id/textView2" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_below="@+id/relativeLayout"
+        android:id="@+id/relativeLayout2">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/user_login_edittext_userpass_defaultvalue"
+            android:singleLine="true"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="true"
+            android:background="#FFFFFF"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentBottom="true"
+            android:textColor="#666666"
+            android:id="@+id/textView" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:id="@+id/user_login_txtUserPass"
+            android:background="@drawable/edittext_bg"
+            android:password="false"
+            android:textColor="#666666"
+            android:inputType="text"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/textView" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/linearLayout">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="@string/user_login_btn_name"
+            android:id="@+id/user_login_btnLogin"
+            android:layout_weight="1"
+            style="@style/ButtonStyle"
+            android:textSize="20dp"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="false"
+            android:layout_marginRight="5dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="@string/user_login_reg_btn_name"
+            android:id="@+id/user_login_btnRegister"
+            android:layout_weight="1"
+            android:textSize="20dp"
+            style="@style/ButtonStyle"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="5dp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

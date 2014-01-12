@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    style="@style/ViewPicStyle">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/txtUserAlbumName"
+        android:background="@drawable/edittext_bg"
+        android:textColor="#666666"
+        android:maxLength="50"
+        android:layout_margin="10dp"
+        android:text="标题" />
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:layout_width="55dp"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/user_album_create_select_useralbumtype_title"
+            android:id="@+id/textView"
+            android:background="#FFFFFF"
+            android:textColor="#666666"
+            android:textSize="18dp"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/spUserAlbumType"
+            android:background="#FFFFFF" />
+    </LinearLayout>
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:background="@drawable/edittext_bg"
+        android:textColor="#666666"
+        android:ems="10"
+        android:id="@+id/txtUserAlbumIntro"
+        android:layout_gravity="center_horizontal"
+        android:maxLength="500"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="介绍"
+        android:lines="1"
+        android:maxLines="3" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拍摄新照片"
+            android:textSize="20dp"
+            android:id="@+id/btnTakeNewPhoto"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            style="@style/ButtonStyle" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="从照片库中选择"
+            android:textSize="20dp"
+            android:id="@+id/btnSelectPicFromGallery"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            style="@style/ButtonStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llSelectedPics"
+                >
+
+
+            </LinearLayout>
+
+
+
+        </HorizontalScrollView>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <cn.mysense.happyphoto.Plugins.PullToRefresh.PullToRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/main_pull_refresh_view"
+        android:background="@android:color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+        <GridView
+            android:id="@+id/gvUserAlbumListOfAll"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="2dp"
+            android:horizontalSpacing="2dp"
+            android:columnWidth="104dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+
+            />
+
+    </cn.mysense.happyphoto.Plugins.PullToRefresh.PullToRefreshView>
+
+</LinearLayout>
