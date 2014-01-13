@@ -15,6 +15,7 @@ import cn.happyz.happyphoto.Tools.ThreadPoolUtils;
 public class UserData extends BaseData implements Runnable {
     private String _httpUrl = null;
     private Handler _handler = null;
+    private UserDataOperateType _userDataOperateType = UserDataOperateType.Null;
 
     public UserData(String httpUrl, Handler handler){
         _httpUrl = httpUrl;
@@ -23,50 +24,56 @@ public class UserData extends BaseData implements Runnable {
 
     @Override
     public void run() {
-        String result = super.RunGet(_httpUrl, _handler);
 
-        if(result != null){
-            try {
-                UserCollections userCollections = new UserCollections();
-                User user = null;
-                JSONObject jsonObject = new JSONObject(result).getJSONObject("user");
-                JSONArray jsonArray = jsonObject.getJSONArray("userlist");
+        if(this._userDataOperateType == UserDataOperateType.Login){
 
-                for(int i=0;i<jsonArray.length();i++){
-                    JSONObject jsonObject2 = (JSONObject)jsonArray.opt(i);
-                    Integer userId = jsonObject2.getInt("UserId");
-                    if(userId>0){
-                        user = new User(
-                                jsonObject2.getInt("UserId"),
-                                jsonObject2.getString("UserName"),
-                                jsonObject2.getString("UserPass"),
-                                jsonObject2.getInt("State")
-                        );
-                    }else{
-                        user = new User(
-                                userId,
-                                "",
-                                "",
-                                -1
-                        );
+            String result = super.RunGet(_httpUrl, _handler);
+
+            if(result != null){
+                try {
+                    UserCollections userCollections = new UserCollections();
+
+                    JSONObject jsonObject = new JSONObject(result).getJSONObject("user");
+                    JSONArray jsonArray = jsonObject.getJSONArray("userlist");
+
+                    for(int i=0;i<jsonArray.length();i++){
+                        JSONObject jsonObject2 = (JSONObject)jsonArray.opt(i);
+                        Integer userId = jsonObject2.getInt("UserId");
+                        User user = null;
+                        if(userId>0){
+                            user = new User(
+                                    jsonObject2.getInt("UserId"),
+                                    jsonObject2.getString("UserName"),
+                                    jsonObject2.getString("UserPass"),
+                                    jsonObject2.getInt("State")
+                            );
+                        }else{
+                            user = new User(
+                                    userId,
+                                    "",
+                                    "",
+                                    -1
+                            );
+                        }
+                        userCollections.add(user);
                     }
-                    userCollections.add(user);
+
+                    Message msg = _handler.obtainMessage();
+                    msg.what = HttpClientStatus.FINISH_GET.ordinal();
+                    msg.obj = userCollections;
+
+                    _handler.sendMessage(msg);
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                    _handler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
                 }
 
-                Message msg = _handler.obtainMessage();
-                msg.what = HttpClientStatus.FINISH_GET.ordinal();
-                msg.obj = userCollections;
-
-                _handler.sendMessage(msg);
-            } catch (Exception ex){
-                ex.printStackTrace();
-                _handler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
             }
-
         }
     }
 
-    public void RequestFromHttp(){
+    public void RequestFromHttp(UserDataOperateType userDataOperateType){
+        this._userDataOperateType = userDataOperateType;
         ThreadPoolUtils.execute(this);
     }
 

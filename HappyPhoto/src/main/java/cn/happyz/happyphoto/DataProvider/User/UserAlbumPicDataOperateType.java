@@ -7,5 +7,6 @@ public enum UserAlbumPicDataOperateType {
     GetList,
     Create,
     Modify,
-    RemoveToBin
+    RemoveToBin,
+    Null
 }

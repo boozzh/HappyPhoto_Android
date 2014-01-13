@@ -30,6 +30,11 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="cn.happyz.happyphoto.Gen.User.UserRegisterActivity"
+            android:theme="@style/UserTheme"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="cn.happyz.happyphoto.Gen.User.UserInfoActivity"
             android:theme="@style/UserTheme"
             android:screenOrientation="portrait" >

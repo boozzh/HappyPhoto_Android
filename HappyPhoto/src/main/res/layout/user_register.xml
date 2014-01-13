@@ -18,7 +18,7 @@
             android:layout_height="50dp"
             android:inputType="numberSigned"
             android:ems="10"
-            android:id="@+id/user_login_txtUserName"
+            android:id="@+id/user_register_txtUserName"
             android:numeric="integer"
             android:background="@drawable/edittext_bg"
             android:textColor="#666666"
@@ -32,7 +32,7 @@
             android:layout_width="80dp"
             android:layout_height="50dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/user_login_edittext_username_defaultvalue"
+            android:text="@string/user_register_edittext_username_defaultvalue"
             android:singleLine="true"
             android:layout_alignParentLeft="false"
             android:layout_alignParentStart="true"
@@ -55,7 +55,7 @@
             android:layout_width="80dp"
             android:layout_height="50dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/user_login_edittext_userpass_defaultvalue"
+            android:text="@string/user_register_edittext_userpass_defaultvalue"
             android:singleLine="true"
             android:layout_alignParentLeft="false"
             android:layout_alignParentStart="true"
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:ems="10"
-            android:id="@+id/user_login_txtUserPass"
+            android:id="@+id/user_register_txtUserPass"
             android:background="@drawable/edittext_bg"
             android:password="false"
             android:textColor="#666666"
@@ -98,27 +98,28 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="@string/user_login_login_btn_name"
-            android:id="@+id/user_login_btnLogin"
-            android:layout_weight="1"
-            style="@style/ButtonStyle"
-            android:textSize="20dp"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentStart="false"
-            android:layout_marginRight="5dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:text="@string/user_login_reg_btn_name"
-            android:id="@+id/user_login_btnRegister"
+            android:text="@string/user_register_reg_btn_name"
+            android:id="@+id/user_register_btnRegister"
             android:layout_weight="1"
             android:textSize="20dp"
             style="@style/ButtonStyle"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_marginRight="5dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="@string/user_register_login_btn_name"
+            android:id="@+id/user_register_btnLogin"
+            android:layout_weight="1"
+            style="@style/ButtonStyle"
+            android:textSize="20dp"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="false"
             android:layout_marginLeft="5dp" />
+
     </LinearLayout>
 
 

@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import cn.happyz.happyphoto.DataProvider.User.User;
 import cn.happyz.happyphoto.DataProvider.User.UserCollections;
@@ -21,14 +20,13 @@ import cn.happyz.happyphoto.DataProvider.User.UserData;
 import cn.happyz.happyphoto.DataProvider.User.UserDataOperateType;
 import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.R;
-import cn.happyz.happyphoto.Tools.FormatObject;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
 import cn.happyz.happyphoto.Tools.ToastObject;
 
 /**
- * Created by zcmzc on 13-11-18.
+ * Created by zcmzc on 14-1-13.
  */
-public class UserLoginActivity extends BaseGen {
+public class UserRegisterActivity extends BaseGen {
 
     private ImageButton btnBack;
     private Button btnUserLogin;
@@ -40,12 +38,12 @@ public class UserLoginActivity extends BaseGen {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        setContentView(R.layout.user_login);
+        setContentView(R.layout.user_register);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);  //titlebar为自己标题栏的布局
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
         TextView tvTitleBarTitle = (TextView) findViewById(R.id.txtTitleBar);
-        tvTitleBarTitle.setText(R.string.user_login_title); //修改title文字
+        tvTitleBarTitle.setText(R.string.user_register_title);
 
 
 
@@ -58,7 +56,7 @@ public class UserLoginActivity extends BaseGen {
             }
         });
 
-        txtUserName = (EditText) findViewById(R.id.user_login_txtUserName);
+        txtUserName = (EditText) findViewById(R.id.user_register_txtUserName);
         txtUserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +66,7 @@ public class UserLoginActivity extends BaseGen {
             }
         });
 
-        txtUserPass = (EditText) findViewById(R.id.user_login_txtUserPass);
+        txtUserPass = (EditText) findViewById(R.id.user_register_txtUserPass);
         txtUserPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         txtUserPass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,49 +79,52 @@ public class UserLoginActivity extends BaseGen {
         });
 
 
-        btnUserLogin = (Button) findViewById(R.id.user_login_btnLogin);
+        btnUserLogin = (Button) findViewById(R.id.user_register_btnLogin);
         btnUserLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 btnUserLogin.setEnabled(false);
-                String userName = txtUserName.getText().toString().trim();
-                if(userName == null || userName.equals("")){
-                    ToastObject.Show(UserLoginActivity.this, getString(R.string.user_login_tips_no_username));
-                    btnUserLogin.setEnabled(true);
-                    return;
-                }
-                String userPass = txtUserPass.getText().toString().trim();
-                if(userPass == null || userPass.equals("")){
-                    ToastObject.Show(UserLoginActivity.this, getString(R.string.user_login_tips_no_userpass));
-                    btnUserLogin.setEnabled(true);
-                    return;
-                }
 
-                String userLoginUrl = getString(R.string.config_user_login_url);
-                userLoginUrl = userLoginUrl.replace("{username}",txtUserName.getText());
-                userLoginUrl = userLoginUrl.replace("{userpass}",FormatObject.MD5(txtUserPass.getText().toString()));
-                userLoginUrl = userLoginUrl.replace("{siteid}",getString(R.string.config_siteid));
+                Intent intent = new Intent(UserRegisterActivity.this, UserLoginActivity.class);
+                startActivity(intent);
+                UserRegisterActivity.this.finish();
 
-                UserLoginHandler userLoginHandler = new UserLoginHandler();
-                UserData userData = new UserData(userLoginUrl,userLoginHandler);
-                userData.RequestFromHttp(UserDataOperateType.Login);
             }
         });
 
-        btnUserRegister = (Button) findViewById(R.id.user_login_btnRegister);
+        btnUserRegister = (Button) findViewById(R.id.user_register_btnRegister);
         btnUserRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 btnUserRegister.setEnabled(false);
-                Intent intent = new Intent(UserLoginActivity.this, UserRegisterActivity.class);
-                startActivity(intent);
-                UserLoginActivity.this.finish();
+
+                String userName = txtUserName.getText().toString().trim();
+                if(userName == null || userName.equals("")){
+                    ToastObject.Show(UserRegisterActivity.this, getString(R.string.user_register_tips_no_username));
+                    btnUserRegister.setEnabled(true);
+                    return;
+                }
+                String userPass = txtUserPass.getText().toString().trim();
+                if(userPass == null || userPass.equals("")){
+                    ToastObject.Show(UserRegisterActivity.this, getString(R.string.user_register_tips_no_userpass));
+                    btnUserRegister.setEnabled(true);
+                    return;
+                }
+
+                String userRegisterUrl = getString(R.string.config_user_register_url);
+                userRegisterUrl = userRegisterUrl.replace("{username}",txtUserName.getText());
+                //注册的时候，密码不用md5加密
+                userRegisterUrl = userRegisterUrl.replace("{userpass}",txtUserPass.getText().toString());
+                userRegisterUrl = userRegisterUrl.replace("{siteid}",getString(R.string.config_siteid));
+
+                UserRegisterHandler userRegisterHandler = new UserRegisterHandler();
+                UserData userData = new UserData(userRegisterUrl,userRegisterHandler);
+                userData.RequestFromHttp(UserDataOperateType.Register);
             }
         });
     }
 
-
-    private class UserLoginHandler extends Handler {
+    private class UserRegisterHandler extends Handler {
         @Override
         public void dispatchMessage(Message msg) {
 
@@ -131,7 +132,7 @@ public class UserLoginActivity extends BaseGen {
 
             switch(httpClientStatus){
                 case START_GET:
-                    ToastObject.Show(UserLoginActivity.this, getString(R.string.user_login_result_begin));
+                    ToastObject.Show(UserRegisterActivity.this, getString(R.string.user_register_result_begin));
                     break;
 
                 case FINISH_GET:
@@ -144,17 +145,17 @@ public class UserLoginActivity extends BaseGen {
                             String userPass = user.getUserPass();
                             Integer state = user.getState();
                             if(userId>0){
-                                ToastObject.Show(UserLoginActivity.this, getString(R.string.user_login_result_success));
+                                ToastObject.Show(UserRegisterActivity.this, getString(R.string.user_register_result_success));
 
                                 SharedPreferences sp = getSharedPreferences("USERINFO", MODE_PRIVATE);
                                 sp.edit().putInt("USERID",userId).commit();
                                 sp.edit().putString("USERNAME",userName).commit();
                                 sp.edit().putString("USERPASS",userPass).commit();
                                 sp.edit().putInt("STATE",state).commit();
-                                UserLoginActivity.this.finish();
+                                UserRegisterActivity.this.finish();
                             }else{
-                                btnUserLogin.setEnabled(true);
-                                ToastObject.Show(UserLoginActivity.this, getString(R.string.user_login_result_failure));
+                                btnUserRegister.setEnabled(true);
+                                ToastObject.Show(UserRegisterActivity.this, getString(R.string.user_register_result_failure));
                             }
                         }
                     }
@@ -162,17 +163,15 @@ public class UserLoginActivity extends BaseGen {
                     break;
 
                 case ERROR_GET:
-                    btnUserLogin.setEnabled(true);
-                    ToastObject.Show(UserLoginActivity.this, getString(R.string.user_login_result_failure_for_network));
+                    btnUserRegister.setEnabled(true);
+                    ToastObject.Show(UserRegisterActivity.this, getString(R.string.user_register_result_failure_for_network));
                     break;
 
                 default:
-                    btnUserLogin.setEnabled(true);
+                    btnUserRegister.setEnabled(true);
                     System.out.println("nothing to do");
                     break;
             }
         }
     }
 }
-
-

@@ -16,12 +16,32 @@
     <string name="default_block_1_number">1</string>
     <string name="default_block_1_name">手机拍展示</string>
     <string name="default_block_1_icon_alt">icon1</string>
-    <string name="user_login_btn_name">登录</string>
+    <string name="user_login_login_btn_name">登录</string>
     <string name="user_login_reg_btn_name">注册</string>
-    <string name="user_login_edittext_username_defaultvalue">Cell Phone</string>
-    <string name="user_login_edittext_userpass_defaultvalue">Password</string>
+    <string name="user_login_edittext_username_defaultvalue">手机</string>
+    <string name="user_login_edittext_userpass_defaultvalue">密码</string>
     <string name="user_login_title">会员登录</string>
+    <string name="user_login_tips_no_username">请输入手机号码</string>
+    <string name="user_login_tips_no_userpass">请输入密码</string>
+    <string name="user_login_result_begin">开始登录</string>
     <string name="user_login_result_success">登录成功</string>
+    <string name="user_login_result_failure">登录失败，请检查您的手机或密码是否正确</string>
+    <string name="user_login_result_failure_for_network">登录失败，网络出错，请稍后再试</string>
+
+
+    <string name="user_register_login_btn_name">登录</string>
+    <string name="user_register_reg_btn_name">注册</string>
+    <string name="user_register_edittext_username_defaultvalue">手机</string>
+    <string name="user_register_edittext_userpass_defaultvalue">密码</string>
+    <string name="user_register_title">会员注册</string>
+    <string name="user_register_tips_no_username">请输入手机号码</string>
+    <string name="user_register_tips_no_userpass">请输入密码</string>
+    <string name="user_register_result_begin">开始注册</string>
+    <string name="user_register_result_success">注册成功</string>
+    <string name="user_register_result_failure">注册失败</string>
+    <string name="user_register_result_failure_for_network">注册失败，网络出错，请稍后再试</string>
+
+
     <string name="user_info_title">会员信息</string>
     <string name="default_block_5_name">往期比赛</string>
     <string name="default_block_6_name">乐图币充值</string>

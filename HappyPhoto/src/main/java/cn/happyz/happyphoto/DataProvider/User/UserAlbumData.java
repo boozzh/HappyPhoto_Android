@@ -21,7 +21,7 @@ import cn.happyz.happyphoto.Tools.ThreadPoolUtils;
 public class UserAlbumData extends BaseData implements Runnable {
     private String _httpUrl = null;
     private Handler _handler = null;
-    private UserAlbumDataOperateType _userAlbumDataOperateType = UserAlbumDataOperateType.GetList;
+    private UserAlbumDataOperateType _userAlbumDataOperateType = UserAlbumDataOperateType.Null;
 
     private UserAlbum _userAlbum;
 

@@ -10,5 +10,6 @@ public enum UserAlbumDataOperateType {
     GetListOfType,
     Create,
     Modify,
-    RemoveToBin
+    RemoveToBin,
+    Null
 }
