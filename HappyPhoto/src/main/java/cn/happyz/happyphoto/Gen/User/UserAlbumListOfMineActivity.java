@@ -56,7 +56,7 @@ public class UserAlbumListOfMineActivity extends BaseGen implements PullToRefres
         TextView tvTitleBarTitle = (TextView) findViewById(R.id.txtTitleBar);
         tvTitleBarTitle.setText(R.string.user_album_list_mine_titlebar); //修改title文字
 
-        this.CheckUserLogin();
+        boolean userIsLogined = this.CheckUserLogin();
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
         btnBack.setVisibility(0);
@@ -66,11 +66,12 @@ public class UserAlbumListOfMineActivity extends BaseGen implements PullToRefres
                 finish();
             }
         });
-
-        LoadData(PageIndex,PageSize);
+        if(userIsLogined){
+            LoadData(PageIndex,PageSize);
+        }
     }
 
-    private void CheckUserLogin(){
+    private boolean CheckUserLogin(){
         TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
         boolean userIsLogined = super.UserCheckIsLogined(UserAlbumListOfMineActivity.this);
         if(userIsLogined){
@@ -82,6 +83,7 @@ public class UserAlbumListOfMineActivity extends BaseGen implements PullToRefres
             //this.finish();
             //txtUserOp.setEnabled(false);
         }
+        return userIsLogined;
     }
 
     private void LoadData(int pageIndex,int pageSize){
