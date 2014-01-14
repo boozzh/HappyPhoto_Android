@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -63,7 +62,7 @@ public class UserAlbumCreateActivity extends BaseGen {
     private TextView txtUserAlbumName;
     private TextView txtUserAlbumIntro;
     private boolean checkUserAlbumType = false;
-    public UserAlbumPicCollections uapcOfUserAlbumCreate;
+    public UserAlbumPicCollections userAlbumPicCollectionsOfUserAlbumCreate;
     private LinearLayout linearLayout;
     private ProgressDialog progressDialog;
     private int loadImageByCamera = 1;
@@ -331,7 +330,7 @@ public class UserAlbumCreateActivity extends BaseGen {
             txtUserOp.setEnabled(true);
             return;
         }
-        if(uapcOfUserAlbumCreate == null || uapcOfUserAlbumCreate.size()<=0){
+        if(userAlbumPicCollectionsOfUserAlbumCreate == null || userAlbumPicCollectionsOfUserAlbumCreate.size()<=0){
             ToastObject.Show(UserAlbumCreateActivity.this,getString(R.string.message_user_album_create_useralbumpic_is_null));
             TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
             txtUserOp.setEnabled(true);
@@ -364,7 +363,7 @@ public class UserAlbumCreateActivity extends BaseGen {
         public void onClick(DialogInterface dialog, int which) {
             //点击“确定按钮”取消对话框
             //dialog.cancel();
-            if(uapcOfUserAlbumCreate.size() == 0){
+            if(userAlbumPicCollectionsOfUserAlbumCreate.size() == 0){
                 //ToastObject.Show(UserAlbumCreateActivity.this, getString(R.string.message_upload_success));
                 //progressDialog.setMessage(getString(R.string.message_upload_success));
                 //转到我的作品
@@ -422,7 +421,7 @@ public class UserAlbumCreateActivity extends BaseGen {
                         progressDialog.setTitle(getString(R.string.user_album_create_progressdialog_title));
                         progressDialog.setMessage(getString(R.string.user_album_create_progressdialog_content));
                         progressDialog.setIndeterminate(false);// false代表根据程序进度确切的显示进度
-                        progressDialog.setMax(uapcOfUserAlbumCreate.size());
+                        progressDialog.setMax(userAlbumPicCollectionsOfUserAlbumCreate.size());
                         //progressDialog.setButton(ProgressDialog.BUTTON_NEUTRAL, getString(R.string.user_album_create_progressdialog_button_text), new ProgressDialogButtonListener());
                         progressDialog.setCancelable(false); // 设置ProgressDialog 是否可以按退回按键取消
                         progressDialog.setCanceledOnTouchOutside(false);
@@ -431,7 +430,7 @@ public class UserAlbumCreateActivity extends BaseGen {
                         //btnOfProgressDialog.setEnabled(false);
                         progressDialog.show();
 
-                        UserAlbumCreateActivity.this.CreateUserAlbumPic(userAlbumId, uapcOfUserAlbumCreate);
+                        UserAlbumCreateActivity.this.CreateUserAlbumPic(userAlbumId, userAlbumPicCollectionsOfUserAlbumCreate);
                     }
                     //ToastObject.Show(UserAlbumCreateActivity.this, getString(R.string.message_upload_success));
                     break;
@@ -458,10 +457,10 @@ public class UserAlbumCreateActivity extends BaseGen {
                     //Button btnOfProgressDialog = progressDialog.getButton(ProgressDialog.BUTTON_NEGATIVE);
                     //btnOfProgressDialog.setEnabled(false);
                     UserAlbumPic userAlbumPic = (UserAlbumPic) msg.obj;
-                    uapcOfUserAlbumCreate.remove(userAlbumPic);
-                    if(uapcOfUserAlbumCreate.size()>0){
+                    userAlbumPicCollectionsOfUserAlbumCreate.remove(userAlbumPic);
+                    if(userAlbumPicCollectionsOfUserAlbumCreate.size()>0){
                         int userAlbumId = userAlbumPic.getUserAlbumId();
-                        UserAlbumCreateActivity.this.CreateUserAlbumPic(userAlbumId, uapcOfUserAlbumCreate);
+                        UserAlbumCreateActivity.this.CreateUserAlbumPic(userAlbumId, userAlbumPicCollectionsOfUserAlbumCreate);
                     }else{
                         //全部完成
                         //btnOfProgressDialog.setEnabled(true);
@@ -511,10 +510,10 @@ public class UserAlbumCreateActivity extends BaseGen {
      * 将照片加入到滑动视图
      */
     private void AddToHorizontalScrollView(UserAlbumPic userAlbumPic){
-        if(uapcOfUserAlbumCreate == null){
-            uapcOfUserAlbumCreate = new UserAlbumPicCollections();
+        if(userAlbumPicCollectionsOfUserAlbumCreate == null){
+            userAlbumPicCollectionsOfUserAlbumCreate = new UserAlbumPicCollections();
         }
-        if(uapcOfUserAlbumCreate.size()==0){
+        if(userAlbumPicCollectionsOfUserAlbumCreate.size()==0){
             //第一张图片设为封面图
             Integer isCover = 1;
             userAlbumPic.setIsCover(isCover);
@@ -522,7 +521,7 @@ public class UserAlbumCreateActivity extends BaseGen {
             Integer isCover = 0;
             userAlbumPic.setIsCover(isCover);
         }
-        uapcOfUserAlbumCreate.add(userAlbumPic);
+        userAlbumPicCollectionsOfUserAlbumCreate.add(userAlbumPic);
 
         linearLayout = (LinearLayout) findViewById(R.id.llSelectedPics);
 
@@ -576,7 +575,7 @@ public class UserAlbumCreateActivity extends BaseGen {
             LinearLayout ll = (LinearLayout)rlParent.getParent();
             ll.removeView(rlParent);
             //从照片相册对象集合删除
-            uapcOfUserAlbumCreate.remove(_userAlbumPic);
+            userAlbumPicCollectionsOfUserAlbumCreate.remove(_userAlbumPic);
         }
     }
 }
