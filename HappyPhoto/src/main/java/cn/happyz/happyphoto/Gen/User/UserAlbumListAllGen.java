@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,17 +24,16 @@ import cn.happyz.happyphoto.DataProvider.User.UserAlbumDataOperateType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumListAdapter;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeData;
+import cn.happyz.happyphoto.DefaultGen;
 import cn.happyz.happyphoto.Gen.BaseGen;
-import cn.happyz.happyphoto.MainActivity;
 import cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
-import cn.happyz.happyphoto.Tools.ToastObject;
 
 /**
  * Created by zcmzc on 13-12-8.
  */
-public class UserAlbumListAllActivity extends BaseGen implements PullToRefreshView.OnHeaderRefreshListener,PullToRefreshView.OnFooterRefreshListener {
+public class UserAlbumListAllGen extends BaseGen implements PullToRefreshView.OnHeaderRefreshListener,PullToRefreshView.OnFooterRefreshListener {
     private ImageButton ibtnMenuTitleBarWithMenu;
     PullToRefreshView pullToRefreshView;
     int PageSize = 18;
@@ -63,7 +61,7 @@ public class UserAlbumListAllActivity extends BaseGen implements PullToRefreshVi
 
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar_with_menu);
         TextView tvTitleBarTitle = (TextView) findViewById(R.id.txtTitleBarWithMenu);
-        tvTitleBarTitle.setText(R.string.user_album_list_all_titlebar); //修改title文字
+        tvTitleBarTitle.setText(R.string.user_album_list_all_title); //修改title文字
 
         gvUserAlbumListOfAll = (GridView) findViewById(R.id.gvUserAlbumListOfAll);
         gvUserAlbumListOfAll.setBackgroundColor(Color.parseColor("#333333"));
@@ -99,7 +97,7 @@ public class UserAlbumListAllActivity extends BaseGen implements PullToRefreshVi
             }
         });
 
-        if(MainActivity.globalUserAlbumTypeCollections != null && MainActivity.globalUserAlbumTypeCollections.size()>0){
+        if(DefaultGen.globalUserAlbumTypeCollections != null && DefaultGen.globalUserAlbumTypeCollections.size()>0){
             //userAlbumTypeCollections 有可能从其他的view中取得
             LoadUserAlbumTypeList();
         }else{
@@ -143,11 +141,11 @@ public class UserAlbumListAllActivity extends BaseGen implements PullToRefreshVi
 
     private void LoadUserAlbumTypeList(){
         llUserAlbumListLeftMenu = (LinearLayout) findViewById(R.id.llUserAlbumListLeftMenu);
-        if(MainActivity.globalUserAlbumTypeCollections != null && MainActivity.globalUserAlbumTypeCollections.size()>0){
-            for(int i=0;i<MainActivity.globalUserAlbumTypeCollections.size();i++){
-                Button button = new Button(UserAlbumListAllActivity.this);
-                button.setTag(MainActivity.globalUserAlbumTypeCollections.get(i).getUserAlbumTypeId());
-                button.setText(MainActivity.globalUserAlbumTypeCollections.get(i).getUserAlbumTypeName());
+        if(DefaultGen.globalUserAlbumTypeCollections != null && DefaultGen.globalUserAlbumTypeCollections.size()>0){
+            for(int i=0;i< DefaultGen.globalUserAlbumTypeCollections.size();i++){
+                Button button = new Button(UserAlbumListAllGen.this);
+                button.setTag(DefaultGen.globalUserAlbumTypeCollections.get(i).getUserAlbumTypeId());
+                button.setText(DefaultGen.globalUserAlbumTypeCollections.get(i).getUserAlbumTypeName());
                 button.setBackgroundColor(Color.parseColor("#0A1027"));
                 button.setTextColor(Color.parseColor("#FFFFFF"));
                 button.setOnClickListener(new View.OnClickListener() {
@@ -189,18 +187,18 @@ public class UserAlbumListAllActivity extends BaseGen implements PullToRefreshVi
                         userAlbumListAdapterOfShow.notifyDataSetChanged();
                     }else{
                         userAlbumCollectionsOfShow = (UserAlbumCollections)msg.obj;
-                        userAlbumListAdapterOfShow = new UserAlbumListAdapter(UserAlbumListAllActivity.this,R.layout.user_album_type_list_item, userAlbumCollectionsOfShow);
+                        userAlbumListAdapterOfShow = new UserAlbumListAdapter(UserAlbumListAllGen.this,R.layout.user_album_type_list_item, userAlbumCollectionsOfShow);
                         gvUserAlbumListOfAll.setAdapter(userAlbumListAdapterOfShow);
                         gvUserAlbumListOfAll.setOnItemClickListener(new GridViewItemClick());
-                        pullToRefreshView.setOnHeaderRefreshListener(UserAlbumListAllActivity.this);
-                        pullToRefreshView.setOnFooterRefreshListener(UserAlbumListAllActivity.this);
+                        pullToRefreshView.setOnHeaderRefreshListener(UserAlbumListAllGen.this);
+                        pullToRefreshView.setOnFooterRefreshListener(UserAlbumListAllGen.this);
                     }
 
                     pullToRefreshView.setLastUpdated(new Date().toLocaleString());
                     break;
 
                 case ERROR_GET:
-                    Toast.makeText(UserAlbumListAllActivity.this, "加载失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserAlbumListAllGen.this, "加载失败", Toast.LENGTH_SHORT).show();
                     break;
 
                 default:
@@ -221,7 +219,7 @@ public class UserAlbumListAllActivity extends BaseGen implements PullToRefreshVi
                 case START_GET:
                     break;
                 case FINISH_GET:
-                    MainActivity.globalUserAlbumTypeCollections = (UserAlbumTypeCollections)msg.obj;
+                    DefaultGen.globalUserAlbumTypeCollections = (UserAlbumTypeCollections)msg.obj;
                     LoadUserAlbumTypeList();
                     break;
                 case ERROR_GET:
@@ -270,9 +268,9 @@ public class UserAlbumListAllActivity extends BaseGen implements PullToRefreshVi
             //Intent intent = new Intent();
             ImagePositionsOfAll = position;//图片的位置 
             BaseGen.USER_ALBUM_PIC_LIST_SHOW_MODULE = 1;
-            //ToastObject.Show(UserAlbumListOfMineActivity.this, Integer.toString(ImagePositionsOfMine));
-            Intent intent = new Intent(UserAlbumListAllActivity.this, UserAlbumPicListActivity.class);
-            //intent.setClass(UserAlbumListOfMineActivity.this,UserAlbumPicListActivity.class);
+            //ToastObject.Show(UserAlbumListOfMineGen.this, Integer.toString(ImagePositionsOfMine));
+            Intent intent = new Intent(UserAlbumListAllGen.this, UserAlbumPicListGen.class);
+            //intent.setClass(UserAlbumListOfMineGen.this,UserAlbumPicListGen.class);
             startActivity(intent);
         }
     }

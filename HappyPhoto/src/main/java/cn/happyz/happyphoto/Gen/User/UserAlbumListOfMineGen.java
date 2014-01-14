@@ -28,7 +28,7 @@ import cn.happyz.happyphoto.Tools.ToastObject;
 /**
  * Created by zcmzc on 13-12-22.
  */
-public class UserAlbumListOfMineActivity extends BaseGen implements PullToRefreshView.OnHeaderRefreshListener,PullToRefreshView.OnFooterRefreshListener {
+public class UserAlbumListOfMineGen extends BaseGen implements PullToRefreshView.OnHeaderRefreshListener,PullToRefreshView.OnFooterRefreshListener {
 
     private ImageButton btnBack;
 
@@ -72,13 +72,13 @@ public class UserAlbumListOfMineActivity extends BaseGen implements PullToRefres
     }
 
     private boolean CheckUserLogin(){
-        TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
-        boolean userIsLogined = super.UserCheckIsLogined(UserAlbumListOfMineActivity.this);
+        //TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
+        boolean userIsLogined = super.UserCheckIsLogined(UserAlbumListOfMineGen.this);
         if(userIsLogined){
-            //ToastObject.Show(this,Integer.toString(super.GetNowUserId(UserAlbumCreateActivity.this)));
+            //ToastObject.Show(this,Integer.toString(super.GetNowUserId(UserAlbumCreateGen.this)));
 
         }else{
-            Intent intent = new Intent(UserAlbumListOfMineActivity.this, UserLoginActivity.class);
+            Intent intent = new Intent(UserAlbumListOfMineGen.this, UserLoginGen.class);
             startActivity(intent);
             //this.finish();
             //txtUserOp.setEnabled(false);
@@ -120,11 +120,11 @@ public class UserAlbumListOfMineActivity extends BaseGen implements PullToRefres
                         gvOfMine = (GridView) findViewById(R.id.gvUserAlbumListOfMine);
                         gvOfMine.setBackgroundColor(Color.parseColor("#333333"));
                         userAlbumCollectionsOfMine = (UserAlbumCollections)msg.obj;
-                        userAlbumListAdapterOfMine = new UserAlbumListAdapter(UserAlbumListOfMineActivity.this,R.layout.user_album_type_list_item, userAlbumCollectionsOfMine);
+                        userAlbumListAdapterOfMine = new UserAlbumListAdapter(UserAlbumListOfMineGen.this,R.layout.user_album_type_list_item, userAlbumCollectionsOfMine);
                         gvOfMine.setAdapter(userAlbumListAdapterOfMine);
                         gvOfMine.setOnItemClickListener(new GridViewItemClick());
-                        pullToRefreshView.setOnHeaderRefreshListener(UserAlbumListOfMineActivity.this);
-                        pullToRefreshView.setOnFooterRefreshListener(UserAlbumListOfMineActivity.this);
+                        pullToRefreshView.setOnHeaderRefreshListener(UserAlbumListOfMineGen.this);
+                        pullToRefreshView.setOnFooterRefreshListener(UserAlbumListOfMineGen.this);
                     }
 
                     pullToRefreshView.setLastUpdated(new Date().toLocaleString());
@@ -132,7 +132,7 @@ public class UserAlbumListOfMineActivity extends BaseGen implements PullToRefres
                     break;
 
                 case ERROR_GET:
-                    ToastObject.Show(UserAlbumListOfMineActivity.this, "加载失败");
+                    ToastObject.Show(UserAlbumListOfMineGen.this, "加载失败");
                     break;
 
                 default:
@@ -177,9 +177,9 @@ public class UserAlbumListOfMineActivity extends BaseGen implements PullToRefres
             //Intent intent = new Intent();
             ImagePositionsOfMine = position;//图片的位置 
             BaseGen.USER_ALBUM_PIC_LIST_SHOW_MODULE = 3;
-            //ToastObject.Show(UserAlbumListOfMineActivity.this, Integer.toString(ImagePositionsOfMine));
-            Intent intent = new Intent(UserAlbumListOfMineActivity.this, UserAlbumPicListActivity.class);
-            //intent.setClass(UserAlbumListOfMineActivity.this,UserAlbumPicListActivity.class);
+            //ToastObject.Show(UserAlbumListOfMineGen.this, Integer.toString(ImagePositionsOfMine));
+            Intent intent = new Intent(UserAlbumListOfMineGen.this, UserAlbumPicListGen.class);
+            //intent.setClass(UserAlbumListOfMineGen.this,UserAlbumPicListGen.class);
             startActivity(intent);
         }
     }

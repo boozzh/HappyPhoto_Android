@@ -39,8 +39,8 @@ import cn.happyz.happyphoto.DataProvider.User.UserAlbumType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeData;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeListAdapter;
+import cn.happyz.happyphoto.DefaultGen;
 import cn.happyz.happyphoto.Gen.BaseGen;
-import cn.happyz.happyphoto.MainActivity;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.FileObject;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
@@ -50,7 +50,7 @@ import cn.happyz.happyphoto.Tools.ToastObject;
 /**
  * Created by zcmzc on 13-12-20.
  */
-public class UserAlbumCreateActivity extends BaseGen {
+public class UserAlbumCreateGen extends BaseGen {
 
 
     private Button btnSelectPicFromGallery;
@@ -80,9 +80,7 @@ public class UserAlbumCreateActivity extends BaseGen {
 
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);  //titlebar为自己标题栏的布局
         TextView tvTitleBarTitle = (TextView) findViewById(R.id.txtTitleBar);
-        tvTitleBarTitle.setText(R.string.user_album_create_titlebar); //修改title文字
-
-        this.CheckUserLogin();
+        tvTitleBarTitle.setText(R.string.user_album_create_title); //修改title文字
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
         btnBack.setVisibility(0);
@@ -93,7 +91,10 @@ public class UserAlbumCreateActivity extends BaseGen {
             }
         });
 
-        if(MainActivity.globalUserAlbumTypeCollections != null && MainActivity.globalUserAlbumTypeCollections.size()>0){
+        this.CheckUserLogin();
+
+
+        if(DefaultGen.globalUserAlbumTypeCollections != null && DefaultGen.globalUserAlbumTypeCollections.size()>0){
             //userAlbumTypeCollections 有可能从其他的view中取得
             LoadUserAlbumTypeList();
         }else{
@@ -128,7 +129,7 @@ public class UserAlbumCreateActivity extends BaseGen {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, sourcePicUri);
                     startActivityForResult(intent, loadImageByCamera);
                 }else{
-                    Toast.makeText(UserAlbumCreateActivity.this, getString(R.string.message_takephoto_nosdcard), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserAlbumCreateGen.this, getString(R.string.message_takephoto_nosdcard), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -166,10 +167,10 @@ public class UserAlbumCreateActivity extends BaseGen {
     }
 
     private void LoadUserAlbumTypeList(){
-        if(MainActivity.globalUserAlbumTypeCollections != null && MainActivity.globalUserAlbumTypeCollections.size()>0){
+        if(DefaultGen.globalUserAlbumTypeCollections != null && DefaultGen.globalUserAlbumTypeCollections.size()>0){
             checkUserAlbumType = true;
             Spinner sp = (Spinner) findViewById(R.id.spUserAlbumType);
-            UserAlbumTypeListAdapter userAlbumTypeListAdapter = new UserAlbumTypeListAdapter(UserAlbumCreateActivity.this,R.layout.user_album_type_list_item,MainActivity.globalUserAlbumTypeCollections);
+            UserAlbumTypeListAdapter userAlbumTypeListAdapter = new UserAlbumTypeListAdapter(UserAlbumCreateGen.this,R.layout.user_album_type_list_item, DefaultGen.globalUserAlbumTypeCollections);
             userAlbumTypeListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             sp.setAdapter(userAlbumTypeListAdapter);
         }
@@ -178,21 +179,21 @@ public class UserAlbumCreateActivity extends BaseGen {
 
     private void CheckUserLogin(){
         TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
-        boolean userIsLogined = super.UserCheckIsLogined(UserAlbumCreateActivity.this);
+        boolean userIsLogined = super.UserCheckIsLogined(UserAlbumCreateGen.this);
         if(userIsLogined){
-            //ToastObject.Show(this,Integer.toString(super.GetNowUserId(UserAlbumCreateActivity.this)));
+            //ToastObject.Show(this,Integer.toString(super.GetNowUserId(UserAlbumCreateGen.this)));
             txtUserOp.setText(R.string.user_album_create_user_album_button_confirm_text);
             txtUserOp.setEnabled(true);
             txtUserOp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //确认上传作品
-                    UserAlbumCreateActivity.this.ConfirmToCreateUserAlbum();
+                    UserAlbumCreateGen.this.ConfirmToCreateUserAlbum();
                     view.setEnabled(false);
                 }
             });
         }else{
-            Intent intent = new Intent(UserAlbumCreateActivity.this, UserLoginActivity.class);
+            Intent intent = new Intent(UserAlbumCreateGen.this, UserLoginGen.class);
             startActivityForResult(intent, userLogin);
             this.finish();
             //txtUserOp.setEnabled(false);
@@ -289,7 +290,7 @@ public class UserAlbumCreateActivity extends BaseGen {
 
                         nowPhotoNumber++;
                         ///////////////////////////////添加到相册图片集合对象//////////////////////////////
-                        int userId = super.GetNowUserId(UserAlbumCreateActivity.this);
+                        int userId = super.GetNowUserId(UserAlbumCreateGen.this);
                         UserAlbumPic userAlbumPic = new UserAlbumPic(filePath+sourceFileName);
                         userAlbumPic.setUserId(userId);
                         this.AddToHorizontalScrollView(userAlbumPic);
@@ -318,20 +319,20 @@ public class UserAlbumCreateActivity extends BaseGen {
         String userAlbumName = txtUserAlbumName.getText().toString().trim();
         if(userAlbumName == null || userAlbumName.equals("") || userAlbumName.startsWith(getString(R.string.user_album_create_user_album_name_default_value))){
             //标题不能为空，也不能等于默认值
-            ToastObject.Show(UserAlbumCreateActivity.this,getString(R.string.message_user_album_create_useralbumname_is_null));
+            ToastObject.Show(UserAlbumCreateGen.this,getString(R.string.message_user_album_create_useralbumname_is_null));
             TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
             txtUserOp.setEnabled(true);
             return;
         }
         if(!checkUserAlbumType){
             //未读取到作品分类
-            ToastObject.Show(UserAlbumCreateActivity.this,getString(R.string.message_user_album_create_useralbumtype_is_null));
+            ToastObject.Show(UserAlbumCreateGen.this,getString(R.string.message_user_album_create_useralbumtype_is_null));
             TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
             txtUserOp.setEnabled(true);
             return;
         }
         if(userAlbumPicCollectionsOfUserAlbumCreate == null || userAlbumPicCollectionsOfUserAlbumCreate.size()<=0){
-            ToastObject.Show(UserAlbumCreateActivity.this,getString(R.string.message_user_album_create_useralbumpic_is_null));
+            ToastObject.Show(UserAlbumCreateGen.this,getString(R.string.message_user_album_create_useralbumpic_is_null));
             TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
             txtUserOp.setEnabled(true);
             return;
@@ -344,7 +345,7 @@ public class UserAlbumCreateActivity extends BaseGen {
         Spinner sp = (Spinner) findViewById(R.id.spUserAlbumType);
         UserAlbumType userAlbumType = (UserAlbumType)sp.getSelectedItem();
         int userAlbumTypeId = userAlbumType.getUserAlbumTypeId();
-        int userId = super.GetNowUserId(UserAlbumCreateActivity.this);
+        int userId = super.GetNowUserId(UserAlbumCreateGen.this);
         int siteId = Integer.parseInt(getString(R.string.config_siteid));
 
         String httpAlbumUploadUrl = getString(R.string.config_user_album_create_url);
@@ -364,10 +365,10 @@ public class UserAlbumCreateActivity extends BaseGen {
             //点击“确定按钮”取消对话框
             //dialog.cancel();
             if(userAlbumPicCollectionsOfUserAlbumCreate.size() == 0){
-                //ToastObject.Show(UserAlbumCreateActivity.this, getString(R.string.message_upload_success));
+                //ToastObject.Show(UserAlbumCreateGen.this, getString(R.string.message_upload_success));
                 //progressDialog.setMessage(getString(R.string.message_upload_success));
                 //转到我的作品
-                Intent intent = new Intent(UserAlbumCreateActivity.this, UserAlbumListOfMineActivity.class);
+                Intent intent = new Intent(UserAlbumCreateGen.this, UserAlbumListOfMineGen.class);
                 startActivity(intent);
                 //finish();
             }
@@ -410,13 +411,13 @@ public class UserAlbumCreateActivity extends BaseGen {
             HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
             switch(httpClientStatus){
                 case START_POST:
-                    ToastObject.Show(UserAlbumCreateActivity.this, getString(R.string.message_upload_begin));
+                    ToastObject.Show(UserAlbumCreateGen.this, getString(R.string.message_upload_begin));
                     break;
                 case FINISH_POST:
                     //传照片
                     int userAlbumId = Integer.parseInt(msg.obj.toString());
                     if(userAlbumId>0){
-                        progressDialog = new ProgressDialog(UserAlbumCreateActivity.this);
+                        progressDialog = new ProgressDialog(UserAlbumCreateGen.this);
                         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                         progressDialog.setTitle(getString(R.string.user_album_create_progressdialog_title));
                         progressDialog.setMessage(getString(R.string.user_album_create_progressdialog_content));
@@ -430,12 +431,12 @@ public class UserAlbumCreateActivity extends BaseGen {
                         //btnOfProgressDialog.setEnabled(false);
                         progressDialog.show();
 
-                        UserAlbumCreateActivity.this.CreateUserAlbumPic(userAlbumId, userAlbumPicCollectionsOfUserAlbumCreate);
+                        UserAlbumCreateGen.this.CreateUserAlbumPic(userAlbumId, userAlbumPicCollectionsOfUserAlbumCreate);
                     }
-                    //ToastObject.Show(UserAlbumCreateActivity.this, getString(R.string.message_upload_success));
+                    //ToastObject.Show(UserAlbumCreateGen.this, getString(R.string.message_upload_success));
                     break;
                 case ERROR_POST:
-                    ToastObject.Show(UserAlbumCreateActivity.this, getString(R.string.message_upload_failure));
+                    ToastObject.Show(UserAlbumCreateGen.this, getString(R.string.message_upload_failure));
                     break;
                 default:
                     System.out.println("nothing to do");
@@ -450,7 +451,7 @@ public class UserAlbumCreateActivity extends BaseGen {
             HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
             switch(httpClientStatus){
                 case START_POST:
-                    //ToastObject.Show(UserAlbumCreateActivity.this, getString(R.string.message_upload_begin));
+                    //ToastObject.Show(UserAlbumCreateGen.this, getString(R.string.message_upload_begin));
                     break;
                 case FINISH_POST:
                     progressDialog.incrementProgressBy(1);
@@ -460,20 +461,20 @@ public class UserAlbumCreateActivity extends BaseGen {
                     userAlbumPicCollectionsOfUserAlbumCreate.remove(userAlbumPic);
                     if(userAlbumPicCollectionsOfUserAlbumCreate.size()>0){
                         int userAlbumId = userAlbumPic.getUserAlbumId();
-                        UserAlbumCreateActivity.this.CreateUserAlbumPic(userAlbumId, userAlbumPicCollectionsOfUserAlbumCreate);
+                        UserAlbumCreateGen.this.CreateUserAlbumPic(userAlbumId, userAlbumPicCollectionsOfUserAlbumCreate);
                     }else{
                         //全部完成
                         //btnOfProgressDialog.setEnabled(true);
                         progressDialog.setMessage(getString(R.string.message_upload_success));
                         //转到我的作品
-                        Intent intent = new Intent(UserAlbumCreateActivity.this, UserAlbumListOfMineActivity.class);
+                        Intent intent = new Intent(UserAlbumCreateGen.this, UserAlbumListOfMineGen.class);
                         startActivity(intent);
                         progressDialog.dismiss();
                         finish();
                     }
                     break;
                 case ERROR_POST:
-                    ToastObject.Show(UserAlbumCreateActivity.this, getString(R.string.message_upload_failure));
+                    ToastObject.Show(UserAlbumCreateGen.this, getString(R.string.message_upload_failure));
                     break;
                 default:
                     System.out.println("nothing to do");
@@ -494,7 +495,7 @@ public class UserAlbumCreateActivity extends BaseGen {
                 case START_GET:
                     break;
                 case FINISH_GET:
-                    MainActivity.globalUserAlbumTypeCollections = (UserAlbumTypeCollections)msg.obj;
+                    DefaultGen.globalUserAlbumTypeCollections = (UserAlbumTypeCollections)msg.obj;
                     LoadUserAlbumTypeList();
                     break;
                 case ERROR_GET:
@@ -526,11 +527,11 @@ public class UserAlbumCreateActivity extends BaseGen {
         linearLayout = (LinearLayout) findViewById(R.id.llSelectedPics);
 
         //////////////////////////////////////////////////////////////
-        RelativeLayout rl = new RelativeLayout(UserAlbumCreateActivity.this);
+        RelativeLayout rl = new RelativeLayout(UserAlbumCreateGen.this);
         rl.setRight(10);
         rl.setId(100);
 
-        ImageView iv = new ImageView(UserAlbumCreateActivity.this);
+        ImageView iv = new ImageView(UserAlbumCreateGen.this);
         iv.setMaxWidth(150);
         iv.setMaxHeight(200);
         iv.setImageBitmap(thumbPic);
@@ -543,11 +544,11 @@ public class UserAlbumCreateActivity extends BaseGen {
         // btn1 位于父 View 的顶部，在父 View 中水平居中
         rl.addView(iv, lp1);
 
-        Button btn = new Button(UserAlbumCreateActivity.this);
+        Button btn = new Button(UserAlbumCreateGen.this);
         btn.setText(getString(R.string.user_album_create_user_album_button_cancel_text));
         //btn.setBackgroundColor(Color.parseColor("#CA0000"));
         //btn.setTextColor(Color.parseColor("#FFFFFF"));
-        btn.setTextAppearance(UserAlbumCreateActivity.this, R.style.ButtonStyle);
+        btn.setTextAppearance(UserAlbumCreateGen.this, R.style.ButtonStyle);
         btn.setOnClickListener(new CancelUserAlbumPicListener(userAlbumPic));
 
         RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

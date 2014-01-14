@@ -26,7 +26,7 @@ import cn.happyz.happyphoto.Tools.ToastObject;
 /**
  * Created by zcmzc on 14-1-13.
  */
-public class UserRegisterActivity extends BaseGen {
+public class UserRegisterGen extends BaseGen {
 
     private ImageButton btnBack;
     private Button btnUserLogin;
@@ -85,9 +85,9 @@ public class UserRegisterActivity extends BaseGen {
             public void onClick(View view) {
                 btnUserLogin.setEnabled(false);
 
-                Intent intent = new Intent(UserRegisterActivity.this, UserLoginActivity.class);
+                Intent intent = new Intent(UserRegisterGen.this, UserLoginGen.class);
                 startActivity(intent);
-                UserRegisterActivity.this.finish();
+                UserRegisterGen.this.finish();
 
             }
         });
@@ -100,13 +100,13 @@ public class UserRegisterActivity extends BaseGen {
 
                 String userName = txtUserName.getText().toString().trim();
                 if(userName == null || userName.equals("")){
-                    ToastObject.Show(UserRegisterActivity.this, getString(R.string.user_register_tips_no_username));
+                    ToastObject.Show(UserRegisterGen.this, getString(R.string.user_register_tips_no_username));
                     btnUserRegister.setEnabled(true);
                     return;
                 }
                 String userPass = txtUserPass.getText().toString().trim();
                 if(userPass == null || userPass.equals("")){
-                    ToastObject.Show(UserRegisterActivity.this, getString(R.string.user_register_tips_no_userpass));
+                    ToastObject.Show(UserRegisterGen.this, getString(R.string.user_register_tips_no_userpass));
                     btnUserRegister.setEnabled(true);
                     return;
                 }
@@ -132,7 +132,7 @@ public class UserRegisterActivity extends BaseGen {
 
             switch(httpClientStatus){
                 case START_GET:
-                    ToastObject.Show(UserRegisterActivity.this, getString(R.string.user_register_result_begin));
+                    ToastObject.Show(UserRegisterGen.this, getString(R.string.user_register_result_begin));
                     break;
 
                 case FINISH_GET:
@@ -145,17 +145,17 @@ public class UserRegisterActivity extends BaseGen {
                             String userPass = user.getUserPass();
                             Integer state = user.getState();
                             if(userId>0){
-                                ToastObject.Show(UserRegisterActivity.this, getString(R.string.user_register_result_success));
+                                ToastObject.Show(UserRegisterGen.this, getString(R.string.user_register_result_success));
 
                                 SharedPreferences sp = getSharedPreferences("USERINFO", MODE_PRIVATE);
                                 sp.edit().putInt("USERID",userId).commit();
                                 sp.edit().putString("USERNAME",userName).commit();
                                 sp.edit().putString("USERPASS",userPass).commit();
                                 sp.edit().putInt("STATE",state).commit();
-                                UserRegisterActivity.this.finish();
+                                UserRegisterGen.this.finish();
                             }else{
                                 btnUserRegister.setEnabled(true);
-                                ToastObject.Show(UserRegisterActivity.this, getString(R.string.user_register_result_failure));
+                                ToastObject.Show(UserRegisterGen.this, getString(R.string.user_register_result_failure));
                             }
                         }
                     }
@@ -164,7 +164,7 @@ public class UserRegisterActivity extends BaseGen {
 
                 case ERROR_GET:
                     btnUserRegister.setEnabled(true);
-                    ToastObject.Show(UserRegisterActivity.this, getString(R.string.user_register_result_failure_for_network));
+                    ToastObject.Show(UserRegisterGen.this, getString(R.string.user_register_result_failure_for_network));
                     break;
 
                 default:

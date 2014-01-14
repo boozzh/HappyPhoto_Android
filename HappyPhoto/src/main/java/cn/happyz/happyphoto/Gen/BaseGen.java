@@ -1,17 +1,12 @@
 package cn.happyz.happyphoto.Gen;
 
-import cn.happyz.happyphoto.Gen.User.UserLoginActivity;
 import cn.happyz.happyphoto.R;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
-import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.view.View;
 import android.widget.TextView;
 
 /**

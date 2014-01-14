@@ -24,24 +24,24 @@ import android.widget.ViewFlipper;
 import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNews;
 import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsCollections;
 import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsData;
+import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsOperateType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeCollections;
+import cn.happyz.happyphoto.Gen.Activity.ActivityListGen;
 import cn.happyz.happyphoto.Gen.BaseGen;
-import cn.happyz.happyphoto.Gen.User.UserAlbumCreateActivity;
-import cn.happyz.happyphoto.Gen.User.UserAlbumGameActivity;
-import cn.happyz.happyphoto.Gen.User.UserAlbumListAllActivity;
-import cn.happyz.happyphoto.Gen.User.UserAlbumListOfMineActivity;
-import cn.happyz.happyphoto.Gen.User.UserInfoActivity;
-import cn.happyz.happyphoto.Gen.User.UserLoginActivity;
+import cn.happyz.happyphoto.Gen.User.UserAlbumCreateGen;
+import cn.happyz.happyphoto.Gen.User.UserAlbumListAllGen;
+import cn.happyz.happyphoto.Gen.User.UserAlbumListOfMineGen;
+import cn.happyz.happyphoto.Gen.User.UserLoginGen;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
 
 
-public class MainActivity extends BaseGen {
+public class DefaultGen extends BaseGen {
 
     private ViewFlipper viewFlipper;
     private FrameLayout btnUserAlbumShow;
     private FrameLayout btnTakeAndUpload;
-    private FrameLayout btnGotoGame;
+    private FrameLayout btnActivityList;
     private FrameLayout btnMyPhoto;
     private FrameLayout btnOldGame;
     private FrameLayout btnMoney;
@@ -53,7 +53,7 @@ public class MainActivity extends BaseGen {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.default_page);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
 
@@ -64,30 +64,23 @@ public class MainActivity extends BaseGen {
 
         btnUserAlbumShow = (FrameLayout) findViewById(R.id.btnUserAlbumShow);
         btnTakeAndUpload = (FrameLayout) findViewById(R.id.btnTakeAndUpload);
-        btnGotoGame = (FrameLayout) findViewById(R.id.btnGotoGame);
+        btnActivityList = (FrameLayout) findViewById(R.id.btnActivityList);
         btnMyPhoto = (FrameLayout) findViewById(R.id.btnMyPhoto);
         btnOldGame = (FrameLayout) findViewById(R.id.btnOldGame);
         btnMoney = (FrameLayout) findViewById(R.id.btnMoney);
-        //btnUserAlbumShow.setBackgroundResource(R.drawable.main_bg1);
-        //btnTakeAndUpload.setBackgroundResource(R.drawable.main_bg2);
-        //btnGotoGame.setBackgroundResource(R.drawable.main_bg3);
-        //btnMyPhoto.setBackgroundResource(R.drawable.main_bg4);
-        //btnOldGame.setBackgroundResource(R.drawable.main_bg5);
-        //btnMoney.setBackgroundResource(R.drawable.main_bg6);
 
-        //_textView = (TextView) findViewById(R.id.textView);
 
         btnUserAlbumShow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UserAlbumListAllActivity.class);
+                Intent intent = new Intent(DefaultGen.this, UserAlbumListAllGen.class);
                 startActivity(intent);
                 //finish();
             }
         });
 
-        btnGotoGame.setOnClickListener(new View.OnClickListener() {
+        btnActivityList.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UserAlbumGameActivity.class);
+                Intent intent = new Intent(DefaultGen.this, ActivityListGen.class);
                 startActivity(intent);
                 //finish();
             }
@@ -95,20 +88,20 @@ public class MainActivity extends BaseGen {
 
         btnMyPhoto.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UserAlbumListOfMineActivity.class);
+                Intent intent = new Intent(DefaultGen.this, UserAlbumListOfMineGen.class);
                 startActivity(intent);
             }
         });
 
         btnTakeAndUpload.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UserAlbumCreateActivity.class);
+                Intent intent = new Intent(DefaultGen.this, UserAlbumCreateGen.class);
                 startActivity(intent);
             }
         });
 
         TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
-        boolean userIsLogined = super.UserCheckIsLogined(MainActivity.this);
+        boolean userIsLogined = super.UserCheckIsLogined(DefaultGen.this);
         if(userIsLogined){
             //显示会员图像
 
@@ -121,7 +114,7 @@ public class MainActivity extends BaseGen {
                 @Override
                 public void onClick(View view) {
                     //确认上传作品
-                    Intent intent = new Intent(MainActivity.this, UserLoginActivity.class);
+                    Intent intent = new Intent(DefaultGen.this, UserLoginGen.class);
                     startActivityForResult(intent, 1);
                 }
             });
@@ -130,7 +123,7 @@ public class MainActivity extends BaseGen {
         String httpUrl = getString(R.string.config_default_intro_pics_url);
         LoadImagesHandler loadImagesHandler = new LoadImagesHandler();
         DocumentNewsData documentNewsData = new DocumentNewsData(httpUrl,loadImagesHandler);
-        documentNewsData.GetDataFromHttp();
+        documentNewsData.GetDataFromHttp(DocumentNewsOperateType.GetList);
 
     }
 
@@ -142,9 +135,9 @@ public class MainActivity extends BaseGen {
 
             switch(httpClientStatus){
                 case START_GET:
-                    //Toast.makeText(MainActivity.this, "开始下载", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(DefaultGen.this, "开始下载", Toast.LENGTH_SHORT).show();
 
-                    progressBar = new ProgressBar(MainActivity.this);
+                    progressBar = new ProgressBar(DefaultGen.this);
                     progressBar.setIndeterminate(true);
                     FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(50,50);
                     params.gravity = Gravity.CENTER;
@@ -154,11 +147,11 @@ public class MainActivity extends BaseGen {
                     break;
 
                 case FINISH_GET:
-                    //Toast.makeText(MainActivity.this, "下载成功", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(DefaultGen.this, "下载成功", Toast.LENGTH_SHORT).show();
 
                     DocumentNewsCollections documentNewsCollections = (DocumentNewsCollections)msg.obj;
-                    for(int i=0;i<documentNewsCollections.Count();i++){
-                        DocumentNews documentNews = documentNewsCollections.Get(i);
+                    for(int i=0;i<documentNewsCollections.size();i++){
+                        DocumentNews documentNews = documentNewsCollections.get(i);
                         if(documentNews != null){
                             //构建ImageButton对象加入到轮换图中
 
@@ -168,7 +161,7 @@ public class MainActivity extends BaseGen {
 
                             asyncImageLoader.loadDrawable(imageUrl, new AsyncImageLoader.ImageCallback() {
                                 public void imageLoaded(Drawable imageDrawable, String imageUrl) {
-                                    ImageButton imageButton = new ImageButton(MainActivity.this);
+                                    ImageButton imageButton = new ImageButton(DefaultGen.this);
                                     LinearLayout.LayoutParams ibParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                                             LinearLayout.LayoutParams.MATCH_PARENT);
                                     imageButton.setLayoutParams(ibParams);
@@ -184,7 +177,7 @@ public class MainActivity extends BaseGen {
                     break;
 
                 case ERROR_GET:
-                    Toast.makeText(MainActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DefaultGen.this, "下载失败", Toast.LENGTH_SHORT).show();
                     break;
 
                 default:

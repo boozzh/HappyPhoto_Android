@@ -4,26 +4,26 @@ package cn.happyz.happyphoto.DataProvider.DocumentNews;
  * Created by zcmzc on 13-11-18.
  */
 public class DocumentNews {
-    private int _documentNewsId;
-    private String _documentNewsTitle;
-    private String _titlePic;
+    private int DocumentNewsId;
+    private String DocumentNewsTitle;
+    private String TitlePic;
 
     public DocumentNews(int documentNewsId,String documentNewsTitle,String titlePic){
         super();
-        _documentNewsId = documentNewsId;
-        _documentNewsTitle = documentNewsTitle;
-        _titlePic = titlePic;
+        DocumentNewsId = documentNewsId;
+        DocumentNewsTitle = documentNewsTitle;
+        TitlePic = titlePic;
     }
 
-    public int get_documentNewsId(){
-        return _documentNewsId;
+    public int getDocumentNewsId(){
+        return DocumentNewsId;
     }
 
     public String getDocumentNewsTitle(){
-        return _documentNewsTitle;
+        return DocumentNewsTitle;
     }
 
     public String getTitlePic(){
-        return _titlePic;
+        return TitlePic;
     }
 }

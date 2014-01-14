@@ -1,4 +1,4 @@
-package cn.happyz.happyphoto.DataProvider.DocumentNews;
+package cn.happyz.happyphoto.DataProvider.Activity;
 
 import android.os.Handler;
 import android.os.Message;
@@ -7,47 +7,46 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cn.happyz.happyphoto.DataProvider.BaseData;
+import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNews;
+import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsCollections;
+import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsOperateType;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
 import cn.happyz.happyphoto.Tools.ThreadPoolUtils;
 
 /**
- * Created by zcmzc on 13-11-18.
+ * Created by homezc on 14-1-14.
  */
-public class DocumentNewsData extends BaseData implements Runnable {
-
+public class ActivityData extends BaseData implements Runnable {
     private String HttpUrl = null;
     private Handler MyHandler = null;
-    private DocumentNewsOperateType MyOperateType;
+    private ActivityDataOperateType MyOperateType;
 
-    public DocumentNewsData(String httpUrl, Handler handler){
+    public ActivityData(String httpUrl, Handler handler){
         HttpUrl = httpUrl;
         MyHandler = handler;
     }
 
     @Override
     public void run() {
-        if(MyOperateType == DocumentNewsOperateType.GetList){
+        if(MyOperateType == ActivityDataOperateType.GetList){
             String result = super.RunGet(HttpUrl, MyHandler);
             if(result != null){
                 try {
-                    DocumentNewsCollections documentNewsCollections = new DocumentNewsCollections();
-                    DocumentNews documentNews;
+                    ActivityCollections activityCollections = new ActivityCollections();
+                    Activity activity;
                     JSONObject jsonObject = new JSONObject(result).getJSONObject("documentnews");
                     JSONArray jsonArray = jsonObject.getJSONArray("documentnewslist");
 
                     for(int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject2 = (JSONObject)jsonArray.opt(i);
-                        documentNews = new DocumentNews(
-                                jsonObject2.getInt("documentnewsid"),
-                                jsonObject2.getString("documentnewstitle"),
-                                jsonObject2.getString("titlepic")
-                        );
-                        documentNewsCollections.add(documentNews);
+                        activity = new Activity();
+                        activity.setActivityId(jsonObject2.getInt("ActivityID"));
+                        activityCollections.add(activity);
                     }
 
                     Message msg = MyHandler.obtainMessage();
                     msg.what = HttpClientStatus.FINISH_GET.ordinal();
-                    msg.obj = documentNewsCollections;
+                    msg.obj = activityCollections;
 
                     MyHandler.sendMessage(msg);
                 } catch (Exception ex){
@@ -59,8 +58,8 @@ public class DocumentNewsData extends BaseData implements Runnable {
 
     }
 
-    public void GetDataFromHttp(DocumentNewsOperateType documentNewsOperateType){
-        this.MyOperateType = documentNewsOperateType;
+    public void GetDataFromHttp(ActivityDataOperateType activityDataOperateType){
+        this.MyOperateType = activityDataOperateType;
         ThreadPoolUtils.execute(this);
     }
 }

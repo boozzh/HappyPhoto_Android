@@ -258,7 +258,7 @@ public class UserAlbumListSideDrawer extends FrameLayout {
 
     /**
      * Set the duration time of left sliding animation.
-     * @param msec The duration time should be milli-second ( default = 180 )
+     * @param msec The duration time should be milli-second ( default_page = 180 )
      */
     public void setAnimationDurationLeft(int msec) {
         mDurationLeft = msec;
@@ -266,7 +266,7 @@ public class UserAlbumListSideDrawer extends FrameLayout {
 
     /**
      * Set the duration time of ringht sliding animation.
-     * @param msec The duration time should be milli-second ( default = 180 )
+     * @param msec The duration time should be milli-second ( default_page = 180 )
      */
     public void setAnimationDurationRight(int msec) {
         mDurationRight = msec;

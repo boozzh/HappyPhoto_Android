@@ -47,8 +47,8 @@
     <string name="default_block_6_name">乐图币充值</string>
     <string name="default_block_6_icon_alt">icon6</string>
     <string name="default_block_5_icon_alt">icon5</string>
-    <string name="user_album_list_all_titlebar">手机拍展示</string>
-    <string name="user_album_create_titlebar">上传作品</string>
+    <string name="user_album_list_all_title">手机拍展示</string>
+    <string name="user_album_create_title">上传作品</string>
     <string name="user_album_create_user_album_name_default_value">标题</string>
     <string name="user_album_create_user_album_intro_default_value">介绍</string>
     <string name="user_album_create_user_album_button_confirm_text">确认</string>
@@ -69,6 +69,9 @@
     <string name="user_album_pic_list_begin_save_pic">开始保存图片</string>
     <string name="user_album_pic_list_success_save_pic">保存图片成功</string>
     <string name="user_album_pic_list_fail_save_pic">保存失败</string>
+
+
+    <string name="activity_list_all_title">手机拍比赛</string>
 
 
     <string name="pull_to_refresh_pull_label">下拉刷新</string>

@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="cn.happyz.happyphoto.MainActivity"
+            android:name=".DefaultGen"
             android:theme="@style/StartTheme"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -25,43 +25,43 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="cn.happyz.happyphoto.Gen.User.UserLoginActivity"
+            android:name=".Gen.User.UserLoginGen"
             android:theme="@style/UserTheme"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="cn.happyz.happyphoto.Gen.User.UserRegisterActivity"
+            android:name=".Gen.User.UserRegisterGen"
             android:theme="@style/UserTheme"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="cn.happyz.happyphoto.Gen.User.UserInfoActivity"
+            android:name=".Gen.User.UserInfoGen"
             android:theme="@style/UserTheme"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="cn.happyz.happyphoto.Gen.User.UserAlbumCreateActivity"
+            android:name=".Gen.User.UserAlbumCreateGen"
             android:theme="@style/UserTheme"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="cn.happyz.happyphoto.Gen.User.UserAlbumListAllActivity"
+            android:name=".Gen.User.UserAlbumListAllGen"
             android:theme="@style/UserTheme"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="cn.happyz.happyphoto.Gen.User.UserAlbumGameActivity"
+            android:name=".Gen.User.UserAlbumListOfMineGen"
             android:theme="@style/UserTheme"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="cn.happyz.happyphoto.Gen.User.UserAlbumListOfMineActivity"
-            android:theme="@style/UserTheme"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="cn.happyz.happyphoto.Gen.User.UserAlbumPicListActivity"
+            android:name=".Gen.User.UserAlbumPicListGen"
             android:theme="@style/ViewPicStyle"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".Gen.Activity.ActivityListGen"
+            android:theme="@style/UserTheme"
             android:screenOrientation="portrait" >
         </activity>
     </application>

@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import cn.happyz.happyphoto.DataProvider.User.User;
 import cn.happyz.happyphoto.DataProvider.User.UserCollections;
@@ -28,7 +27,7 @@ import cn.happyz.happyphoto.Tools.ToastObject;
 /**
  * Created by zcmzc on 13-11-18.
  */
-public class UserLoginActivity extends BaseGen {
+public class UserLoginGen extends BaseGen {
 
     private ImageButton btnBack;
     private Button btnUserLogin;
@@ -88,13 +87,13 @@ public class UserLoginActivity extends BaseGen {
                 btnUserLogin.setEnabled(false);
                 String userName = txtUserName.getText().toString().trim();
                 if(userName == null || userName.equals("")){
-                    ToastObject.Show(UserLoginActivity.this, getString(R.string.user_login_tips_no_username));
+                    ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_tips_no_username));
                     btnUserLogin.setEnabled(true);
                     return;
                 }
                 String userPass = txtUserPass.getText().toString().trim();
                 if(userPass == null || userPass.equals("")){
-                    ToastObject.Show(UserLoginActivity.this, getString(R.string.user_login_tips_no_userpass));
+                    ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_tips_no_userpass));
                     btnUserLogin.setEnabled(true);
                     return;
                 }
@@ -115,9 +114,9 @@ public class UserLoginActivity extends BaseGen {
             @Override
             public void onClick(View view) {
                 btnUserRegister.setEnabled(false);
-                Intent intent = new Intent(UserLoginActivity.this, UserRegisterActivity.class);
+                Intent intent = new Intent(UserLoginGen.this, UserRegisterGen.class);
                 startActivity(intent);
-                UserLoginActivity.this.finish();
+                UserLoginGen.this.finish();
             }
         });
     }
@@ -131,7 +130,7 @@ public class UserLoginActivity extends BaseGen {
 
             switch(httpClientStatus){
                 case START_GET:
-                    ToastObject.Show(UserLoginActivity.this, getString(R.string.user_login_result_begin));
+                    ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_result_begin));
                     break;
 
                 case FINISH_GET:
@@ -144,17 +143,17 @@ public class UserLoginActivity extends BaseGen {
                             String userPass = user.getUserPass();
                             Integer state = user.getState();
                             if(userId>0){
-                                ToastObject.Show(UserLoginActivity.this, getString(R.string.user_login_result_success));
+                                ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_result_success));
 
                                 SharedPreferences sp = getSharedPreferences("USERINFO", MODE_PRIVATE);
                                 sp.edit().putInt("USERID",userId).commit();
                                 sp.edit().putString("USERNAME",userName).commit();
                                 sp.edit().putString("USERPASS",userPass).commit();
                                 sp.edit().putInt("STATE",state).commit();
-                                UserLoginActivity.this.finish();
+                                UserLoginGen.this.finish();
                             }else{
                                 btnUserLogin.setEnabled(true);
-                                ToastObject.Show(UserLoginActivity.this, getString(R.string.user_login_result_failure));
+                                ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_result_failure));
                             }
                         }
                     }
@@ -163,7 +162,7 @@ public class UserLoginActivity extends BaseGen {
 
                 case ERROR_GET:
                     btnUserLogin.setEnabled(true);
-                    ToastObject.Show(UserLoginActivity.this, getString(R.string.user_login_result_failure_for_network));
+                    ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_result_failure_for_network));
                     break;
 
                 default:

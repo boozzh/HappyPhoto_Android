@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
 
-    <cn.mysense.happyphoto.Plugins.PullToRefresh.PullToRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
+    <cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/main_pull_refresh_view"
         android:background="@android:color/white"
         android:layout_width="fill_parent"
@@ -24,6 +24,6 @@
 
             />
 
-    </cn.mysense.happyphoto.Plugins.PullToRefresh.PullToRefreshView>
+    </cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView>
 
 </LinearLayout>

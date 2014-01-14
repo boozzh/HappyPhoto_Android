@@ -36,7 +36,7 @@ import cn.happyz.happyphoto.Tools.ToastObject;
 /**
  * Created by zcmzc on 14-1-1.
  */
-public class UserAlbumPicListActivity extends BaseGen implements GestureDetector.OnGestureListener {
+public class UserAlbumPicListGen extends BaseGen implements GestureDetector.OnGestureListener {
 
     private ImageButton btnBack;
 
@@ -86,16 +86,16 @@ public class UserAlbumPicListActivity extends BaseGen implements GestureDetector
         //取得数据
         gestureDetector = new GestureDetector(this, this);
         vfUserAlbumPicListOfList = (ViewFlipper) findViewById(R.id.vfUserAlbumPicListOfList);
-        //int imagePositionsOfMine = UserAlbumListOfMineActivity.ImagePositionsOfMine;
+        //int imagePositionsOfMine = UserAlbumListOfMineGen.ImagePositionsOfMine;
 
         //来源页面，有多个来源页面时，进行来源的区分
         UserAlbum userAlbum = null;
         if(BaseGen.USER_ALBUM_PIC_LIST_SHOW_MODULE == 1){ //全部数据
-            userAlbum = UserAlbumListAllActivity.userAlbumCollectionsOfShow.get(UserAlbumListAllActivity.ImagePositionsOfAll);
+            userAlbum = UserAlbumListAllGen.userAlbumCollectionsOfShow.get(UserAlbumListAllGen.ImagePositionsOfAll);
         }else if(BaseGen.USER_ALBUM_PIC_LIST_SHOW_MODULE == 2){ //分类数据
-            userAlbum = UserAlbumListAllActivity.userAlbumCollectionsOfShow.get(UserAlbumListAllActivity.ImagePositionsOfType);
+            userAlbum = UserAlbumListAllGen.userAlbumCollectionsOfShow.get(UserAlbumListAllGen.ImagePositionsOfType);
         }else if(BaseGen.USER_ALBUM_PIC_LIST_SHOW_MODULE == 3){ //个人数据
-            userAlbum = UserAlbumListOfMineActivity.userAlbumCollectionsOfMine.get(UserAlbumListOfMineActivity.ImagePositionsOfMine);
+            userAlbum = UserAlbumListOfMineGen.userAlbumCollectionsOfMine.get(UserAlbumListOfMineGen.ImagePositionsOfMine);
         }
         if(userAlbum != null){
             int userAlbumId = userAlbum.getUserAlbumId();
@@ -114,7 +114,7 @@ public class UserAlbumPicListActivity extends BaseGen implements GestureDetector
             final int nowIndex = Integer.parseInt(vfUserAlbumPicListOfList.getCurrentView().getTag().toString());
             String userAlbumPicUrl = getString(R.string.config_site_url) + "/" + uapcOfList.get(nowIndex).getUserAlbumPicUrl();
             if(!"".equals(userAlbumPicUrl)){
-                ToastObject.Show(UserAlbumPicListActivity.this,getString(R.string.user_album_pic_list_begin_save_pic));
+                ToastObject.Show(UserAlbumPicListGen.this,getString(R.string.user_album_pic_list_begin_save_pic));
                 AsyncImageLoader asyncImageLoader = new AsyncImageLoader();
                 asyncImageLoader.loadDrawable(userAlbumPicUrl, new AsyncImageLoader.ImageCallback() {
                     public void imageLoaded(Drawable imageDrawable, String imageUrl) {
@@ -124,9 +124,9 @@ public class UserAlbumPicListActivity extends BaseGen implements GestureDetector
                             String fileName = Integer.toString(uapcOfList.get(nowIndex).getUserAlbumId()); //Long.toString(Calendar.getInstance().getTimeInMillis());
                             String url = MediaStore.Images.Media.insertImage(cr, bitmap, fileName, "");
                             if(url != null){
-                                ToastObject.Show(UserAlbumPicListActivity.this,getString(R.string.user_album_pic_list_success_save_pic));
+                                ToastObject.Show(UserAlbumPicListGen.this,getString(R.string.user_album_pic_list_success_save_pic));
                             }else {
-                                ToastObject.Show(UserAlbumPicListActivity.this,getString(R.string.user_album_pic_list_fail_save_pic));
+                                ToastObject.Show(UserAlbumPicListGen.this,getString(R.string.user_album_pic_list_fail_save_pic));
                             }
                         }
                     }
@@ -282,14 +282,14 @@ public class UserAlbumPicListActivity extends BaseGen implements GestureDetector
                         //position = 0;
                         LoadImage(uapcOfList);
 
-                        //ivUserAlbumPicOfList.setOnTouchListener(UserAlbumPicListActivity.this);
+                        //ivUserAlbumPicOfList.setOnTouchListener(UserAlbumPicListGen.this);
                         //ivUserAlbumPicOfList.setLongClickable(true);
 
                     }
                     break;
 
                 case ERROR_GET:
-                    ToastObject.Show(UserAlbumPicListActivity.this, "加载失败");
+                    ToastObject.Show(UserAlbumPicListGen.this, "加载失败");
                     break;
 
                 default:
@@ -302,7 +302,7 @@ public class UserAlbumPicListActivity extends BaseGen implements GestureDetector
     private void LoadImage(UserAlbumPicCollections uapcOfList){
         position = 0;
         for(int i=0;i<uapcOfList.size();i++){
-            final ImageView iv = new ImageView(UserAlbumPicListActivity.this);
+            final ImageView iv = new ImageView(UserAlbumPicListGen.this);
             iv.setTag(position);
             position++;
             String userAlbumPicCompressUrl = getString(R.string.config_site_url) + "/" + uapcOfList.get(i).getUserAlbumPicCompressUrl();
@@ -314,7 +314,7 @@ public class UserAlbumPicListActivity extends BaseGen implements GestureDetector
                         iv.setImageDrawable(imageDrawable);
                         //iv.setId();
 
-                        //ToastObject.Show(UserAlbumPicListActivity.this,Integer.toString(ivUserAlbumPicOfList.getWidth()) + "," + Integer.toString(ivUserAlbumPicOfList.getHeight()));
+                        //ToastObject.Show(UserAlbumPicListGen.this,Integer.toString(ivUserAlbumPicOfList.getWidth()) + "," + Integer.toString(ivUserAlbumPicOfList.getHeight()));
                     }
                 });
             }
