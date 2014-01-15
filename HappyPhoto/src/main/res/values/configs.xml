@@ -39,4 +39,9 @@
     <string name="config_user_album_upload_pic_source_filename">source_camera_photo</string>
     <string name="config_user_album_upload_pic_thumb_filename">thumb_camera_photo</string>
     <string name="config_user_album_upload_pic_fileex">jpg</string>
+
+
+    <string name="config_activity_get_list_of_all_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=activity&f=client_list_of_all]]>
+    </string>
 </resources>

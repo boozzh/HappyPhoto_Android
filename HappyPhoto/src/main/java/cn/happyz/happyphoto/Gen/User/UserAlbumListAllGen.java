@@ -29,6 +29,7 @@ import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
+import cn.happyz.happyphoto.Tools.ToastObject;
 
 /**
  * Created by zcmzc on 13-12-8.
@@ -175,6 +176,7 @@ public class UserAlbumListAllGen extends BaseGen implements PullToRefreshView.On
             HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
             switch(httpClientStatus){
                 case START_GET:
+                    ToastObject.Show(UserAlbumListAllGen.this, getString(R.string.message_load_begin));
                     break;
                 case FINISH_GET:
                     for(int i=0;i<llUserAlbumListLeftMenu.getChildCount();i++){
@@ -198,7 +200,7 @@ public class UserAlbumListAllGen extends BaseGen implements PullToRefreshView.On
                     break;
 
                 case ERROR_GET:
-                    Toast.makeText(UserAlbumListAllGen.this, "加载失败", Toast.LENGTH_SHORT).show();
+                    ToastObject.Show(UserAlbumListAllGen.this, getString(R.string.message_load_failure));
                     break;
 
                 default:
