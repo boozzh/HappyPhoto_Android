@@ -52,6 +52,8 @@ public class ActivityData extends BaseData implements Runnable {
                         activity = new Activity();
                         activity.setActivityId(jsonObject2.getInt("ActivityID"));
                         activity.setActivitySubject(jsonObject2.getString("ActivitySubject"));
+                        activity.setTitlePic(jsonObject2.getString("TitlePic"));
+                        activity.setActivityContent(jsonObject2.getString("ActivityContent"));
                         activityCollections.add(activity);
                     }
 

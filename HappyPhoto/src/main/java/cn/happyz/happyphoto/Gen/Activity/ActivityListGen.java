@@ -39,7 +39,7 @@ public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHead
     PullToRefreshView pullToRefreshView;
     int PageSize = 18;
     int PageIndex = 1;
-    public ActivityCollections activityCollectionsOfListAll;
+    public static ActivityCollections activityCollectionsOfListAll;
     ActivityListAdapter activityListAdapter;
     private ListView listViewOfActivityList;
     public static int ActivityPositionsOfListAll;
@@ -150,10 +150,10 @@ public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHead
             //Intent intent = new Intent();
             ActivityPositionsOfListAll = position;//图片的位置 
             //BaseGen.USER_ALBUM_PIC_LIST_SHOW_MODULE = 1;
-            //ToastObject.Show(UserAlbumListOfMineGen.this, Integer.toString(ImagePositionsOfMine));
-            //Intent intent = new Intent(ActivityListGen.this, UserAlbumPicListGen.class);
+            //ToastObject.Show(ActivityListGen.this, Integer.toString(ActivityPositionsOfListAll));
+            Intent intent = new Intent(ActivityListGen.this, ActivityDetailGen.class);
             //intent.setClass(UserAlbumListOfMineGen.this,UserAlbumPicListGen.class);
-            //startActivity(intent);
+            startActivity(intent);
         }
     }
 }

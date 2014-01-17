@@ -2,21 +2,23 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#999999">
 
 
 
     <cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/main_pull_refresh_view"
-        android:background="@android:color/white"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:background="#999999"
         >
 
         <ListView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/listViewOfActivityList" />
+            android:id="@+id/listViewOfActivityList"
+            android:background="#999999"/>
 
     </cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView>
 </LinearLayout>
