@@ -253,7 +253,7 @@ public class UserAlbumListAllGen extends BaseGen implements PullToRefreshView.On
 
             @Override
             public void run() {
-                pullToRefreshView.onHeaderRefreshComplete("更新于:"+new Date().toLocaleString());
+                pullToRefreshView.onHeaderRefreshComplete(getString(R.string.pull_to_refresh_update_tips)+new Date().toLocaleString());
 //				mPullToRefreshView.onHeaderRefreshComplete();
                 if(userAlbumCollectionsOfShow != null){
                     userAlbumCollectionsOfShow.clear();

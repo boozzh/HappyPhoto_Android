@@ -69,6 +69,11 @@
             android:theme="@style/UserTheme"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".Gen.Activity.ActivityAlbumSelectGen"
+            android:theme="@style/UserTheme"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 

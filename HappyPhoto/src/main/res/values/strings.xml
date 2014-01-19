@@ -78,6 +78,10 @@
     <string name="activity_join">我要报名</string>
 
 
+    <string name="activity_album_select_title">选择参加比赛的作品</string>
+    <string name="activity_album_select_confirm">确认</string>
+
+
     <string name="pull_to_refresh_pull_label">下拉刷新</string>
     <string name="pull_to_refresh_release_label">松开后刷新</string>
     <string name="pull_to_refresh_refreshing_label">刷新\u2026</string>

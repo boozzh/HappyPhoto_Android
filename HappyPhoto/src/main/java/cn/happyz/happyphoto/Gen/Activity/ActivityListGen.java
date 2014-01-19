@@ -12,19 +12,14 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Date;
 
-import cn.happyz.happyphoto.DataProvider.Activity.Activity;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityCollections;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityData;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityDataOperateType;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityListAdapter;
-import cn.happyz.happyphoto.DataProvider.User.UserAlbumCollections;
-import cn.happyz.happyphoto.DataProvider.User.UserAlbumListAdapter;
 import cn.happyz.happyphoto.Gen.BaseGen;
-import cn.happyz.happyphoto.Gen.User.UserAlbumPicListGen;
 import cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
@@ -42,7 +37,8 @@ public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHead
     public static ActivityCollections activityCollectionsOfListAll;
     ActivityListAdapter activityListAdapter;
     private ListView listViewOfActivityList;
-    public static int ActivityPositionsOfListAll;
+    public static int activityPositionsOfListAll;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,9 +144,9 @@ public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHead
         public void onItemClick(AdapterView<?> parent, View v, int position, long id){
             //点击操作
             //Intent intent = new Intent();
-            ActivityPositionsOfListAll = position;//图片的位置 
+            activityPositionsOfListAll = position;//图片的位置 
             //BaseGen.USER_ALBUM_PIC_LIST_SHOW_MODULE = 1;
-            //ToastObject.Show(ActivityListGen.this, Integer.toString(ActivityPositionsOfListAll));
+            //ToastObject.Show(ActivityListGen.this, Integer.toString(activityPositionsOfListAll));
             Intent intent = new Intent(ActivityListGen.this, ActivityDetailGen.class);
             //intent.setClass(UserAlbumListOfMineGen.this,UserAlbumPicListGen.class);
             startActivity(intent);

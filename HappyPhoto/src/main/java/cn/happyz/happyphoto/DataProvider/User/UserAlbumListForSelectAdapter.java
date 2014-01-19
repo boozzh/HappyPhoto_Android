@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumSelectGen;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.FormatObject;
@@ -19,12 +20,12 @@ import cn.happyz.happyphoto.Tools.FormatObject;
 /**
  *
  */
-public class UserAlbumListAdapter extends ArrayAdapter<UserAlbum> {
+public class UserAlbumListForSelectAdapter extends ArrayAdapter<UserAlbum> {
     private UserAlbumCollections _userAlbumCollections;
     private Context _context;
     private int _resource;
 
-    public UserAlbumListAdapter(Context context,int resource,UserAlbumCollections userAlbumCollections) {
+    public UserAlbumListForSelectAdapter(Context context,int resource,UserAlbumCollections userAlbumCollections) {
         super(context, resource, userAlbumCollections);
         this._context = context;
         this._resource = resource;
@@ -49,13 +50,14 @@ public class UserAlbumListAdapter extends ArrayAdapter<UserAlbum> {
             linearLayout.setPadding(10,10,10,10);
 
             String coverPicUrl = _context.getString(R.string.config_site_url) + "/" + _userAlbumCollections.get(position).getCoverPicUrl();
+            final int nowPosition = position;
             if(!"".equals(coverPicUrl)){
                 final ImageView ivCoverPicUrlOfListItem = new ImageView(linearLayout.getContext());
                 ViewGroup.LayoutParams imageParam = new ViewGroup.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
                 ivCoverPicUrlOfListItem.setLayoutParams(imageParam);
                 ivCoverPicUrlOfListItem.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 final FrameLayout frameLayout1 = new FrameLayout(linearLayout.getContext());
-                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FormatObject.DipToPx(linearLayout.getContext(),100));
+                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FormatObject.DipToPx(linearLayout.getContext(), 100));
                 frameLayout1.setBackgroundColor(Color.parseColor("#efefef"));
                 frameLayout1.setPadding(
                         FormatObject.DipToPx(linearLayout.getContext(),2)
@@ -77,6 +79,31 @@ public class UserAlbumListAdapter extends ArrayAdapter<UserAlbum> {
                         frameLayout2.addView(ivCoverPicUrlOfListItem);
                         frameLayout1.addView(frameLayout2);
                         linearLayout.addView(frameLayout1);
+
+                        ivCoverPicUrlOfListItem.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                int userAlbumId = _userAlbumCollections.get(nowPosition).getUserAlbumId();
+                                String addToString = '|'+Integer.toString(userAlbumId);
+                                int paddingValue;
+                                if(ActivityAlbumSelectGen.selectedUserAlbumId !=null && ActivityAlbumSelectGen.selectedUserAlbumId.indexOf(addToString)>=0){
+                                    //已经有这个作品了，进行取消操作
+                                    ActivityAlbumSelectGen.selectedUserAlbumId =
+                                            ActivityAlbumSelectGen.selectedUserAlbumId.replace(addToString,"");
+                                    paddingValue = 2;
+                                }else{
+                                    //还没有这个作品，进行添加操作
+                                    ActivityAlbumSelectGen.selectedUserAlbumId += '|'+Integer.toString(userAlbumId);
+                                    paddingValue = 6;
+                                }
+
+                                frameLayout1.setPadding(
+                                        FormatObject.DipToPx(linearLayout.getContext(),paddingValue)
+                                        ,FormatObject.DipToPx(linearLayout.getContext(),paddingValue)
+                                        ,FormatObject.DipToPx(linearLayout.getContext(),paddingValue)
+                                        ,FormatObject.DipToPx(linearLayout.getContext(),paddingValue));
+                            }
+                        });
                     }
                 });
             }

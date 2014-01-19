@@ -45,7 +45,7 @@ public class ActivityDetailGen extends BaseGen {
 
     private void LoadData(){
         if(ActivityListGen.activityCollectionsOfListAll != null && ActivityListGen.activityCollectionsOfListAll.size()>0){
-            Activity activity = ActivityListGen.activityCollectionsOfListAll.get(ActivityListGen.ActivityPositionsOfListAll);
+            Activity activity = ActivityListGen.activityCollectionsOfListAll.get(ActivityListGen.activityPositionsOfListAll);
             if(activity != null){
                 webViewOfActivityDetail = (WebView) findViewById(R.id.webViewOfActivityDetail);
                 webViewOfActivityDetail.getSettings().setJavaScriptEnabled(true);

@@ -1,4 +1,4 @@
-package cn.happyz.happyphoto.Gen.User;
+package cn.happyz.happyphoto.Gen.Activity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -19,41 +20,48 @@ import cn.happyz.happyphoto.DataProvider.User.UserAlbumCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumData;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumDataOperateType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumListAdapter;
+import cn.happyz.happyphoto.DataProvider.User.UserAlbumListForSelectAdapter;
 import cn.happyz.happyphoto.Gen.BaseGen;
+import cn.happyz.happyphoto.Gen.User.UserAlbumPicListGen;
+import cn.happyz.happyphoto.Gen.User.UserLoginGen;
 import cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
 import cn.happyz.happyphoto.Tools.ToastObject;
 
 /**
- * Created by zcmzc on 13-12-22.
+ * 选择参加比赛的作品
  */
-public class UserAlbumListOfMineGen extends BaseGen implements PullToRefreshView.OnHeaderRefreshListener,PullToRefreshView.OnFooterRefreshListener {
+public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView.OnHeaderRefreshListener,PullToRefreshView.OnFooterRefreshListener  {
 
     private ImageButton btnBack;
-
     PullToRefreshView pullToRefreshView;
-    public static UserAlbumCollections userAlbumCollectionsOfMine;
+    UserAlbumCollections userAlbumCollectionsOfMineForSelect;
     GridView gvOfMine;
     int PageSize = 18;
     int PageIndex = 1;
-    UserAlbumListAdapter userAlbumListAdapterOfMine;
+    //UserAlbumListAdapter userAlbumListAdapterOfMine;
+    UserAlbumListForSelectAdapter userAlbumListForSelectAdapter;
+
+    /**
+     * 已经选择的作品id,以|分隔
+     */
+    public static String selectedUserAlbumId;
 
     /**
      * 点击的照片在数组中的索引位置
      */
     public static int ImagePositionsOfMine;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        setContentView(R.layout.user_album_list_mine);
+        setContentView(R.layout.activity_album_select);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);  //titlebar为自己标题栏的布局
         TextView tvTitleBarTitle = (TextView) findViewById(R.id.txtTitleBar);
-        tvTitleBarTitle.setText(R.string.user_album_list_mine_titlebar); //修改title文字
+        tvTitleBarTitle.setText(R.string.activity_album_select_title); //修改title文字
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
         btnBack.setVisibility(0);
@@ -68,17 +76,28 @@ public class UserAlbumListOfMineGen extends BaseGen implements PullToRefreshView
 
         if(userIsLogined){
             LoadData(PageIndex,PageSize);
+
+            Button activity_album_select_confirm = (Button) findViewById(R.id.activity_album_select_confirm);
+            activity_album_select_confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //提交报名
+                }
+            });
+
+
         }
     }
 
+
     private boolean CheckUserLogin(){
         //TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
-        boolean userIsLogined = super.UserCheckIsLogined(UserAlbumListOfMineGen.this);
+        boolean userIsLogined = super.UserCheckIsLogined(ActivityAlbumSelectGen.this);
         if(userIsLogined){
             //ToastObject.Show(this,Integer.toString(super.GetNowUserId(UserAlbumCreateGen.this)));
 
         }else{
-            Intent intent = new Intent(UserAlbumListOfMineGen.this, UserLoginGen.class);
+            Intent intent = new Intent(ActivityAlbumSelectGen.this, UserLoginGen.class);
             startActivity(intent);
             //this.finish();
             //txtUserOp.setEnabled(false);
@@ -91,15 +110,14 @@ public class UserAlbumListOfMineGen extends BaseGen implements PullToRefreshView
         String userAlbumGetListOfMineUrl = getString(R.string.config_user_album_getlist_ofmine_url);
         int userId = super.GetNowUserId(this);//Integer.parseInt(getString(R.string.config_siteid));
         userAlbumGetListOfMineUrl = userAlbumGetListOfMineUrl.replace("{userid}",Integer.toString(userId));
-        UserAlbumListOfMineHandler userAlbumListOfMineHandler = new UserAlbumListOfMineHandler();
-        UserAlbumData userAlbumData = new UserAlbumData(userAlbumGetListOfMineUrl,userAlbumListOfMineHandler);
+        ActivityAlbumSelectHandler activityAlbumSelectHandler = new ActivityAlbumSelectHandler();
+        UserAlbumData userAlbumData = new UserAlbumData(userAlbumGetListOfMineUrl,activityAlbumSelectHandler);
         userAlbumData.setPageIndex(pageIndex);
         userAlbumData.setPageSize(pageSize);
         userAlbumData.RequestFromHttp(UserAlbumDataOperateType.GetListOfMine);
     }
 
-
-    private class UserAlbumListOfMineHandler extends Handler {
+    private class ActivityAlbumSelectHandler extends Handler {
         @Override
         public void dispatchMessage(Message msg) {
 
@@ -110,21 +128,20 @@ public class UserAlbumListOfMineGen extends BaseGen implements PullToRefreshView
                     break;
 
                 case FINISH_GET:
-                    if(userAlbumCollectionsOfMine != null && userAlbumListAdapterOfMine != null && userAlbumCollectionsOfMine.size()>0){
-                        userAlbumCollectionsOfMine.addAll((UserAlbumCollections)msg.obj);
-                        userAlbumListAdapterOfMine.notifyDataSetChanged();
+                    if(userAlbumCollectionsOfMineForSelect != null && userAlbumListForSelectAdapter != null && userAlbumCollectionsOfMineForSelect.size()>0){
+                        userAlbumCollectionsOfMineForSelect.addAll((UserAlbumCollections)msg.obj);
+                        userAlbumListForSelectAdapter.notifyDataSetChanged();
                     }else{
-
                         pullToRefreshView = (PullToRefreshView)findViewById(R.id.main_pull_refresh_view);
                         pullToRefreshView.setBackgroundColor(Color.parseColor("#333333"));
                         gvOfMine = (GridView) findViewById(R.id.gvUserAlbumListOfMine);
                         gvOfMine.setBackgroundColor(Color.parseColor("#333333"));
-                        userAlbumCollectionsOfMine = (UserAlbumCollections)msg.obj;
-                        userAlbumListAdapterOfMine = new UserAlbumListAdapter(UserAlbumListOfMineGen.this,R.layout.user_album_type_list_item, userAlbumCollectionsOfMine);
-                        gvOfMine.setAdapter(userAlbumListAdapterOfMine);
+                        userAlbumCollectionsOfMineForSelect = (UserAlbumCollections)msg.obj;
+                        userAlbumListForSelectAdapter = new UserAlbumListForSelectAdapter(ActivityAlbumSelectGen.this,R.layout.activity_list_all_item, userAlbumCollectionsOfMineForSelect);
+                        gvOfMine.setAdapter(userAlbumListForSelectAdapter);
                         gvOfMine.setOnItemClickListener(new GridViewItemClick());
-                        pullToRefreshView.setOnHeaderRefreshListener(UserAlbumListOfMineGen.this);
-                        pullToRefreshView.setOnFooterRefreshListener(UserAlbumListOfMineGen.this);
+                        pullToRefreshView.setOnHeaderRefreshListener(ActivityAlbumSelectGen.this);
+                        pullToRefreshView.setOnFooterRefreshListener(ActivityAlbumSelectGen.this);
                     }
 
                     pullToRefreshView.setLastUpdated(new Date().toLocaleString());
@@ -132,7 +149,7 @@ public class UserAlbumListOfMineGen extends BaseGen implements PullToRefreshView
                     break;
 
                 case ERROR_GET:
-                    ToastObject.Show(UserAlbumListOfMineGen.this, getString(R.string.message_load_failure));
+                    ToastObject.Show(ActivityAlbumSelectGen.this, "加载失败");
                     break;
 
                 default:
@@ -161,10 +178,10 @@ public class UserAlbumListOfMineGen extends BaseGen implements PullToRefreshView
 
             @Override
             public void run() {
-                pullToRefreshView.onHeaderRefreshComplete(getString(R.string.pull_to_refresh_update_tips)+new Date().toLocaleString());
+                //pullToRefreshView.onHeaderRefreshComplete( getString(R.string.pull_to_refresh_update_tips) +new Date().toLocaleString());
 //				mPullToRefreshView.onHeaderRefreshComplete();
-                userAlbumCollectionsOfMine.clear();
-                LoadData(PageIndex,PageSize);
+                //userAlbumCollectionsOfMineForSelect.clear();
+                //LoadData(PageIndex,PageSize);
             }
         },1000);
 
@@ -175,12 +192,12 @@ public class UserAlbumListOfMineGen extends BaseGen implements PullToRefreshView
         public void onItemClick(AdapterView<?> parent, View v, int position, long id){
             //点击操作 
             //Intent intent = new Intent();
-            ImagePositionsOfMine = position;//图片的位置 
-            BaseGen.USER_ALBUM_PIC_LIST_SHOW_MODULE = 3;
+            //ImagePositionsOfMine = position;//图片的位置 
+            //BaseGen.USER_ALBUM_PIC_LIST_SHOW_MODULE = 3;
             //ToastObject.Show(UserAlbumListOfMineGen.this, Integer.toString(ImagePositionsOfMine));
-            Intent intent = new Intent(UserAlbumListOfMineGen.this, UserAlbumPicListGen.class);
+            //Intent intent = new Intent(ActivityAlbumSelectGen.this, UserAlbumPicListGen.class);
             //intent.setClass(UserAlbumListOfMineGen.this,UserAlbumPicListGen.class);
-            startActivity(intent);
+            //startActivity(intent);
         }
     }
 }

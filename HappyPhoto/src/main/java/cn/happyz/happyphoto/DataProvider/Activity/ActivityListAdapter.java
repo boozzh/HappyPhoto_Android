@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumSelectGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityDetailGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityListGen;
 import cn.happyz.happyphoto.R;
@@ -46,6 +47,8 @@ public class ActivityListAdapter extends ArrayAdapter<Activity> {
     }
 
     private View LoadData(int position, View convertView, ViewGroup parent){
+        ActivityListGen.activityPositionsOfListAll = position;
+
         LayoutInflater layoutInflater = LayoutInflater.from(_context);
         //convertView = layoutInflater.inflate(_resource, null);
         final LinearLayout linearLayout = (LinearLayout)layoutInflater.inflate(_resource, null);
@@ -57,7 +60,7 @@ public class ActivityListAdapter extends ArrayAdapter<Activity> {
             String titlePic = _activityCollections.get(position).getTitlePic();
             if(!"".equals(titlePic)){
                 final ImageView ivTitlePicOfListItem = new ImageView(linearLayout.getContext());
-                ivTitlePicOfListItem.setTag(position);
+                //ivTitlePicOfListItem.setTag(position);
                 ViewGroup.LayoutParams imageParam = new ViewGroup.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
                 ivTitlePicOfListItem.setLayoutParams(imageParam);
                 ivTitlePicOfListItem.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -86,7 +89,7 @@ public class ActivityListAdapter extends ArrayAdapter<Activity> {
                             @Override
                             public void onClick(View view) {
                                 int nowPosition = Integer.parseInt(view.getTag().toString());
-                                ActivityListGen.ActivityPositionsOfListAll = nowPosition;
+                                ActivityListGen.activityPositionsOfListAll = nowPosition;
                                 Intent intent = new Intent(linearLayout.getContext(), ActivityDetailGen.class);
                                 linearLayout.getContext().startActivity(intent);
                             }
@@ -99,12 +102,15 @@ public class ActivityListAdapter extends ArrayAdapter<Activity> {
                         Button button = new Button(linearLayout.getContext());
                         button.setText(R.string.activity_join);
                         button.setBackgroundColor(Color.parseColor("#efefef"));
-                        button.setTag(ivTitlePicOfListItem.getTag());
+                        //button.setTag(ivTitlePicOfListItem.getTag());
                         button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                int nowPosition = Integer.parseInt(view.getTag().toString());
-                                ToastObject.Show(linearLayout.getContext(), Integer.toString(nowPosition));
+                                //int nowPosition = Integer.parseInt(view.getTag().toString());
+                                //ToastObject.Show(linearLayout.getContext(), Integer.toString(nowPosition));
+
+                                Intent intent = new Intent(linearLayout.getContext(), ActivityAlbumSelectGen.class);
+                                linearLayout.getContext().startActivity(intent);
                             }
                         });
                         linearLayout.addView(button);
@@ -119,12 +125,12 @@ public class ActivityListAdapter extends ArrayAdapter<Activity> {
             String activitySubject = _activityCollections.get(position).getActivitySubject();
             tvActivitySubjectOfListItem.setText(activitySubject);
             tvActivitySubjectOfListItem.setTextSize(20);
-            tvActivitySubjectOfListItem.setTag(position);
+            //tvActivitySubjectOfListItem.setTag(position);
             tvActivitySubjectOfListItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int nowPosition = Integer.parseInt(view.getTag().toString());
-                    ActivityListGen.ActivityPositionsOfListAll = nowPosition;
+                    //int nowPosition = Integer.parseInt(view.getTag().toString());
+                    //ActivityListGen.activityPositionsOfListAll = nowPosition;
                     Intent intent = new Intent(linearLayout.getContext(), ActivityDetailGen.class);
                     linearLayout.getContext().startActivity(intent);
                 }
