@@ -17,7 +17,7 @@ public class DocumentNewsData extends BaseData implements Runnable {
 
     private String HttpUrl = null;
     private Handler MyHandler = null;
-    private DocumentNewsOperateType MyOperateType;
+    private DocumentNewsDataOperateType MyOperateType;
 
     public DocumentNewsData(String httpUrl, Handler handler){
         HttpUrl = httpUrl;
@@ -26,7 +26,7 @@ public class DocumentNewsData extends BaseData implements Runnable {
 
     @Override
     public void run() {
-        if(MyOperateType == DocumentNewsOperateType.GetList){
+        if(MyOperateType == DocumentNewsDataOperateType.GetList){
             String result = super.RunGet(HttpUrl, MyHandler);
             if(result != null){
                 try {
@@ -59,7 +59,7 @@ public class DocumentNewsData extends BaseData implements Runnable {
 
     }
 
-    public void GetDataFromHttp(DocumentNewsOperateType documentNewsOperateType){
+    public void GetDataFromHttp(DocumentNewsDataOperateType documentNewsOperateType){
         this.MyOperateType = documentNewsOperateType;
         ThreadPoolUtils.execute(this);
     }

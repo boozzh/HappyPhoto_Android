@@ -5,6 +5,14 @@
     <string name="config_site_url">
         <![CDATA[http://hp.mysense.cn]]>
     </string>
+
+    <string name="config_client_app_get_new_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=client_app&f=get_new&client_app_type=1]]>
+    </string>
+    <string name="config_client_app_file_save_path">
+        <![CDATA[/happyphoto/temp/]]>
+    </string>
+
     <string name="config_default_intro_pics_url">
         <![CDATA[http://hp.mysense.cn/index.php?&a=doc&f=news&m=listformobile&p=1&ps=5&cid=2]]>
     </string>

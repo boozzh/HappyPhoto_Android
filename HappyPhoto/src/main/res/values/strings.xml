@@ -90,4 +90,12 @@
     <string name="pull_to_refresh_footer_refreshing_label">加载中\u2026</string>
     <string name="pull_to_refresh_update_tips">更新于:</string>
 
+
+    <string name="client_app_title">软件更新</string>
+    <string name="client_app_confirm_to_update">马上更新</string>
+    <string name="client_app_cancel_to_update">暂不更新</string>
+    <string name="client_app_never_to_update">不再提示</string>
+
+
+
 </resources>

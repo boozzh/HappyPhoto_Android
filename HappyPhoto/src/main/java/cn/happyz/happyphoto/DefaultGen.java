@@ -24,7 +24,7 @@ import android.widget.ViewFlipper;
 import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNews;
 import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsCollections;
 import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsData;
-import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsOperateType;
+import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsDataOperateType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeCollections;
 import cn.happyz.happyphoto.Gen.Activity.ActivityListGen;
 import cn.happyz.happyphoto.Gen.BaseGen;
@@ -32,6 +32,7 @@ import cn.happyz.happyphoto.Gen.User.UserAlbumCreateGen;
 import cn.happyz.happyphoto.Gen.User.UserAlbumListAllGen;
 import cn.happyz.happyphoto.Gen.User.UserAlbumListOfMineGen;
 import cn.happyz.happyphoto.Gen.User.UserLoginGen;
+import cn.happyz.happyphoto.Tools.AppAutoUpdate;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
 
@@ -123,7 +124,11 @@ public class DefaultGen extends BaseGen {
         String httpUrl = getString(R.string.config_default_intro_pics_url);
         LoadImagesHandler loadImagesHandler = new LoadImagesHandler();
         DocumentNewsData documentNewsData = new DocumentNewsData(httpUrl,loadImagesHandler);
-        documentNewsData.GetDataFromHttp(DocumentNewsOperateType.GetList);
+        documentNewsData.GetDataFromHttp(DocumentNewsDataOperateType.GetList);
+
+
+        AppAutoUpdate appAutoUpdate = new AppAutoUpdate(this);
+        appAutoUpdate.CheckAndUpdate();
 
     }
 

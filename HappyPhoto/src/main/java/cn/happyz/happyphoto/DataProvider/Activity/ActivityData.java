@@ -7,9 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cn.happyz.happyphoto.DataProvider.BaseData;
-import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNews;
-import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsCollections;
-import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsOperateType;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
 import cn.happyz.happyphoto.Tools.ThreadPoolUtils;
 

@@ -9,5 +9,9 @@ public enum HttpClientStatus{
     ERROR_GET,
     START_POST,
     FINISH_POST,
-    ERROR_POST
+    ERROR_POST,
+    START_DOWNLOAD,
+    RUNNING_DOWNLOAD,
+    FINISH_DOWNLOAD,
+    ERROR_DOWNLOAD
 }
