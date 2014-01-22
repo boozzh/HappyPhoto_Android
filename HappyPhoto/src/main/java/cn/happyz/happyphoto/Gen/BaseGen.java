@@ -24,8 +24,8 @@ public class BaseGen extends Activity {
      * @param context
      */
     protected boolean UserCheckIsLogined(Context context){
-        SharedPreferences sp = context.getSharedPreferences("USERINFO", MODE_PRIVATE);
-        String userName = sp.getString("USERNAME","");
+        SharedPreferences sp = context.getSharedPreferences("USER_INFO", MODE_PRIVATE);
+        String userName = sp.getString("USER_NAME","");
         TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
         if(userName.equals("")){ //not login
             return false;
@@ -40,14 +40,43 @@ public class BaseGen extends Activity {
      * @return
      */
     protected int GetNowUserId(Context context){
-        SharedPreferences sp = context.getSharedPreferences("USERINFO", MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences("USER_INFO", MODE_PRIVATE);
         if(sp != null){
-            int userId = sp.getInt("USERID",0);
+            int userId = sp.getInt("USER_ID",0);
             return userId;
         }else{
             return -1;
         }
+    }
 
+    /**
+     * 当前登录的会员帐号
+     * @param context
+     * @return
+     */
+    protected String GetNowUserName(Context context){
+        SharedPreferences sp = context.getSharedPreferences("USER_INFO", MODE_PRIVATE);
+        if(sp != null){
+            String userName = sp.getString("USER_NAME","");
+            return userName;
+        }else{
+            return null;
+        }
+    }
+
+    /**
+     * 当前登录的会员密码（经过md5加密）
+     * @param context
+     * @return
+     */
+    protected String GetNowUserPass(Context context){
+        SharedPreferences sp = context.getSharedPreferences("USER_INFO", MODE_PRIVATE);
+        if(sp != null){
+            String userName = sp.getString("USER_PASS","");
+            return userName;
+        }else{
+            return null;
+        }
     }
 
     /**

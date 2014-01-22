@@ -145,10 +145,10 @@ public class UserLoginGen extends BaseGen {
                             if(userId>0){
                                 ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_result_success));
 
-                                SharedPreferences sp = getSharedPreferences("USERINFO", MODE_PRIVATE);
-                                sp.edit().putInt("USERID",userId).commit();
-                                sp.edit().putString("USERNAME",userName).commit();
-                                sp.edit().putString("USERPASS",userPass).commit();
+                                SharedPreferences sp = getSharedPreferences("USER_INFO", MODE_PRIVATE);
+                                sp.edit().putInt("USER_ID",userId).commit();
+                                sp.edit().putString("USER_NAME",userName).commit();
+                                sp.edit().putString("USER_PASS",userPass).commit();
                                 sp.edit().putInt("STATE",state).commit();
                                 UserLoginGen.this.finish();
                             }else{

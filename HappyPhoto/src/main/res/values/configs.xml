@@ -52,4 +52,7 @@
     <string name="config_activity_get_list_of_all_url">
         <![CDATA[http://hp.mysense.cn/index.php?a=activity&f=client_list_of_all]]>
     </string>
+    <string name="config_activity_user_create_url">
+        <![CDATA[/index.php?a=activity_user&m=client_create&activity_id={activity_id}&user_id={user_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
+    </string>
 </resources>

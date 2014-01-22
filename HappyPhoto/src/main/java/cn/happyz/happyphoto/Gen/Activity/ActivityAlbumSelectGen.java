@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,6 +17,9 @@ import android.widget.TextView;
 
 import java.util.Date;
 
+import cn.happyz.happyphoto.DataProvider.Activity.Activity;
+import cn.happyz.happyphoto.DataProvider.Activity.ActivityUserData;
+import cn.happyz.happyphoto.DataProvider.Activity.ActivityUserDataOperateType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumData;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumDataOperateType;
@@ -40,7 +44,6 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
     GridView gvOfMine;
     int PageSize = 18;
     int PageIndex = 1;
-    //UserAlbumListAdapter userAlbumListAdapterOfMine;
     UserAlbumListForSelectAdapter userAlbumListForSelectAdapter;
 
     /**
@@ -48,10 +51,6 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
      */
     public static String selectedUserAlbumId;
 
-    /**
-     * 点击的照片在数组中的索引位置
-     */
-    public static int ImagePositionsOfMine;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,19 +74,46 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
         boolean userIsLogin = this.CheckUserLogin();
 
         if(userIsLogin){
-            LoadData(PageIndex,PageSize);
+            final int nowUserId = super.GetNowUserId(this);
+            final String nowUserName = super.GetNowUserName(this);
+            final String nowUserPass = super.GetNowUserPass(this);
+
+            LoadData(PageIndex, PageSize);
 
             Button activity_album_select_confirm = (Button) findViewById(R.id.activity_album_select_confirm);
             activity_album_select_confirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                   //提交报名
-                  if(selectedUserAlbumId != null && !selectedUserAlbumId.equals(""))
-                  ToastObject.Show(ActivityAlbumSelectGen.this,selectedUserAlbumId);
+                   SubmitActivityUser(nowUserId, nowUserName, nowUserPass);
                 }
             });
+        }
+    }
 
+    private void SubmitActivityUser(int nowUserId, String nowUserName, String nowUserPass){
+        if(selectedUserAlbumId != null && !selectedUserAlbumId.equals("")){
+            int activityPositionsOfListAll = ActivityListGen.activityPositionsOfListAll;
+            if(ActivityListGen.activityCollectionsOfListAll != null && activityPositionsOfListAll>=0){
+                Activity activity = ActivityListGen.activityCollectionsOfListAll.get(activityPositionsOfListAll);
+                if(activity != null){
+                    int activityId = activity.getActivityId();
+                    if(activityId > 0){
+                        String httpUrl = getString(R.string.config_site_url) + getString(R.string.config_activity_user_create_url);
+                        httpUrl = httpUrl.replace("{activity_id}",Integer.toString(activityId));
+                        httpUrl = httpUrl.replace("{user_id}",Integer.toString(nowUserId));
+                        httpUrl = httpUrl.replace("{site_id}",getString(R.string.config_siteid));
+                        httpUrl = httpUrl.replace("{user_name}",nowUserName);
+                        httpUrl = httpUrl.replace("{user_pass}",nowUserPass);
+                        ActivityUserCreateHandler activityUserCreateHandler = new ActivityUserCreateHandler();
+                        ActivityUserData activityUserData = new ActivityUserData(httpUrl,activityUserCreateHandler);
+                        activityUserData.GetDataFromHttp(ActivityUserDataOperateType.Create);
 
+                        //ToastObject.Show(ActivityAlbumSelectGen.this,activityId + "," + selectedUserAlbumId);
+
+                    }
+                }
+            }
         }
     }
 
@@ -157,6 +183,25 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
         }
     }
 
+    private class ActivityUserCreateHandler extends Handler {
+        @Override
+        public void dispatchMessage(Message msg) {
+            HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
+
+            switch(httpClientStatus){
+                case START_GET:
+                    break;
+                case FINISH_GET:
+                    ToastObject.Show(ActivityAlbumSelectGen.this,getString(R.string.activity_album_select_submit_activity_user_success));
+                    break;
+                case ERROR_GET:
+                    break;
+                default:
+                    System.out.println("nothing to do");
+                    break;
+            }
+        }
+    }
 
     @Override
     public void onFooterRefresh(PullToRefreshView view) {

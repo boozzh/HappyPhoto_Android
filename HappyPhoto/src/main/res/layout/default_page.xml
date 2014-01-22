@@ -1,14 +1,15 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context=".MainActivity"
     tools:ignore="MergeRootFrame"
     android:background="#111d49">
 
-    <RelativeLayout
-        android:orientation="horizontal"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="165dp"
         android:id="@+id/rl1"
@@ -16,28 +17,25 @@
     <ViewFlipper android:id="@+id/viewFlipper1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:persistentDrawingCache="animation"
+        android:inAnimation="@anim/push_left_in"
+        android:outAnimation="@anim/push_left_out"
         android:background="#111d49">
 
     </ViewFlipper>
-    </RelativeLayout>
-    <RelativeLayout
-        android:orientation="horizontal"
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rl1"
-        android:background="#111d49"
-        android:layout_gravity="bottom">
+        android:background="#111d49">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="100dp"
-            android:baselineAligned="false"
-            android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginRight="10dp">
 
             <FrameLayout
                 android:layout_width="fill_parent"
@@ -78,15 +76,10 @@
 
             </FrameLayout>
         </LinearLayout>
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="100dp"
-            android:baselineAligned="false"
-            android:layout_marginTop="110dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
 
@@ -133,11 +126,7 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
             android:baselineAligned="false"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="210dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
 
@@ -178,7 +167,7 @@
                     android:layout_marginTop="25dp" />
             </FrameLayout>
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 
-</FrameLayout>
+</LinearLayout>

@@ -42,13 +42,13 @@ public class UserInfoGen extends BaseGen {
             }
         });
 
-        btnLogout = (Button) findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sp = getSharedPreferences("USERINFO", MODE_PRIVATE);
-                sp.edit().clear().commit();
-            }
-        });
+        //btnLogout = (Button) findViewById(R.id.btnLogout);
+        //btnLogout.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+        //        SharedPreferences sp = getSharedPreferences("USER_INFO", MODE_PRIVATE);
+        //        sp.edit().clear().commit();
+        //    }
+        //});
     }
 }

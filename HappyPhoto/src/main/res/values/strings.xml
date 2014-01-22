@@ -80,6 +80,7 @@
 
     <string name="activity_album_select_title">选择参加比赛的作品</string>
     <string name="activity_album_select_confirm">确认</string>
+    <string name="activity_album_select_submit_activity_user_success">报名成功</string>
 
 
     <string name="pull_to_refresh_pull_label">下拉刷新</string>
