@@ -25,7 +25,7 @@ public class UserAlbumListForSelectAdapter extends ArrayAdapter<UserAlbum> {
     private Context _context;
     private int _resource;
 
-    public UserAlbumListForSelectAdapter(Context context,int resource,UserAlbumCollections userAlbumCollections) {
+    public UserAlbumListForSelectAdapter(Context context, int resource, UserAlbumCollections userAlbumCollections) {
         super(context, resource, userAlbumCollections);
         this._context = context;
         this._resource = resource;
@@ -37,37 +37,36 @@ public class UserAlbumListForSelectAdapter extends ArrayAdapter<UserAlbum> {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return this.LoadData(position,convertView,parent);
+        return this.LoadData(position, convertView, parent);
     }
 
-    private View LoadData(int position, View convertView, ViewGroup parent){
+    private View LoadData(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(_context);
         //convertView = layoutInflater.inflate(_resource, null);
-        final LinearLayout linearLayout = (LinearLayout)layoutInflater.inflate(_resource, null);
-        if(linearLayout != null)
-        {
+        final LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(_resource, null);
+        if (linearLayout != null) {
             linearLayout.setBackgroundColor(Color.parseColor("#333333"));
-            linearLayout.setPadding(10,10,10,10);
+            linearLayout.setPadding(10, 10, 10, 10);
 
             String coverPicUrl = _context.getString(R.string.config_site_url) + "/" + _userAlbumCollections.get(position).getCoverPicUrl();
             final int nowPosition = position;
-            if(!"".equals(coverPicUrl)){
+            if (!"".equals(coverPicUrl)) {
                 final ImageView ivCoverPicUrlOfListItem = new ImageView(linearLayout.getContext());
-                ViewGroup.LayoutParams imageParam = new ViewGroup.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams imageParam = new ViewGroup.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, FrameLayout.LayoutParams.FILL_PARENT);
                 ivCoverPicUrlOfListItem.setLayoutParams(imageParam);
                 ivCoverPicUrlOfListItem.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 final FrameLayout frameLayout1 = new FrameLayout(linearLayout.getContext());
-                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FormatObject.DipToPx(linearLayout.getContext(), 100));
+                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, FormatObject.DipToPx(linearLayout.getContext(), 100));
                 frameLayout1.setBackgroundColor(Color.parseColor("#efefef"));
                 frameLayout1.setPadding(
-                        FormatObject.DipToPx(linearLayout.getContext(),2)
-                        ,FormatObject.DipToPx(linearLayout.getContext(),2)
-                        ,FormatObject.DipToPx(linearLayout.getContext(),2)
-                        ,FormatObject.DipToPx(linearLayout.getContext(),2));
+                        FormatObject.DipToPx(linearLayout.getContext(), 2)
+                        , FormatObject.DipToPx(linearLayout.getContext(), 2)
+                        , FormatObject.DipToPx(linearLayout.getContext(), 2)
+                        , FormatObject.DipToPx(linearLayout.getContext(), 2));
                 params1.gravity = Gravity.CENTER;
                 frameLayout1.setLayoutParams(params1);
                 final FrameLayout frameLayout2 = new FrameLayout(linearLayout.getContext());
-                FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
+                FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, FrameLayout.LayoutParams.FILL_PARENT);
                 frameLayout2.setBackgroundColor(Color.parseColor("#333333"));
                 //frameLayout2.setPadding(3,3,3,3);
                 params2.gravity = Gravity.CENTER;
@@ -84,24 +83,28 @@ public class UserAlbumListForSelectAdapter extends ArrayAdapter<UserAlbum> {
                             @Override
                             public void onClick(View view) {
                                 int userAlbumId = _userAlbumCollections.get(nowPosition).getUserAlbumId();
-                                String addToString = '|'+Integer.toString(userAlbumId);
+                                String addToString = '|' + Integer.toString(userAlbumId);
                                 int paddingValue;
-                                if(ActivityAlbumSelectGen.selectedUserAlbumId !=null && ActivityAlbumSelectGen.selectedUserAlbumId.indexOf(addToString)>=0){
+                                if (ActivityAlbumSelectGen.selectedUserAlbumId != null && ActivityAlbumSelectGen.selectedUserAlbumId.indexOf(addToString) >= 0) {
                                     //已经有这个作品了，进行取消操作
                                     ActivityAlbumSelectGen.selectedUserAlbumId =
-                                            ActivityAlbumSelectGen.selectedUserAlbumId.replace(addToString,"");
+                                            ActivityAlbumSelectGen.selectedUserAlbumId.replace(addToString, "");
                                     paddingValue = 2;
-                                }else{
+                                } else {
                                     //还没有这个作品，进行添加操作
-                                    ActivityAlbumSelectGen.selectedUserAlbumId += '|'+Integer.toString(userAlbumId);
+                                    if (ActivityAlbumSelectGen.selectedUserAlbumId == null) {
+                                        ActivityAlbumSelectGen.selectedUserAlbumId = '|' + Integer.toString(userAlbumId);
+                                    } else {
+                                        ActivityAlbumSelectGen.selectedUserAlbumId += '|' + Integer.toString(userAlbumId);
+                                    }
                                     paddingValue = 6;
                                 }
 
                                 frameLayout1.setPadding(
-                                        FormatObject.DipToPx(linearLayout.getContext(),paddingValue)
-                                        ,FormatObject.DipToPx(linearLayout.getContext(),paddingValue)
-                                        ,FormatObject.DipToPx(linearLayout.getContext(),paddingValue)
-                                        ,FormatObject.DipToPx(linearLayout.getContext(),paddingValue));
+                                        FormatObject.DipToPx(linearLayout.getContext(), paddingValue)
+                                        , FormatObject.DipToPx(linearLayout.getContext(), paddingValue)
+                                        , FormatObject.DipToPx(linearLayout.getContext(), paddingValue)
+                                        , FormatObject.DipToPx(linearLayout.getContext(), paddingValue));
                             }
                         });
                     }

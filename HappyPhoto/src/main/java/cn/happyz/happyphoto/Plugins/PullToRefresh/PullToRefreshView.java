@@ -175,7 +175,7 @@ public class PullToRefreshView extends LinearLayout {
 		// header layout
 		measureView(mHeaderView);
 		mHeaderViewHeight = mHeaderView.getMeasuredHeight();
-		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+		LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT,
 				mHeaderViewHeight);
 		// 设置topMargin的值为负的header View高度,即将其隐藏在最上方
 		params.topMargin = -(mHeaderViewHeight);
@@ -196,7 +196,7 @@ public class PullToRefreshView extends LinearLayout {
 		// footer layout
 		measureView(mFooterView);
 		mFooterViewHeight = mFooterView.getMeasuredHeight();
-		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+		LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT,
 				mFooterViewHeight);
 		// int top = getHeight();
 		// params.topMargin

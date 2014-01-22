@@ -72,16 +72,18 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
             }
         });
 
-        boolean userIsLogined = this.CheckUserLogin();
+        boolean userIsLogin = this.CheckUserLogin();
 
-        if(userIsLogined){
+        if(userIsLogin){
             LoadData(PageIndex,PageSize);
 
             Button activity_album_select_confirm = (Button) findViewById(R.id.activity_album_select_confirm);
             activity_album_select_confirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //提交报名
+                  //提交报名
+                  if(selectedUserAlbumId != null && !selectedUserAlbumId.equals(""))
+                  ToastObject.Show(ActivityAlbumSelectGen.this,selectedUserAlbumId);
                 }
             });
 
@@ -94,13 +96,10 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
         //TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
         boolean userIsLogined = super.UserCheckIsLogined(ActivityAlbumSelectGen.this);
         if(userIsLogined){
-            //ToastObject.Show(this,Integer.toString(super.GetNowUserId(UserAlbumCreateGen.this)));
-
         }else{
             Intent intent = new Intent(ActivityAlbumSelectGen.this, UserLoginGen.class);
             startActivity(intent);
-            //this.finish();
-            //txtUserOp.setEnabled(false);
+            this.finish();
         }
         return userIsLogined;
     }
@@ -126,7 +125,6 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
             switch(httpClientStatus){
                 case START_GET:
                     break;
-
                 case FINISH_GET:
                     if(userAlbumCollectionsOfMineForSelect != null && userAlbumListForSelectAdapter != null && userAlbumCollectionsOfMineForSelect.size()>0){
                         userAlbumCollectionsOfMineForSelect.addAll((UserAlbumCollections)msg.obj);

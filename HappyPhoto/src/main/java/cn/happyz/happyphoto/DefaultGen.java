@@ -1,6 +1,7 @@
 package cn.happyz.happyphoto;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -102,8 +104,8 @@ public class DefaultGen extends BaseGen {
         });
 
         TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
-        boolean userIsLogined = super.UserCheckIsLogined(DefaultGen.this);
-        if(userIsLogined){
+        boolean userIsLogin = super.UserCheckIsLogined(DefaultGen.this);
+        if(userIsLogin){
             //显示会员图像
 
 
@@ -167,10 +169,12 @@ public class DefaultGen extends BaseGen {
                             asyncImageLoader.loadDrawable(imageUrl, new AsyncImageLoader.ImageCallback() {
                                 public void imageLoaded(Drawable imageDrawable, String imageUrl) {
                                     ImageButton imageButton = new ImageButton(DefaultGen.this);
-                                    LinearLayout.LayoutParams ibParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                            LinearLayout.LayoutParams.MATCH_PARENT);
+                                    LinearLayout.LayoutParams ibParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,
+                                            LinearLayout.LayoutParams.FILL_PARENT);
                                     imageButton.setLayoutParams(ibParams);
+                                    imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
                                     imageButton.setImageDrawable(imageDrawable);
+                                    imageButton.setBackgroundColor(Color.parseColor("#111d49"));
                                     viewFlipper.addView(imageButton);
                                     }
                                 });

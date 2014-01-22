@@ -528,7 +528,7 @@ public class UserAlbumCreateGen extends BaseGen {
 
         //////////////////////////////////////////////////////////////
         RelativeLayout rl = new RelativeLayout(UserAlbumCreateGen.this);
-        rl.setRight(10);
+        //rl.setRight(10);
         rl.setId(100);
 
         ImageView iv = new ImageView(UserAlbumCreateGen.this);

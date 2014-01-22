@@ -80,7 +80,7 @@ public class UserAlbumListOfMineGen extends BaseGen implements PullToRefreshView
         }else{
             Intent intent = new Intent(UserAlbumListOfMineGen.this, UserLoginGen.class);
             startActivity(intent);
-            //this.finish();
+            this.finish();
             //txtUserOp.setEnabled(false);
         }
         return userIsLogined;
@@ -102,19 +102,15 @@ public class UserAlbumListOfMineGen extends BaseGen implements PullToRefreshView
     private class UserAlbumListOfMineHandler extends Handler {
         @Override
         public void dispatchMessage(Message msg) {
-
             HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
-
             switch(httpClientStatus){
                 case START_GET:
                     break;
-
                 case FINISH_GET:
                     if(userAlbumCollectionsOfMine != null && userAlbumListAdapterOfMine != null && userAlbumCollectionsOfMine.size()>0){
                         userAlbumCollectionsOfMine.addAll((UserAlbumCollections)msg.obj);
                         userAlbumListAdapterOfMine.notifyDataSetChanged();
                     }else{
-
                         pullToRefreshView = (PullToRefreshView)findViewById(R.id.main_pull_refresh_view);
                         pullToRefreshView.setBackgroundColor(Color.parseColor("#333333"));
                         gvOfMine = (GridView) findViewById(R.id.gvUserAlbumListOfMine);
@@ -126,15 +122,11 @@ public class UserAlbumListOfMineGen extends BaseGen implements PullToRefreshView
                         pullToRefreshView.setOnHeaderRefreshListener(UserAlbumListOfMineGen.this);
                         pullToRefreshView.setOnFooterRefreshListener(UserAlbumListOfMineGen.this);
                     }
-
                     pullToRefreshView.setLastUpdated(new Date().toLocaleString());
-
                     break;
-
                 case ERROR_GET:
                     ToastObject.Show(UserAlbumListOfMineGen.this, getString(R.string.message_load_failure));
                     break;
-
                 default:
                     System.out.println("nothing to do");
                     break;

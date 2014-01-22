@@ -51,11 +51,11 @@ public class UserAlbumListAdapter extends ArrayAdapter<UserAlbum> {
             String coverPicUrl = _context.getString(R.string.config_site_url) + "/" + _userAlbumCollections.get(position).getCoverPicUrl();
             if(!"".equals(coverPicUrl)){
                 final ImageView ivCoverPicUrlOfListItem = new ImageView(linearLayout.getContext());
-                ViewGroup.LayoutParams imageParam = new ViewGroup.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams imageParam = new ViewGroup.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,FrameLayout.LayoutParams.FILL_PARENT);
                 ivCoverPicUrlOfListItem.setLayoutParams(imageParam);
                 ivCoverPicUrlOfListItem.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 final FrameLayout frameLayout1 = new FrameLayout(linearLayout.getContext());
-                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FormatObject.DipToPx(linearLayout.getContext(),100));
+                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,FormatObject.DipToPx(linearLayout.getContext(),100));
                 frameLayout1.setBackgroundColor(Color.parseColor("#efefef"));
                 frameLayout1.setPadding(
                         FormatObject.DipToPx(linearLayout.getContext(),2)
@@ -65,7 +65,7 @@ public class UserAlbumListAdapter extends ArrayAdapter<UserAlbum> {
                 params1.gravity = Gravity.CENTER;
                 frameLayout1.setLayoutParams(params1);
                 final FrameLayout frameLayout2 = new FrameLayout(linearLayout.getContext());
-                FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
+                FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,FrameLayout.LayoutParams.FILL_PARENT);
                 frameLayout2.setBackgroundColor(Color.parseColor("#333333"));
                 //frameLayout2.setPadding(3,3,3,3);
                 params2.gravity = Gravity.CENTER;

@@ -1,6 +1,5 @@
 package cn.happyz.happyphoto.Tools;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,7 +17,6 @@ import java.io.File;
 import cn.happyz.happyphoto.DataProvider.ClientApp.ClientApp;
 import cn.happyz.happyphoto.DataProvider.ClientApp.ClientAppData;
 import cn.happyz.happyphoto.DataProvider.ClientApp.ClientAppDataOperateType;
-import cn.happyz.happyphoto.Gen.User.UserAlbumListOfMineGen;
 import cn.happyz.happyphoto.R;
 
 /**
@@ -76,7 +74,7 @@ public class AppAutoUpdate {
                 case FINISH_GET:
                     clientApp = (ClientApp)msg.obj;
                     if(clientApp != null){
-                        newVersionCode = 55555555;//clientApp.getVersionCode();
+                        newVersionCode = clientApp.getVersionCode();
                         newVersionName = clientApp.getVersionName();
 
                         if(newVersionCode>currentVersionCode){
@@ -161,6 +159,7 @@ public class AppAutoUpdate {
                         updateProgressDialog.dismiss();
                     }
                     Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.setDataAndType(
                             Uri.fromFile(new File(appSavePath)),
                             "application/vnd.android.package-archive");

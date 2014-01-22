@@ -1,28 +1,32 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context=".MainActivity"
-    tools:ignore="MergeRootFrame">
-
-
-    <ViewFlipper android:id="@+id/viewFlipper1"
-        android:layout_width="fill_parent"
-        android:layout_height="165dp"
-        android:persistentDrawingCache="animation"
-        android:inAnimation="@anim/push_left_in"
-        android:outAnimation="@anim/push_left_out"
-        android:background="#111d49">
-
-    </ViewFlipper>
+    tools:ignore="MergeRootFrame"
+    android:background="#111d49">
 
     <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
+        android:layout_height="165dp"
+        android:id="@+id/rl1"
+        >
+    <ViewFlipper android:id="@+id/viewFlipper1"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="165dp"
-        android:background="@drawable/main_bg">
+        android:background="#111d49">
+
+    </ViewFlipper>
+    </RelativeLayout>
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl1"
+        android:background="#111d49"
+        android:layout_gravity="bottom">
 
         <LinearLayout
             android:orientation="horizontal"
