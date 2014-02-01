@@ -51,8 +51,8 @@ public class ActivityUserData extends BaseData implements Runnable {
         }
     }
 
-    public void GetDataFromHttp(ActivityUserDataOperateType activityDataUserOperateType){
-        this.MyOperateType = activityDataUserOperateType;
+    public void GetDataFromHttp(ActivityUserDataOperateType activityUserDataOperateType){
+        this.MyOperateType = activityUserDataOperateType;
         ThreadPoolUtils.execute(this);
     }
 }
