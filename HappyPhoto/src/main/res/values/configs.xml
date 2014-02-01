@@ -55,7 +55,13 @@
     <string name="config_activity_user_create_url">
         <![CDATA[/index.php?a=activity_user&m=client_create&activity_id={activity_id}&user_id={user_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
     </string>
+    <string name="config_activity_user_delete_url">
+        <![CDATA[/index.php?a=activity_user&m=client_delete&activity_id={activity_id}&user_id={user_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
+    </string>
     <string name="config_activity_album_create_url">
         <![CDATA[/index.php?a=activity_album&m=client_create&activity_id={activity_id}&user_id={user_id}&user_album_id={user_album_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
+    </string>
+    <string name="config_activity_album_delete_url">
+        <![CDATA[/index.php?a=activity_album&m=client_delete&activity_id={activity_id}&user_id={user_id}&user_album_id={user_album_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
     </string>
 </resources>

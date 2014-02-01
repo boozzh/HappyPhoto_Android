@@ -1,10 +1,11 @@
 package cn.happyz.happyphoto.DataProvider.Activity;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +17,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumSelectGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityDetailGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityListGen;
+import cn.happyz.happyphoto.Gen.Activity.ActivityListOfMineJoinedGen;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.FormatObject;
+import cn.happyz.happyphoto.Tools.HttpClientStatus;
+import cn.happyz.happyphoto.Tools.ToastObject;
 
 /**
  * Created by zcmzc on 14-2-1.
@@ -48,7 +51,6 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
 
     private View LoadData(int position, View convertView, ViewGroup parent){
         ActivityListGen.activityPositionsOfListAll = position;
-
         LayoutInflater layoutInflater = LayoutInflater.from(_context);
         final LinearLayout linearLayout = (LinearLayout)layoutInflater.inflate(_resource, null);
         if(linearLayout != null)
@@ -103,7 +105,8 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
                         buttonCancel.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //取消报名
+                                ActivityListOfMineJoinedGen.activityCollectionsOfMineJoined.remove(ActivityListGen.activityPositionsOfListAll);
+                                ActivityListOfMineJoinedAdapter.this.notifyDataSetChanged();
                             }
                         });
                         Button buttonViewMyPhoto = new Button(linearLayout.getContext());
@@ -139,5 +142,24 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
             linearLayout.addView(tvActivitySubjectOfListItem);
         }
         return linearLayout;
+    }
+
+    private class ActivityUserCreateHandler extends Handler {
+        @Override
+        public void dispatchMessage(Message msg) {
+            HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
+            switch (httpClientStatus) {
+                case START_GET:
+                    break;
+                case FINISH_GET:
+                    //ToastObject.Show(ActivityAlbumSelectGen.this, getString(R.string.activity_album_select_submit_activity_user_success));
+                    break;
+                case ERROR_GET:
+                    break;
+                default:
+                    System.out.println("nothing to do");
+                    break;
+            }
+        }
     }
 }

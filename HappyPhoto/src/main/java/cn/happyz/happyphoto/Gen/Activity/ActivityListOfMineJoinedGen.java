@@ -68,14 +68,14 @@ public class ActivityListOfMineJoinedGen extends BaseGen implements PullToRefres
 
     private void LoadData(int pageIndex,int pageSize){
         String activityGetListOfAllUrl = getString(R.string.config_activity_get_list_of_all_url);
-        ActivityOfAllHandler activityOfAllHandler = new ActivityOfAllHandler();
-        ActivityData activityData = new ActivityData(activityGetListOfAllUrl,activityOfAllHandler);
+        ActivityOfMineJoinedHandler activityOfMineJoinedHandler = new ActivityOfMineJoinedHandler();
+        ActivityData activityData = new ActivityData(activityGetListOfAllUrl,activityOfMineJoinedHandler);
         activityData.setPageIndex(pageIndex);
         activityData.setPageSize(pageSize);
         activityData.GetDataFromHttp(ActivityDataOperateType.GetList);
     }
 
-    private class ActivityOfAllHandler extends Handler {
+    private class ActivityOfMineJoinedHandler extends Handler {
         @Override
         public void dispatchMessage(Message msg) {
             HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
@@ -84,11 +84,10 @@ public class ActivityListOfMineJoinedGen extends BaseGen implements PullToRefres
                     ToastObject.Show(ActivityListOfMineJoinedGen.this, getString(R.string.message_load_begin));
                     break;
                 case FINISH_GET:
-
                     activityCollectionsOfMineJoined = (ActivityCollections)msg.obj;
                     activityListOfMineJoinedAdapter = new ActivityListOfMineJoinedAdapter(ActivityListOfMineJoinedGen.this,R.layout.activity_list_mine_joined_item, activityCollectionsOfMineJoined);
                     listViewOfActivityList.setAdapter(activityListOfMineJoinedAdapter);
-                    listViewOfActivityList.setOnItemClickListener(new ListViewItemClick());
+                    //listViewOfActivityList.setOnItemClickListener(new ListViewItemClick());
                     pullToRefreshView.setOnHeaderRefreshListener(ActivityListOfMineJoinedGen.this);
                     pullToRefreshView.setOnFooterRefreshListener(ActivityListOfMineJoinedGen.this);
                     pullToRefreshView.setLastUpdated(new Date().toLocaleString());
