@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     android:background="#999999">
 
-
-
     <cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/main_pull_refresh_view"
         android:layout_width="fill_parent"
@@ -33,8 +31,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="@string/activity_list_btn_my_joined_activity"
-            android:id="@+id/btnMyJoinedActivity"
+            android:text="@string/activity_list_of_mine_btn_all_activity"
+            android:id="@+id/btnAllActivity"
             android:layout_weight="1"
             style="@style/ButtonStyle"
             android:layout_margin="1dp" />

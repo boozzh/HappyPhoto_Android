@@ -74,6 +74,16 @@
             android:theme="@style/UserTheme"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".Gen.Activity.ActivityListOfMineJoinedGen"
+            android:theme="@style/UserTheme"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".Gen.Activity.ActivityListOfMineVotedGen"
+            android:theme="@style/UserTheme"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 

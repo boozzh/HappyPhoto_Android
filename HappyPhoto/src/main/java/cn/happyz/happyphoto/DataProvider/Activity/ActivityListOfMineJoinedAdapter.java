@@ -1,5 +1,6 @@
 package cn.happyz.happyphoto.DataProvider.Activity;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,14 +24,14 @@ import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.FormatObject;
 
 /**
- * Created by zcmzc on 14-1-15.
+ * Created by zcmzc on 14-2-1.
  */
-public class ActivityListAdapter extends ArrayAdapter<Activity> {
+public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
     private ActivityCollections _activityCollections;
     private Context _context;
     private int _resource;
 
-    public ActivityListAdapter(Context context,int resource,ActivityCollections activityCollections) {
+    public ActivityListOfMineJoinedAdapter(Context context,int resource,ActivityCollections activityCollections) {
         super(context, resource, activityCollections);
         this._context = context;
         this._resource = resource;
@@ -92,17 +93,34 @@ public class ActivityListAdapter extends ArrayAdapter<Activity> {
                         frameLayout1.addView(frameLayout2);
                         linearLayout.addView(frameLayout1);
 
-                        Button button = new Button(linearLayout.getContext());
-                        button.setText(R.string.activity_join);
-                        button.setBackgroundColor(Color.parseColor("#efefef"));
-                        button.setOnClickListener(new View.OnClickListener() {
+                        LinearLayout linearLayoutOfButton = new LinearLayout(linearLayout.getContext());
+
+                        Button buttonCancel = new Button(linearLayout.getContext());
+                        buttonCancel.setText(R.string.activity_cancel);
+                        int weight = 1;
+                        buttonCancel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, weight));
+                        buttonCancel.setBackgroundColor(Color.parseColor("#efefef"));
+                        buttonCancel.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(linearLayout.getContext(), ActivityAlbumSelectGen.class);
-                                linearLayout.getContext().startActivity(intent);
+                                //取消报名
                             }
                         });
-                        linearLayout.addView(button);
+                        Button buttonViewMyPhoto = new Button(linearLayout.getContext());
+                        buttonViewMyPhoto.setText(R.string.activity_view_user_album);
+                        buttonViewMyPhoto.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, weight));
+                        buttonViewMyPhoto.setBackgroundColor(Color.parseColor("#efefef"));
+                        buttonViewMyPhoto.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //查看参赛作品
+                            }
+                        });
+
+                        linearLayoutOfButton.addView(buttonCancel);
+                        linearLayoutOfButton.addView(buttonViewMyPhoto);
+
+                        linearLayout.addView(linearLayoutOfButton);
                     }
                 });
             }

@@ -68,7 +68,7 @@ public class UserAlbumListAllGen extends BaseGen implements PullToRefreshView.On
         gvUserAlbumListOfAll.setBackgroundColor(Color.parseColor("#333333"));
 
         pullToRefreshView = (PullToRefreshView)findViewById(R.id.main_pull_refresh_view);
-        pullToRefreshView.setBackgroundColor(Color.parseColor("#333333"));
+        //pullToRefreshView.setBackgroundColor(Color.parseColor("#333333"));
 
 
         userAlbumListSideDrawer = new UserAlbumListSideDrawer(this);

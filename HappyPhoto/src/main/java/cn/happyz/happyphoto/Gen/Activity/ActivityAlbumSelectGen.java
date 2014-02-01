@@ -93,7 +93,6 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
                         e.printStackTrace();
                     }
                 }
-
             });
         }
     }

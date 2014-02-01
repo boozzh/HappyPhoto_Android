@@ -76,6 +76,14 @@
 
     <string name="activity_list_all_title">手机拍比赛</string>
     <string name="activity_join">我要报名</string>
+    <string name="activity_list_btn_my_joined_activity">我参加的比赛</string>
+    <string name="activity_list_btn_my_voted_activity">我投票的比赛</string>
+
+
+    <string name="activity_list_of_mine_title">我参加的比赛</string>
+    <string name="activity_cancel">取消报名</string>
+    <string name="activity_view_user_album">查看参赛作品</string>
+    <string name="activity_list_of_mine_btn_all_activity">全部比赛</string>
 
 
     <string name="activity_album_select_title">选择参加比赛的作品</string>
