@@ -38,6 +38,10 @@ public class ActivityListOfMineJoinedGen extends BaseGen implements PullToRefres
     private ListView listViewOfActivityList;
     public static int activityPositionsOfMineJoined;
 
+    public static int nowUserId;
+    public static String nowUserName;
+    public static String nowUserPass;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,17 +66,33 @@ public class ActivityListOfMineJoinedGen extends BaseGen implements PullToRefres
         listViewOfActivityList = (ListView) findViewById(R.id.listViewOfActivityList);
         pullToRefreshView = (PullToRefreshView)findViewById(R.id.main_pull_refresh_view);
 
-        LoadData(PageIndex, PageSize);
+        nowUserId = super.GetNowUserId(this);
+        nowUserName = super.GetNowUserName(this);
+        nowUserPass = super.GetNowUserPass(this);
+
+        if(nowUserId > 0){
+            LoadData(PageIndex, PageSize);
+        }
     }
 
 
     private void LoadData(int pageIndex,int pageSize){
-        String activityGetListOfAllUrl = getString(R.string.config_activity_get_list_of_all_url);
+        int nowUserId = super.GetNowUserId(this);
+        String nowUserName = super.GetNowUserName(this);
+        String nowUserPass = super.GetNowUserPass(this);
+
+        String activityGetListOfMineJoinedUrl = getString(R.string.config_activity_get_list_of_mine_joined_url);
+        activityGetListOfMineJoinedUrl = activityGetListOfMineJoinedUrl.replace("{user_id}", Integer.toString(nowUserId));
+        activityGetListOfMineJoinedUrl = activityGetListOfMineJoinedUrl.replace("{site_id}", getString(R.string.config_siteid));
+        activityGetListOfMineJoinedUrl = activityGetListOfMineJoinedUrl.replace("{user_name}", nowUserName);
+        activityGetListOfMineJoinedUrl = activityGetListOfMineJoinedUrl.replace("{user_pass}", nowUserPass);
+
+
         ActivityOfMineJoinedHandler activityOfMineJoinedHandler = new ActivityOfMineJoinedHandler();
-        ActivityData activityData = new ActivityData(activityGetListOfAllUrl,activityOfMineJoinedHandler);
+        ActivityData activityData = new ActivityData(activityGetListOfMineJoinedUrl,activityOfMineJoinedHandler);
         activityData.setPageIndex(pageIndex);
         activityData.setPageSize(pageSize);
-        activityData.GetDataFromHttp(ActivityDataOperateType.GetList);
+        activityData.GetDataFromHttp(ActivityDataOperateType.GetListOfMineJoined);
     }
 
     private class ActivityOfMineJoinedHandler extends Handler {
@@ -130,14 +150,5 @@ public class ActivityListOfMineJoinedGen extends BaseGen implements PullToRefres
                 LoadData(PageIndex,PageSize);
             }
         },1000);
-    }
-
-    private class ListViewItemClick implements AdapterView.OnItemClickListener {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id){
-            //点击操作
-            activityPositionsOfMineJoined = position;
-            Intent intent = new Intent(ActivityListOfMineJoinedGen.this, ActivityDetailGen.class);
-            startActivity(intent);
-        }
     }
 }

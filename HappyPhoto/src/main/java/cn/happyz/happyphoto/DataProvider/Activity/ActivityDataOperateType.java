@@ -5,5 +5,6 @@ package cn.happyz.happyphoto.DataProvider.Activity;
  */
 public enum ActivityDataOperateType {
     GetList,
+    GetListOfMineJoined,
     Null
 }

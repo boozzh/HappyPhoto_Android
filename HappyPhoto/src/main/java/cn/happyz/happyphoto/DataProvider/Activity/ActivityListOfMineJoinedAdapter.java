@@ -24,7 +24,6 @@ import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.FormatObject;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
-import cn.happyz.happyphoto.Tools.ToastObject;
 
 /**
  * Created by zcmzc on 14-2-1.
@@ -50,7 +49,7 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
     }
 
     private View LoadData(int position, View convertView, ViewGroup parent){
-        ActivityListGen.activityPositionsOfListAll = position;
+        ActivityListOfMineJoinedGen.activityPositionsOfMineJoined = position;
         LayoutInflater layoutInflater = LayoutInflater.from(_context);
         final LinearLayout linearLayout = (LinearLayout)layoutInflater.inflate(_resource, null);
         if(linearLayout != null)
@@ -96,19 +95,8 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
                         linearLayout.addView(frameLayout1);
 
                         LinearLayout linearLayoutOfButton = new LinearLayout(linearLayout.getContext());
-
-                        Button buttonCancel = new Button(linearLayout.getContext());
-                        buttonCancel.setText(R.string.activity_cancel);
                         int weight = 1;
-                        buttonCancel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, weight));
-                        buttonCancel.setBackgroundColor(Color.parseColor("#efefef"));
-                        buttonCancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ActivityListOfMineJoinedGen.activityCollectionsOfMineJoined.remove(ActivityListGen.activityPositionsOfListAll);
-                                ActivityListOfMineJoinedAdapter.this.notifyDataSetChanged();
-                            }
-                        });
+
                         Button buttonViewMyPhoto = new Button(linearLayout.getContext());
                         buttonViewMyPhoto.setText(R.string.activity_view_user_album);
                         buttonViewMyPhoto.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, weight));
@@ -117,6 +105,48 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
                             @Override
                             public void onClick(View view) {
                                 //查看参赛作品
+                            }
+                        });
+
+                        Button buttonCancel = new Button(linearLayout.getContext());
+                        buttonCancel.setText(R.string.activity_cancel);
+
+                        buttonCancel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, weight));
+                        buttonCancel.setBackgroundColor(Color.parseColor("#efefef"));
+                        buttonCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //取消报名
+                                int userId = ActivityListOfMineJoinedGen.nowUserId;
+                                String userName = ActivityListOfMineJoinedGen.nowUserName;
+                                String userPass = ActivityListOfMineJoinedGen.nowUserPass;
+
+                                String activityUserDeleteUrl = linearLayout.getContext().getString(R.string.config_activity_user_delete_url);
+
+                                int acitivtyId = _activityCollections.get(ActivityListOfMineJoinedGen.activityPositionsOfMineJoined).getActivityId();
+
+                                activityUserDeleteUrl = activityUserDeleteUrl.replace("{user_id}", Integer.toString(userId));
+                                activityUserDeleteUrl = activityUserDeleteUrl.replace("{site_id}", linearLayout.getContext().getString(R.string.config_siteid));
+                                activityUserDeleteUrl = activityUserDeleteUrl.replace("{user_name}", userName);
+                                activityUserDeleteUrl = activityUserDeleteUrl.replace("{user_pass}", userPass);
+                                activityUserDeleteUrl = activityUserDeleteUrl.replace("{activity_id}", Integer.toString(acitivtyId));
+
+                                ActivityUserDeleteHandler activityUserDeleteHandler = new ActivityUserDeleteHandler();
+                                ActivityUserData activityUserData = new ActivityUserData(activityUserDeleteUrl,activityUserDeleteHandler);
+                                activityUserData.GetDataFromHttp(ActivityUserDataOperateType.Delete);
+
+                                String activityAlbumDeleteUrl = linearLayout.getContext().getString(R.string.config_activity_album_delete_url);
+
+                                activityAlbumDeleteUrl = activityAlbumDeleteUrl.replace("{user_id}", Integer.toString(userId));
+                                activityAlbumDeleteUrl = activityAlbumDeleteUrl.replace("{site_id}", linearLayout.getContext().getString(R.string.config_siteid));
+                                activityAlbumDeleteUrl = activityAlbumDeleteUrl.replace("{user_name}", userName);
+                                activityAlbumDeleteUrl = activityAlbumDeleteUrl.replace("{user_pass}", userPass);
+                                activityAlbumDeleteUrl = activityAlbumDeleteUrl.replace("{activity_id}", Integer.toString(acitivtyId));
+
+                                ActivityAlbumDeleteHandler activityAlbumDeleteHandler = new ActivityAlbumDeleteHandler();
+                                ActivityAlbumData activityAlbumData = new ActivityAlbumData(activityAlbumDeleteUrl,activityAlbumDeleteHandler);
+                                activityAlbumData.GetDataFromHttp(ActivityAlbumDataOperateType.Delete);
+
                             }
                         });
 
@@ -144,7 +174,7 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
         return linearLayout;
     }
 
-    private class ActivityUserCreateHandler extends Handler {
+    private class ActivityUserDeleteHandler extends Handler {
         @Override
         public void dispatchMessage(Message msg) {
             HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
@@ -152,12 +182,29 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
                 case START_GET:
                     break;
                 case FINISH_GET:
-                    //ToastObject.Show(ActivityAlbumSelectGen.this, getString(R.string.activity_album_select_submit_activity_user_success));
+                    ActivityListOfMineJoinedGen.activityCollectionsOfMineJoined.remove(ActivityListGen.activityPositionsOfListAll);
+                    ActivityListOfMineJoinedAdapter.this.notifyDataSetChanged();
                     break;
                 case ERROR_GET:
                     break;
                 default:
-                    System.out.println("nothing to do");
+                    break;
+            }
+        }
+    }
+
+    private class ActivityAlbumDeleteHandler extends Handler {
+        @Override
+        public void dispatchMessage(Message msg) {
+            HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
+            switch (httpClientStatus) {
+                case START_GET:
+                    break;
+                case FINISH_GET:
+                    break;
+                case ERROR_GET:
+                    break;
+                default:
                     break;
             }
         }

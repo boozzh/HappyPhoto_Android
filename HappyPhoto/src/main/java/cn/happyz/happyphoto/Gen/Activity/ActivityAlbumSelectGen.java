@@ -105,7 +105,7 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
                 if (activity != null) {
                     int activityId = activity.getActivityId();
                     if (activityId > 0) {
-                        String httpUrl = getString(R.string.config_site_url) + getString(R.string.config_activity_album_create_url);
+                        String httpUrl = getString(R.string.config_activity_album_create_url);
                         httpUrl = httpUrl.replace("{activity_id}", Integer.toString(activityId));
                         String user_album_id = "";
                         user_album_id = URLEncoder.encode(selectedUserAlbumId, "UTF-8");
@@ -131,7 +131,7 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
                 if (activity != null) {
                     int activityId = activity.getActivityId();
                     if (activityId > 0) {
-                        String httpUrl = getString(R.string.config_site_url) + getString(R.string.config_activity_user_create_url);
+                        String httpUrl = getString(R.string.config_activity_user_create_url);
                         httpUrl = httpUrl.replace("{activity_id}", Integer.toString(activityId));
                         httpUrl = httpUrl.replace("{user_id}", Integer.toString(nowUserId));
                         httpUrl = httpUrl.replace("{site_id}", getString(R.string.config_siteid));
@@ -148,7 +148,6 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
             }
         }
     }
-
 
     private boolean CheckUserLogin() {
         //TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
@@ -222,6 +221,9 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
                     break;
                 case FINISH_GET:
                     ToastObject.Show(ActivityAlbumSelectGen.this, getString(R.string.activity_album_select_submit_activity_user_success));
+
+                    Intent intent = new Intent(ActivityAlbumSelectGen.this, ActivityListOfMineJoinedGen.class);
+                    startActivity(intent);
                     break;
                 case ERROR_GET:
                     break;

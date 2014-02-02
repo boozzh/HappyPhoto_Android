@@ -48,6 +48,29 @@ public class ActivityAlbumData extends BaseData implements Runnable {
                     MyHandler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
                 }
             }
+        }else if(MyOperateType == ActivityAlbumDataOperateType.Delete){
+            String result = super.RunGet(HttpUrl, MyHandler);
+            if(result != null){
+                try {
+                    int createResult = -1;
+                    JSONObject jsonObject = new JSONObject(result).getJSONObject("activity_album");
+                    JSONArray jsonArray = jsonObject.getJSONArray("activity_album_delete_result");
+
+                    for(int i=0;i<jsonArray.length();i++){
+                        JSONObject jsonObject2 = (JSONObject)jsonArray.opt(i);
+                        createResult = jsonObject2.getInt("delete_result");
+                    }
+
+                    Message msg = MyHandler.obtainMessage();
+                    msg.what = HttpClientStatus.FINISH_GET.ordinal();
+                    msg.obj = createResult;
+
+                    MyHandler.sendMessage(msg);
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                    MyHandler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
+                }
+            }
         }
     }
 
