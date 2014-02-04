@@ -95,7 +95,7 @@ public class UserAlbumListOfMineGen extends BaseGen implements PullToRefreshView
         UserAlbumData userAlbumData = new UserAlbumData(userAlbumGetListOfMineUrl,userAlbumListOfMineHandler);
         userAlbumData.setPageIndex(pageIndex);
         userAlbumData.setPageSize(pageSize);
-        userAlbumData.RequestFromHttp(UserAlbumDataOperateType.GetListOfMine);
+        userAlbumData.GetDataFromHttp(UserAlbumDataOperateType.GetListOfMine);
     }
 
 
@@ -168,7 +168,7 @@ public class UserAlbumListOfMineGen extends BaseGen implements PullToRefreshView
             //点击操作 
             //Intent intent = new Intent();
             ImagePositionsOfMine = position;//图片的位置 
-            BaseGen.USER_ALBUM_PIC_LIST_SHOW_MODULE = 3;
+            BaseGen.userAlbumPicListShowModule = UserAlbumPicListShowModule.UserAlbumOfMine;
             //ToastObject.Show(UserAlbumListOfMineGen.this, Integer.toString(ImagePositionsOfMine));
             Intent intent = new Intent(UserAlbumListOfMineGen.this, UserAlbumPicListGen.class);
             //intent.setClass(UserAlbumListOfMineGen.this,UserAlbumPicListGen.class);

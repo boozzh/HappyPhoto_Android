@@ -1,5 +1,6 @@
 package cn.happyz.happyphoto.Gen;
 
+import cn.happyz.happyphoto.Gen.User.UserAlbumPicListShowModule;
 import cn.happyz.happyphoto.R;
 
 import android.app.Activity;
@@ -17,7 +18,7 @@ public class BaseGen extends Activity {
     /**
      * 显示会员相册图片数据的模块调用来源类型 0:未设定 1:全部数据 2:分类数据 3:个人数据
      */
-    protected static int USER_ALBUM_PIC_LIST_SHOW_MODULE = 0;
+    protected static UserAlbumPicListShowModule userAlbumPicListShowModule;
 
     /**
      * 检查会员是否登录

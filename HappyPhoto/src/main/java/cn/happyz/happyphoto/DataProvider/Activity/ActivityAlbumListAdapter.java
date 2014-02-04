@@ -1,4 +1,4 @@
-package cn.happyz.happyphoto.DataProvider.User;
+package cn.happyz.happyphoto.DataProvider.Activity;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,19 +12,21 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import cn.happyz.happyphoto.DataProvider.User.UserAlbum;
+import cn.happyz.happyphoto.DataProvider.User.UserAlbumCollections;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.FormatObject;
 
 /**
- *
+ * Created by zcmzc on 14-2-4.
  */
-public class UserAlbumListAdapter extends ArrayAdapter<UserAlbum> {
+public class ActivityAlbumListAdapter extends ArrayAdapter<UserAlbum> {
     private UserAlbumCollections _userAlbumCollections;
     private Context _context;
     private int _resource;
 
-    public UserAlbumListAdapter(Context context,int resource,UserAlbumCollections userAlbumCollections) {
+    public ActivityAlbumListAdapter(Context context,int resource,UserAlbumCollections userAlbumCollections) {
         super(context, resource, userAlbumCollections);
         this._context = context;
         this._resource = resource;
@@ -55,7 +57,7 @@ public class UserAlbumListAdapter extends ArrayAdapter<UserAlbum> {
                 ivCoverPicUrlOfListItem.setLayoutParams(imageParam);
                 ivCoverPicUrlOfListItem.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 final FrameLayout frameLayout1 = new FrameLayout(linearLayout.getContext());
-                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,FormatObject.DipToPx(linearLayout.getContext(),100));
+                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, FormatObject.DipToPx(linearLayout.getContext(), 100));
                 frameLayout1.setBackgroundColor(Color.parseColor("#efefef"));
                 frameLayout1.setPadding(
                         FormatObject.DipToPx(linearLayout.getContext(),2)

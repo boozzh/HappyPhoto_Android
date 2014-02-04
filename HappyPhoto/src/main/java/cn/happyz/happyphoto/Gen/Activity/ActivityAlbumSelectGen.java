@@ -170,7 +170,7 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
         UserAlbumData userAlbumData = new UserAlbumData(userAlbumGetListOfMineUrl, activityAlbumSelectHandler);
         userAlbumData.setPageIndex(pageIndex);
         userAlbumData.setPageSize(pageSize);
-        userAlbumData.RequestFromHttp(UserAlbumDataOperateType.GetListOfMine);
+        userAlbumData.GetDataFromHttp(UserAlbumDataOperateType.GetListOfMine);
     }
 
     private class ActivityAlbumSelectHandler extends Handler {

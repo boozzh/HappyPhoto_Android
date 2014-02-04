@@ -67,4 +67,7 @@
     <string name="config_activity_album_delete_url">
         <![CDATA[http://hp.mysense.cn/index.php?a=activity_album&m=client_delete&activity_id={activity_id}&user_id={user_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
     </string>
+    <string name="config_activity_album_list_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=activity_album&m=client_list&activity_id={activity_id}&site_id={site_id}]]>
+    </string>
 </resources>

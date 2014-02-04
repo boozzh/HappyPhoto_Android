@@ -76,6 +76,7 @@
 
     <string name="activity_list_all_title">手机拍比赛</string>
     <string name="activity_join">我要报名</string>
+    <string name="activity_view_album">参赛作品投票</string>
     <string name="activity_list_btn_my_joined_activity">我参加的比赛</string>
     <string name="activity_list_btn_my_voted_activity">我投票的比赛</string>
 
@@ -89,6 +90,9 @@
     <string name="activity_album_select_title">选择参加比赛的作品</string>
     <string name="activity_album_select_confirm">确认</string>
     <string name="activity_album_select_submit_activity_user_success">报名成功</string>
+
+    <string name="activity_album_list_title">参赛作品</string>
+    <string name="activity_album_list_view_mine_voted">查看我投票的作品</string>
 
 
     <string name="pull_to_refresh_pull_label">下拉刷新</string>

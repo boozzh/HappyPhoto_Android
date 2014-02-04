@@ -355,7 +355,7 @@ public class UserAlbumCreateGen extends BaseGen {
         userAlbum.setUserAlbumIntro(userAlbumIntro);
         userAlbumData.setUserAlbum(userAlbum);
         UserAlbumDataOperateType userAlbumDataOperateType = UserAlbumDataOperateType.Create;
-        userAlbumData.RequestFromHttp(userAlbumDataOperateType);
+        userAlbumData.GetDataFromHttp(userAlbumDataOperateType);
 
     }
 

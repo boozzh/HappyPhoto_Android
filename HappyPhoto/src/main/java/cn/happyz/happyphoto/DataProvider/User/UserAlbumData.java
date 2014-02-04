@@ -2,7 +2,6 @@ package cn.happyz.happyphoto.DataProvider.User;
 
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.appcompat.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,8 +18,8 @@ import cn.happyz.happyphoto.Tools.ThreadPoolUtils;
  * Created by zcmzc on 13-12-13.
  */
 public class UserAlbumData extends BaseData implements Runnable {
-    private String _httpUrl = null;
-    private Handler _handler = null;
+    private String HttpUrl = null;
+    private Handler MyHandler = null;
     private UserAlbumDataOperateType _userAlbumDataOperateType = UserAlbumDataOperateType.Null;
 
     private UserAlbum _userAlbum;
@@ -42,8 +41,8 @@ public class UserAlbumData extends BaseData implements Runnable {
 
 
     public UserAlbumData(String httpUrl, Handler handler){
-        _httpUrl = httpUrl;
-        _handler = handler;
+        HttpUrl = httpUrl;
+        MyHandler = handler;
     }
 
     @Override
@@ -79,11 +78,11 @@ public class UserAlbumData extends BaseData implements Runnable {
             }
             try{
                 boolean isBigData = false;
-                String result = super.RunPost(_httpUrl,_handler,params,isBigData);
-                Message msg = _handler.obtainMessage();
+                String result = super.RunPost(HttpUrl, MyHandler,params,isBigData);
+                Message msg = MyHandler.obtainMessage();
                 msg.what = HttpClientStatus.FINISH_POST.ordinal();
                 msg.obj = result;
-                _handler.sendMessage(msg);
+                MyHandler.sendMessage(msg);
             } catch(UnsupportedEncodingException ex){
 
             }
@@ -91,9 +90,9 @@ public class UserAlbumData extends BaseData implements Runnable {
     }
 
     private void GetListOfAll(){
-        _httpUrl += "&p=" + _pageIndex + "&ps=" + _pageSize;
+        HttpUrl += "&p=" + _pageIndex + "&ps=" + _pageSize;
 
-        String result = super.RunGet(_httpUrl, _handler);
+        String result = super.RunGet(HttpUrl, MyHandler);
         if(result != null){
             try {
                 UserAlbumCollections userAlbumCollections = new UserAlbumCollections();
@@ -123,22 +122,22 @@ public class UserAlbumData extends BaseData implements Runnable {
                     userAlbumCollections.add(userAlbum);
                 }
 
-                Message msg = _handler.obtainMessage();
+                Message msg = MyHandler.obtainMessage();
                 msg.what = HttpClientStatus.FINISH_GET.ordinal();
                 msg.obj = userAlbumCollections;
 
-                _handler.sendMessage(msg);
+                MyHandler.sendMessage(msg);
             } catch (Exception ex){
                 ex.printStackTrace();
-                _handler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
+                MyHandler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
             }
         }
     }
 
     private void GetListOfType(){
-        _httpUrl += "&p=" + _pageIndex + "&ps=" + _pageSize;
+        HttpUrl += "&p=" + _pageIndex + "&ps=" + _pageSize;
 
-        String result = super.RunGet(_httpUrl, _handler);
+        String result = super.RunGet(HttpUrl, MyHandler);
         if(result != null){
             try {
                 UserAlbumCollections userAlbumCollections = new UserAlbumCollections();
@@ -168,23 +167,23 @@ public class UserAlbumData extends BaseData implements Runnable {
                     userAlbumCollections.add(userAlbum);
                 }
 
-                Message msg = _handler.obtainMessage();
+                Message msg = MyHandler.obtainMessage();
                 msg.what = HttpClientStatus.FINISH_GET.ordinal();
                 msg.obj = userAlbumCollections;
 
-                _handler.sendMessage(msg);
+                MyHandler.sendMessage(msg);
             } catch (Exception ex){
                 ex.printStackTrace();
-                _handler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
+                MyHandler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
             }
 
         }
     }
 
     private void GetListOfMine(){
-        _httpUrl += "&p=" + _pageIndex + "&ps=" + _pageSize;
+        HttpUrl += "&p=" + _pageIndex + "&ps=" + _pageSize;
 
-        String result = super.RunGet(_httpUrl, _handler);
+        String result = super.RunGet(HttpUrl, MyHandler);
         if(result != null){
             try {
                 UserAlbumCollections userAlbumCollections = new UserAlbumCollections();
@@ -214,14 +213,14 @@ public class UserAlbumData extends BaseData implements Runnable {
                     userAlbumCollections.add(userAlbum);
                 }
 
-                Message msg = _handler.obtainMessage();
+                Message msg = MyHandler.obtainMessage();
                 msg.what = HttpClientStatus.FINISH_GET.ordinal();
                 msg.obj = userAlbumCollections;
 
-                _handler.sendMessage(msg);
+                MyHandler.sendMessage(msg);
             } catch (Exception ex){
                 ex.printStackTrace();
-                _handler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
+                MyHandler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
             }
 
         }
@@ -231,7 +230,7 @@ public class UserAlbumData extends BaseData implements Runnable {
      * 执行HTTP请求
      * @param userAlbumDataOperateType
      */
-    public void RequestFromHttp(UserAlbumDataOperateType userAlbumDataOperateType){
+    public void GetDataFromHttp(UserAlbumDataOperateType userAlbumDataOperateType){
         this._userAlbumDataOperateType = userAlbumDataOperateType;
         ThreadPoolUtils.execute(this);
     }

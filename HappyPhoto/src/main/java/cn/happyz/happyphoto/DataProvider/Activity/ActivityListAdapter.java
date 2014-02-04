@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumListGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumSelectGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityDetailGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityListGen;
@@ -92,17 +93,36 @@ public class ActivityListAdapter extends ArrayAdapter<Activity> {
                         frameLayout1.addView(frameLayout2);
                         linearLayout.addView(frameLayout1);
 
-                        Button button = new Button(linearLayout.getContext());
-                        button.setText(R.string.activity_join);
-                        button.setBackgroundColor(Color.parseColor("#efefef"));
-                        button.setOnClickListener(new View.OnClickListener() {
+
+                        LinearLayout linearLayoutOfButton = new LinearLayout(linearLayout.getContext());
+                        int weight = 1;
+
+                        Button buttonOfJoin = new Button(linearLayout.getContext());
+                        buttonOfJoin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, weight));
+                        buttonOfJoin.setText(R.string.activity_join);
+                        buttonOfJoin.setBackgroundColor(Color.parseColor("#efefef"));
+                        buttonOfJoin.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent(linearLayout.getContext(), ActivityAlbumSelectGen.class);
                                 linearLayout.getContext().startActivity(intent);
                             }
                         });
-                        linearLayout.addView(button);
+                        linearLayoutOfButton.addView(buttonOfJoin);
+
+                        Button buttonOfViewAlbum = new Button(linearLayout.getContext());
+                        buttonOfViewAlbum.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, weight));
+                        buttonOfViewAlbum.setText(R.string.activity_view_album);
+                        buttonOfViewAlbum.setBackgroundColor(Color.parseColor("#efefef"));
+                        buttonOfViewAlbum.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(linearLayout.getContext(), ActivityAlbumListGen.class);
+                                linearLayout.getContext().startActivity(intent);
+                            }
+                        });
+                        linearLayoutOfButton.addView(buttonOfViewAlbum);
+                        linearLayout.addView(linearLayoutOfButton);
                     }
                 });
             }

@@ -84,6 +84,11 @@
             android:theme="@style/UserTheme"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".Gen.Activity.ActivityAlbumListGen"
+            android:theme="@style/UserTheme"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 

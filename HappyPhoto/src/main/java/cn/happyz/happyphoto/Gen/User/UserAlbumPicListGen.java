@@ -26,6 +26,7 @@ import cn.happyz.happyphoto.DataProvider.User.UserAlbum;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumPicCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumPicData;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumPicDataOperateType;
+import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumListGen;
 import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
@@ -90,12 +91,14 @@ public class UserAlbumPicListGen extends BaseGen implements GestureDetector.OnGe
 
         //来源页面，有多个来源页面时，进行来源的区分
         UserAlbum userAlbum = null;
-        if(BaseGen.USER_ALBUM_PIC_LIST_SHOW_MODULE == 1){ //全部数据
+        if(BaseGen.userAlbumPicListShowModule == UserAlbumPicListShowModule.UserAlbumOfAll){ //全部数据
             userAlbum = UserAlbumListAllGen.userAlbumCollectionsOfShow.get(UserAlbumListAllGen.ImagePositionsOfAll);
-        }else if(BaseGen.USER_ALBUM_PIC_LIST_SHOW_MODULE == 2){ //分类数据
+        }else if(BaseGen.userAlbumPicListShowModule == UserAlbumPicListShowModule.UserAlbumOfType){ //分类数据
             userAlbum = UserAlbumListAllGen.userAlbumCollectionsOfShow.get(UserAlbumListAllGen.ImagePositionsOfType);
-        }else if(BaseGen.USER_ALBUM_PIC_LIST_SHOW_MODULE == 3){ //个人数据
+        }else if(BaseGen.userAlbumPicListShowModule == UserAlbumPicListShowModule.UserAlbumOfMine){ //个人数据
             userAlbum = UserAlbumListOfMineGen.userAlbumCollectionsOfMine.get(UserAlbumListOfMineGen.ImagePositionsOfMine);
+        }else if(BaseGen.userAlbumPicListShowModule == UserAlbumPicListShowModule.UserAlbumOfActivityAlbumList){ //个人数据
+            userAlbum = ActivityAlbumListGen.userAlbumCollectionsOfActivityAlbumList.get(ActivityAlbumListGen.ImagePositionsOfActivityAlbum);
         }
         if(userAlbum != null){
             int userAlbumId = userAlbum.getUserAlbumId();
