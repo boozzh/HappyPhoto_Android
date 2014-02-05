@@ -1,6 +1,7 @@
 package cn.happyz.happyphoto.Gen;
 
 import cn.happyz.happyphoto.Gen.User.UserAlbumPicListShowModule;
+import cn.happyz.happyphoto.Gen.User.UserLoginRequestActivity;
 import cn.happyz.happyphoto.R;
 
 import android.app.Activity;
@@ -20,6 +21,7 @@ public class BaseGen extends Activity {
      */
     protected static UserAlbumPicListShowModule userAlbumPicListShowModule;
 
+    protected static UserLoginRequestActivity userLoginRequestActivity;
     /**
      * 检查会员是否登录
      * @param context
@@ -77,6 +79,21 @@ public class BaseGen extends Activity {
             return userName;
         }else{
             return null;
+        }
+    }
+
+    /**
+     * 当前登录的会员点卷
+     * @param context
+     * @return
+     */
+    protected int GetNowUserPoint(Context context){
+        SharedPreferences sp = context.getSharedPreferences("USER_INFO", MODE_PRIVATE);
+        if(sp != null){
+            int userId = sp.getInt("USER_POINT",0);
+            return userId;
+        }else{
+            return -1;
         }
     }
 

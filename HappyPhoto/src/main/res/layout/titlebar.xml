@@ -40,4 +40,16 @@
         android:gravity="center"
         android:textAlignment="center" />
 
+    <ImageButton
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/ibtnUserInfo"
+        android:src="@drawable/person"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitXY"
+        android:background="#111D49"
+        android:layout_marginRight="10dp"
+        android:visibility="invisible" />
+
 </RelativeLayout>

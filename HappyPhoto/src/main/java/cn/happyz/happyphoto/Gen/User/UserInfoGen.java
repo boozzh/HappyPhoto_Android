@@ -1,5 +1,6 @@
 package cn.happyz.happyphoto.Gen.User;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import cn.happyz.happyphoto.DefaultGen;
 import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.R;
 
@@ -19,6 +21,8 @@ public class UserInfoGen extends BaseGen {
 
     private ImageButton btnBack;
     private Button btnLogout;
+    private TextView txtUserOp;
+    private ImageButton ibtnUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +35,6 @@ public class UserInfoGen extends BaseGen {
         TextView tvTitleBarTitle = (TextView) findViewById(R.id.txtTitleBar);
         tvTitleBarTitle.setText(R.string.user_info_title); //修改title文字
 
-
-
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
         btnBack.setVisibility(0);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -42,13 +44,23 @@ public class UserInfoGen extends BaseGen {
             }
         });
 
-        //btnLogout = (Button) findViewById(R.id.btnLogout);
-        //btnLogout.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-        //        SharedPreferences sp = getSharedPreferences("USER_INFO", MODE_PRIVATE);
-        //        sp.edit().clear().commit();
-        //    }
-        //});
+        txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
+        ibtnUserInfo = (ImageButton) findViewById(R.id.ibtnUserInfo);
+
+        btnLogout = (Button) findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sp = getSharedPreferences("USER_INFO", MODE_PRIVATE);
+                sp.edit().clear().commit();
+
+                txtUserOp.setVisibility(View.VISIBLE);
+                ibtnUserInfo.setVisibility(View.INVISIBLE);
+
+                Intent intent = new Intent(UserInfoGen.this, DefaultGen.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }

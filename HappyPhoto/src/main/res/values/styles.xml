@@ -18,6 +18,11 @@
         <item name="android:textColor">#ffffff</item>
     </style>
 
+    <style name="ButtonStyleOfPic">
+        <item name="android:background">#000000</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
     <style name="ViewPicStyle" parent="AppTheme">
         <item name="android:windowTitleSize">50dp</item>
         <item name="android:windowTitleBackgroundStyle">@style/ViewPicTitleBackground</item>

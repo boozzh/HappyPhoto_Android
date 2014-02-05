@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
-    android:paddingStart="10dp">
+    android:paddingStart="10dp"
+    android:background="#000000">
 
     <ImageButton
         android:layout_width="40dp"
@@ -68,5 +69,15 @@
         android:src="@drawable/recycle"
         android:scaleType="fitStart"
         android:padding="5dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="@string/user_album_pic_list_vote"
+        android:id="@+id/btnVote"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ibtnDeletePic"
+        style="@style/ButtonStyleOfPic"
+        android:textSize="22sp" />
 
 </RelativeLayout>

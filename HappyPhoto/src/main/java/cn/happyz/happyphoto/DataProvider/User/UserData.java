@@ -47,6 +47,7 @@ public class UserData extends BaseData implements Runnable {
                                     jsonObject2.getString("UserPass"),
                                     jsonObject2.getInt("State")
                             );
+                            user.setUserPoint(jsonObject2.getInt("UserPoint"));
                         }else{
                             user = new User(
                                     userId,

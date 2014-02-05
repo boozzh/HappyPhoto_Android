@@ -38,6 +38,12 @@ public class DialogHelper {
         Confirm(context, context.getText(titleId), context.getText(messageId), context.getText(okTextId), okClickListener, context.getText(cancelTextId), cancelListener);
     }
 
+    public static void Confirm(Context context, String title, String message,
+                               int okTextId, OnClickListener okClickListener,  int cancelTextId,
+                               OnClickListener cancelListener) {
+        Confirm(context, title, message, context.getText(okTextId), okClickListener, context.getText(cancelTextId), cancelListener);
+    }
+
     private static AlertDialog.Builder createDialog(Context context, CharSequence title,
                                                     CharSequence message) {
         AlertDialog.Builder builder = new Builder(context);

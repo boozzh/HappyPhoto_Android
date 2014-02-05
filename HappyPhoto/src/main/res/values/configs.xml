@@ -40,7 +40,7 @@
     <string name="config_user_album_getlist_ofmine_url">
         <![CDATA[http://hp.mysense.cn/index.php?a=user&f=useralbum&m=client_list_of_one_user&userid={userid}]]>
     </string>
-    <string name="config_user_album_pic_getlist_url">
+    <string name="config_user_album_pic_get_list_url">
         <![CDATA[http://hp.mysense.cn/index.php?a=user&f=useralbumpic&m=client_list]]>
     </string>
     <string name="config_user_album_upload_pic_filepath">/happyphoto/temp/</string>
@@ -69,5 +69,8 @@
     </string>
     <string name="config_activity_album_list_url">
         <![CDATA[http://hp.mysense.cn/index.php?a=activity_album&m=client_list&activity_id={activity_id}&site_id={site_id}]]>
+    </string>
+    <string name="config_activity_vote_record_create_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=activity_vote_record&f=client_create&activity_id={activity_id}&site_id={site_id}&user_album_id={user_album_id}&user_id={user_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
     </string>
 </resources>

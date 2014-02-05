@@ -72,6 +72,11 @@
     <string name="user_album_pic_list_begin_save_pic">开始保存图片</string>
     <string name="user_album_pic_list_success_save_pic">保存图片成功</string>
     <string name="user_album_pic_list_fail_save_pic">保存失败</string>
+    <string name="user_album_pic_list_vote">投票</string>
+    <string name="user_album_pic_list_vote_dialog_title">是否为此作品投票</string>
+    <string name="user_album_pic_list_vote_dialog_message">您当前剩余乐图币：{user_point}，投票需花费10个乐图币，是否投票?</string>
+    <string name="user_album_pic_list_vote_dialog_confirm">投票</string>
+    <string name="user_album_pic_list_vote_dialog_cancel">取消</string>
 
 
     <string name="activity_list_all_title">手机拍比赛</string>

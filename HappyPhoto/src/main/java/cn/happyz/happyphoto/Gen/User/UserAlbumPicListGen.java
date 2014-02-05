@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,18 +19,30 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import java.util.Date;
+
+import cn.happyz.happyphoto.DataProvider.Activity.ActivityAlbumListAdapter;
+import cn.happyz.happyphoto.DataProvider.Activity.ActivityVoteRecordData;
+import cn.happyz.happyphoto.DataProvider.Activity.ActivityVoteRecordDataOperateType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbum;
+import cn.happyz.happyphoto.DataProvider.User.UserAlbumCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumPicCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumPicData;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumPicDataOperateType;
 import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumListGen;
+import cn.happyz.happyphoto.Gen.Activity.ActivityListGen;
 import cn.happyz.happyphoto.Gen.BaseGen;
+import cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
+import cn.happyz.happyphoto.Tools.DialogHelper;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
 import cn.happyz.happyphoto.Tools.ImageObject;
 import cn.happyz.happyphoto.Tools.ToastObject;
@@ -55,7 +68,15 @@ public class UserAlbumPicListGen extends BaseGen implements GestureDetector.OnGe
     GestureDetector gestureDetector;
     private ImageButton ibtnDownloadPic;
     private ImageButton ibtnBackToUserAlbumPicList;
+    private ImageButton ibtnDeletePic;
+    private Button btnVote;
+    private int userAlbumId;
     UserAlbumPicCollections uapcOfList;
+
+
+    private int nowUserId;
+    private String nowUserName;
+    private String nowUserPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +100,22 @@ public class UserAlbumPicListGen extends BaseGen implements GestureDetector.OnGe
         ibtnBackToUserAlbumPicList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //保存图片
                 finish();
+            }
+        });
+        ibtnDeletePic = (ImageButton) findViewById(R.id.ibtnDeletePic);
+        ibtnDeletePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //删除图片
+            }
+        });
+        btnVote = (Button) findViewById(R.id.btnVote);
+        btnVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //投票
+                Vote();
             }
         });
 
@@ -97,13 +132,15 @@ public class UserAlbumPicListGen extends BaseGen implements GestureDetector.OnGe
             userAlbum = UserAlbumListAllGen.userAlbumCollectionsOfShow.get(UserAlbumListAllGen.ImagePositionsOfType);
         }else if(BaseGen.userAlbumPicListShowModule == UserAlbumPicListShowModule.UserAlbumOfMine){ //个人数据
             userAlbum = UserAlbumListOfMineGen.userAlbumCollectionsOfMine.get(UserAlbumListOfMineGen.ImagePositionsOfMine);
-        }else if(BaseGen.userAlbumPicListShowModule == UserAlbumPicListShowModule.UserAlbumOfActivityAlbumList){ //个人数据
+        }else if(BaseGen.userAlbumPicListShowModule == UserAlbumPicListShowModule.UserAlbumOfActivityAlbumList){ //某活动报名作品
             userAlbum = ActivityAlbumListGen.userAlbumCollectionsOfActivityAlbumList.get(ActivityAlbumListGen.ImagePositionsOfActivityAlbum);
+            //隐藏删除按钮
+            ibtnDeletePic.setVisibility(View.INVISIBLE);
         }
         if(userAlbum != null){
-            int userAlbumId = userAlbum.getUserAlbumId();
+            userAlbumId = userAlbum.getUserAlbumId();
             if(userAlbumId > 0){
-                String userAlbumPicGetListUrl = getString(R.string.config_user_album_pic_getlist_url);
+                String userAlbumPicGetListUrl = getString(R.string.config_user_album_pic_get_list_url);
                 UserAlbumPicListHandler userAlbumPicListHandler = new UserAlbumPicListHandler();
                 UserAlbumPicData userAlbumPicData = new UserAlbumPicData(userAlbumPicGetListUrl,userAlbumPicListHandler);
                 userAlbumPicData.setUserAlbum(userAlbum);
@@ -138,6 +175,92 @@ public class UserAlbumPicListGen extends BaseGen implements GestureDetector.OnGe
         }
 
 
+    }
+
+    private void Vote(){
+        //step 1 判断登录
+        boolean userIsLogin = this.CheckUserLogin();
+        if(userIsLogin){
+            nowUserId = super.GetNowUserId(this);
+            nowUserName = super.GetNowUserName(this);
+            nowUserPass = super.GetNowUserPass(this);
+            int userPoint = super.GetNowUserPoint(this);
+            String message = getString(R.string.user_album_pic_list_vote_dialog_message);
+            message = message.replace("{user_point}", Integer.toString(userPoint));
+            //弹出确认框
+            DialogHelper.Confirm(UserAlbumPicListGen.this,
+                    getString(R.string.user_album_pic_list_vote_dialog_title),
+                    message,
+                    R.string.user_album_pic_list_vote_dialog_confirm,
+                    new ConfirmToVoteListener(),
+                    R.string.user_album_pic_list_vote_dialog_cancel,
+                    new CancelToUpdateListener()
+            );
+
+
+
+        }
+    }
+
+    private class ConfirmToVoteListener implements android.content.DialogInterface.OnClickListener{
+        public void onClick(DialogInterface dialog, int which) {
+
+            if(ActivityListGen.activityCollectionsOfListAll != null && ActivityListGen.activityCollectionsOfListAll.size()>0){
+                int activityId = ActivityListGen.activityCollectionsOfListAll.get(ActivityListGen.activityPositionsOfListAll).getActivityId();
+                if(activityId>0 && userAlbumId>0){
+                    String httpUrl = getString(R.string.config_activity_vote_record_create_url);
+                    int siteId = Integer.parseInt(getString(R.string.config_siteid));
+                    httpUrl = httpUrl.replace("{site_id}",Integer.toString(siteId));
+                    httpUrl = httpUrl.replace("{activity_id}", Integer.toString(activityId));
+                    httpUrl = httpUrl.replace("{user_album_id}", Integer.toString(userAlbumId));
+                    httpUrl = httpUrl.replace("{user_id}", Integer.toString(nowUserId));
+                    httpUrl = httpUrl.replace("{user_name}", nowUserName);
+                    httpUrl = httpUrl.replace("{user_pass}", nowUserPass);
+                    VoteHandler voteHandler = new VoteHandler();
+                    ActivityVoteRecordData activityVoteRecordData = new ActivityVoteRecordData(httpUrl, voteHandler);
+                    activityVoteRecordData.GetDataFromHttp(ActivityVoteRecordDataOperateType.Create);
+                }
+            }
+
+        }
+    }
+
+    private class CancelToUpdateListener implements android.content.DialogInterface.OnClickListener{
+        public void onClick(DialogInterface dialog, int which) {
+            dialog.cancel();
+        }
+    }
+
+    private boolean CheckUserLogin(){
+        boolean userIsLogin = super.UserCheckIsLogined(UserAlbumPicListGen.this);
+        if(userIsLogin){
+
+        }else{
+            Intent intent = new Intent(UserAlbumPicListGen.this, UserLoginGen.class);
+            startActivity(intent);
+        }
+        return userIsLogin;
+    }
+
+    private class VoteHandler extends Handler {
+        @Override
+        public void dispatchMessage(Message msg) {
+
+            HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
+
+            switch (httpClientStatus) {
+                case START_GET:
+                    break;
+                case FINISH_GET:
+                    break;
+                case ERROR_GET:
+                    ToastObject.Show(UserAlbumPicListGen.this, getString(R.string.message_load_failure));
+                    break;
+                default:
+                    System.out.println("nothing to do");
+                    break;
+            }
+        }
     }
 
     @Override

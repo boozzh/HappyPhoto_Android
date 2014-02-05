@@ -22,7 +22,6 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 
-
 import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNews;
 import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsCollections;
 import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsData;
@@ -33,7 +32,9 @@ import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.Gen.User.UserAlbumCreateGen;
 import cn.happyz.happyphoto.Gen.User.UserAlbumListAllGen;
 import cn.happyz.happyphoto.Gen.User.UserAlbumListOfMineGen;
+import cn.happyz.happyphoto.Gen.User.UserInfoGen;
 import cn.happyz.happyphoto.Gen.User.UserLoginGen;
+import cn.happyz.happyphoto.Gen.User.UserLoginRequestActivity;
 import cn.happyz.happyphoto.Tools.AppAutoUpdate;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
@@ -47,6 +48,7 @@ public class DefaultGen extends BaseGen {
     private FrameLayout btnActivityList;
     private FrameLayout btnMyPhoto;
     private FrameLayout btnOldGame;
+    private ImageButton ibtnUserInfo;
     private FrameLayout btnMoney;
     public static UserAlbumTypeCollections globalUserAlbumTypeCollections;
 
@@ -72,6 +74,7 @@ public class DefaultGen extends BaseGen {
         btnOldGame = (FrameLayout) findViewById(R.id.btnOldGame);
         btnMoney = (FrameLayout) findViewById(R.id.btnMoney);
 
+        ibtnUserInfo = (ImageButton) findViewById(R.id.ibtnUserInfo);
 
         btnUserAlbumShow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -103,20 +106,31 @@ public class DefaultGen extends BaseGen {
             }
         });
 
+        btnMoney.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(DefaultGen.this, UserInfoGen.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         TextView txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
         boolean userIsLogin = super.UserCheckIsLogined(DefaultGen.this);
-        if(userIsLogin){
+        if (userIsLogin) {
             //显示会员图像
 
+            ibtnUserInfo.setVisibility(View.VISIBLE);
+            txtUserOp.setVisibility(View.INVISIBLE);
 
-
-        }else{
+        } else {
             txtUserOp.setText(R.string.titlebar_userinfo_login);
             txtUserOp.setEnabled(true);
             txtUserOp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //确认上传作品
+                    finish();
+                    BaseGen.userLoginRequestActivity = UserLoginRequestActivity.DefaultGen;
                     Intent intent = new Intent(DefaultGen.this, UserLoginGen.class);
                     startActivityForResult(intent, 1);
                 }
@@ -125,7 +139,7 @@ public class DefaultGen extends BaseGen {
 
         String httpUrl = getString(R.string.config_default_intro_pics_url);
         LoadImagesHandler loadImagesHandler = new LoadImagesHandler();
-        DocumentNewsData documentNewsData = new DocumentNewsData(httpUrl,loadImagesHandler);
+        DocumentNewsData documentNewsData = new DocumentNewsData(httpUrl, loadImagesHandler);
         documentNewsData.GetDataFromHttp(DocumentNewsDataOperateType.GetList);
 
 
@@ -140,13 +154,13 @@ public class DefaultGen extends BaseGen {
 
             HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
 
-            switch(httpClientStatus){
+            switch (httpClientStatus) {
                 case START_GET:
                     //Toast.makeText(DefaultGen.this, "开始下载", Toast.LENGTH_SHORT).show();
 
                     progressBar = new ProgressBar(DefaultGen.this);
                     progressBar.setIndeterminate(true);
-                    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(50,50);
+                    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(50, 50);
                     params.gravity = Gravity.CENTER;
                     progressBar.setLayoutParams(params);
                     viewFlipper.addView(progressBar);
@@ -156,14 +170,14 @@ public class DefaultGen extends BaseGen {
                 case FINISH_GET:
                     //Toast.makeText(DefaultGen.this, "下载成功", Toast.LENGTH_SHORT).show();
 
-                    DocumentNewsCollections documentNewsCollections = (DocumentNewsCollections)msg.obj;
-                    for(int i=0;i<documentNewsCollections.size();i++){
+                    DocumentNewsCollections documentNewsCollections = (DocumentNewsCollections) msg.obj;
+                    for (int i = 0; i < documentNewsCollections.size(); i++) {
                         DocumentNews documentNews = documentNewsCollections.get(i);
-                        if(documentNews != null){
+                        if (documentNews != null) {
                             //构建ImageButton对象加入到轮换图中
 
                             String titlePic = documentNews.getTitlePic();
-                            String imageUrl = getString(R.string.config_site_url)+titlePic;
+                            String imageUrl = getString(R.string.config_site_url) + titlePic;
                             AsyncImageLoader asyncImageLoader = new AsyncImageLoader();
 
                             asyncImageLoader.loadDrawable(imageUrl, new AsyncImageLoader.ImageCallback() {
@@ -176,8 +190,8 @@ public class DefaultGen extends BaseGen {
                                     imageButton.setImageDrawable(imageDrawable);
                                     imageButton.setBackgroundColor(Color.parseColor("#111d49"));
                                     viewFlipper.addView(imageButton);
-                                    }
-                                });
+                                }
+                            });
 
 
                         }
@@ -198,7 +212,7 @@ public class DefaultGen extends BaseGen {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;

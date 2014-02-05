@@ -18,6 +18,7 @@ import cn.happyz.happyphoto.DataProvider.User.User;
 import cn.happyz.happyphoto.DataProvider.User.UserCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserData;
 import cn.happyz.happyphoto.DataProvider.User.UserDataOperateType;
+import cn.happyz.happyphoto.DefaultGen;
 import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.FormatObject;
@@ -34,6 +35,8 @@ public class UserLoginGen extends BaseGen {
     private Button btnUserRegister;
     private EditText txtUserName;
     private EditText txtUserPass;
+    private TextView txtUserOp;
+    private ImageButton ibtnUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,6 @@ public class UserLoginGen extends BaseGen {
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);  //titlebar为自己标题栏的布局
         TextView tvTitleBarTitle = (TextView) findViewById(R.id.txtTitleBar);
         tvTitleBarTitle.setText(R.string.user_login_title); //修改title文字
-
 
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
@@ -67,6 +69,9 @@ public class UserLoginGen extends BaseGen {
             }
         });
 
+        txtUserOp = (TextView) findViewById(R.id.titlebar_btnUserOp);
+        ibtnUserInfo = (ImageButton) findViewById(R.id.ibtnUserInfo);
+
         txtUserPass = (EditText) findViewById(R.id.user_login_txtUserPass);
         txtUserPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         txtUserPass.setOnClickListener(new View.OnClickListener() {
@@ -86,25 +91,25 @@ public class UserLoginGen extends BaseGen {
             public void onClick(View view) {
                 btnUserLogin.setEnabled(false);
                 String userName = txtUserName.getText().toString().trim();
-                if(userName == null || userName.equals("")){
+                if (userName == null || userName.equals("")) {
                     ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_tips_no_username));
                     btnUserLogin.setEnabled(true);
                     return;
                 }
                 String userPass = txtUserPass.getText().toString().trim();
-                if(userPass == null || userPass.equals("")){
+                if (userPass == null || userPass.equals("")) {
                     ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_tips_no_userpass));
                     btnUserLogin.setEnabled(true);
                     return;
                 }
 
                 String userLoginUrl = getString(R.string.config_user_login_url);
-                userLoginUrl = userLoginUrl.replace("{username}",txtUserName.getText());
-                userLoginUrl = userLoginUrl.replace("{userpass}",FormatObject.MD5(txtUserPass.getText().toString()));
-                userLoginUrl = userLoginUrl.replace("{siteid}",getString(R.string.config_siteid));
+                userLoginUrl = userLoginUrl.replace("{username}", txtUserName.getText());
+                userLoginUrl = userLoginUrl.replace("{userpass}", FormatObject.MD5(txtUserPass.getText().toString()));
+                userLoginUrl = userLoginUrl.replace("{siteid}", getString(R.string.config_siteid));
 
                 UserLoginHandler userLoginHandler = new UserLoginHandler();
-                UserData userData = new UserData(userLoginUrl,userLoginHandler);
+                UserData userData = new UserData(userLoginUrl, userLoginHandler);
                 userData.RequestFromHttp(UserDataOperateType.Login);
             }
         });
@@ -128,30 +133,44 @@ public class UserLoginGen extends BaseGen {
 
             HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
 
-            switch(httpClientStatus){
+            switch (httpClientStatus) {
                 case START_GET:
                     ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_result_begin));
                     break;
 
                 case FINISH_GET:
-                    UserCollections userCollections = (UserCollections)msg.obj;
-                    for(int i=0;i<userCollections.size();i++){
+                    UserCollections userCollections = (UserCollections) msg.obj;
+                    for (int i = 0; i < userCollections.size(); i++) {
                         User user = userCollections.get(i);
-                        if(user != null){
+                        if (user != null) {
                             Integer userId = user.getUserId();
                             String userName = user.getUserName();
                             String userPass = user.getUserPass();
-                            Integer state = user.getState();
-                            if(userId>0){
+                            int state = user.getState();
+                            int userPoint = user.getUserPoint();
+                            if (userId > 0) {
+
+                                txtUserOp.setVisibility(View.INVISIBLE);
+                                ibtnUserInfo.setVisibility(View.VISIBLE);
+
+
                                 ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_result_success));
 
                                 SharedPreferences sp = getSharedPreferences("USER_INFO", MODE_PRIVATE);
-                                sp.edit().putInt("USER_ID",userId).commit();
-                                sp.edit().putString("USER_NAME",userName).commit();
-                                sp.edit().putString("USER_PASS",userPass).commit();
-                                sp.edit().putInt("STATE",state).commit();
+                                sp.edit().putInt("USER_ID", userId).commit();
+                                sp.edit().putString("USER_NAME", userName).commit();
+                                sp.edit().putString("USER_PASS", userPass).commit();
+                                sp.edit().putInt("STATE", state).commit();
+                                sp.edit().putInt("USER_POINT", userPoint).commit();
                                 UserLoginGen.this.finish();
-                            }else{
+
+                                if (BaseGen.userLoginRequestActivity == UserLoginRequestActivity.DefaultGen) {
+
+                                    Intent intent = new Intent(UserLoginGen.this, DefaultGen.class);
+                                    startActivity(intent);
+                                }
+
+                            } else {
                                 btnUserLogin.setEnabled(true);
                                 ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_result_failure));
                             }
