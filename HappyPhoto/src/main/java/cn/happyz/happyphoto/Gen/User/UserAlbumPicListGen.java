@@ -253,6 +253,20 @@ public class UserAlbumPicListGen extends BaseGen implements GestureDetector.OnGe
                 case START_GET:
                     break;
                 case FINISH_GET:
+                    int createResult = Integer.parseInt(msg.obj.toString());
+                    if(createResult>0){
+                        String successMessage = getString(R.string.user_album_pic_list_vote_result_success);
+                        int needUserPoint = 10;
+                        successMessage = successMessage.replace("{user_point}", Integer.toString(needUserPoint));
+                        ToastObject.Show(UserAlbumPicListGen.this,successMessage);
+                    }else if(createResult == -5){
+                        ToastObject.Show(UserAlbumPicListGen.this,getString(R.string.user_album_pic_list_vote_result_has_vote));
+                    }else if(createResult == -10){
+                        ToastObject.Show(UserAlbumPicListGen.this,getString(R.string.user_album_pic_list_vote_result_error_user));
+                    }else if(createResult == -4){
+                        ToastObject.Show(UserAlbumPicListGen.this,getString(R.string.user_album_pic_list_vote_result_no_user_point));
+
+                    }
                     break;
                 case ERROR_GET:
                     ToastObject.Show(UserAlbumPicListGen.this, getString(R.string.message_load_failure));

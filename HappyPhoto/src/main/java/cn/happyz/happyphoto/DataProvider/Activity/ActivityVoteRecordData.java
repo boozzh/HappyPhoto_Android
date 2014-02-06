@@ -30,8 +30,8 @@ public class ActivityVoteRecordData extends BaseData implements Runnable {
             if(result != null){
                 try {
                     int createResult = -1;
-                    JSONObject jsonObject = new JSONObject(result).getJSONObject("activity_user");
-                    JSONArray jsonArray = jsonObject.getJSONArray("activity_user_create_result");
+                    JSONObject jsonObject = new JSONObject(result).getJSONObject("activity_vote_record");
+                    JSONArray jsonArray = jsonObject.getJSONArray("activity_vote_record_create_result");
 
                     for(int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject2 = (JSONObject)jsonArray.opt(i);

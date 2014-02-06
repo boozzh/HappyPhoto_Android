@@ -77,6 +77,11 @@
     <string name="user_album_pic_list_vote_dialog_message">您当前剩余乐图币：{user_point}，投票需花费10个乐图币，是否投票?</string>
     <string name="user_album_pic_list_vote_dialog_confirm">投票</string>
     <string name="user_album_pic_list_vote_dialog_cancel">取消</string>
+    <string name="user_album_pic_list_vote_result_success">投票成功，扣除{user_point}乐图币</string>
+    <string name="user_album_pic_list_vote_result_fail">投票失败，本次操作未扣除乐图币</string>
+    <string name="user_album_pic_list_vote_result_has_vote">您已经投过票了，本次操作未扣除乐图币</string>
+    <string name="user_album_pic_list_vote_result_no_user_point">您的乐图币不够了，请充值后操作</string>
+    <string name="user_album_pic_list_vote_result_error_user">会员验证出错，请重新登录，本次操作未扣除乐图币</string>
 
 
     <string name="activity_list_all_title">手机拍比赛</string>
