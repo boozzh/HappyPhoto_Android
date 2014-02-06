@@ -8,6 +8,7 @@ import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import cn.happyz.happyphoto.AppApplication;
 import cn.happyz.happyphoto.DataProvider.Activity.Activity;
 import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.R;
@@ -43,18 +44,18 @@ public class ActivityDetailGen extends BaseGen {
         LoadData();
     }
 
-    private void LoadData(){
-        if(ActivityListGen.activityCollectionsOfListAll != null && ActivityListGen.activityCollectionsOfListAll.size()>0){
-            Activity activity = ActivityListGen.activityCollectionsOfListAll.get(ActivityListGen.activityPositionsOfListAll);
-            if(activity != null){
-                webViewOfActivityDetail = (WebView) findViewById(R.id.webViewOfActivityDetail);
-                webViewOfActivityDetail.getSettings().setJavaScriptEnabled(true);
-                String encoding = "UTF-8";
-                String mimeType = "text/html";
-                final String activityContent = activity.getActivityContent();
-                webViewOfActivityDetail.loadDataWithBaseURL("file://", activityContent,mimeType, encoding, "about:blank");
-            }
+    private void LoadData() {
+        Activity activity = ((AppApplication) getApplication()).getNowSelectActivity();
+
+        if (activity != null) {
+            webViewOfActivityDetail = (WebView) findViewById(R.id.webViewOfActivityDetail);
+            webViewOfActivityDetail.getSettings().setJavaScriptEnabled(true);
+            String encoding = "UTF-8";
+            String mimeType = "text/html";
+            final String activityContent = activity.getActivityContent();
+            webViewOfActivityDetail.loadDataWithBaseURL("file://", activityContent, mimeType, encoding, "about:blank");
         }
+
     }
 
 }

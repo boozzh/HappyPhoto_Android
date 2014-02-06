@@ -12,9 +12,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import cn.happyz.happyphoto.AppApplication;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.FormatObject;
+import cn.happyz.happyphoto.Tools.ToastObject;
 
 /**
  *
@@ -46,26 +48,30 @@ public class UserAlbumListAdapter extends ArrayAdapter<UserAlbum> {
         if(linearLayout != null)
         {
             linearLayout.setBackgroundColor(Color.parseColor("#333333"));
-            linearLayout.setPadding(10,10,10,10);
+            linearLayout.setPadding(5,5,5,5);
 
             String coverPicUrl = _context.getString(R.string.config_site_url) + "/" + _userAlbumCollections.get(position).getCoverPicUrl();
             if(!"".equals(coverPicUrl)){
                 final ImageView ivCoverPicUrlOfListItem = new ImageView(linearLayout.getContext());
-                ViewGroup.LayoutParams imageParam = new ViewGroup.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,FrameLayout.LayoutParams.FILL_PARENT);
+                ViewGroup.LayoutParams imageParam = new ViewGroup.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
                 ivCoverPicUrlOfListItem.setLayoutParams(imageParam);
                 ivCoverPicUrlOfListItem.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 final FrameLayout frameLayout1 = new FrameLayout(linearLayout.getContext());
-                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,FormatObject.DipToPx(linearLayout.getContext(),100));
-                frameLayout1.setBackgroundColor(Color.parseColor("#efefef"));
-                frameLayout1.setPadding(
-                        FormatObject.DipToPx(linearLayout.getContext(),2)
-                        ,FormatObject.DipToPx(linearLayout.getContext(),2)
-                        ,FormatObject.DipToPx(linearLayout.getContext(),2)
-                        ,FormatObject.DipToPx(linearLayout.getContext(),2));
+
+
+                int displayWidth = ((AppApplication)_context.getApplicationContext()).getDisplayWidth();
+                //每行三个
+                int imageWidth = displayWidth/3 - FormatObject.DipToPx(linearLayout.getContext(), 12); //px
+
+                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(imageWidth,imageWidth);
+                //frameLayout1.setBackgroundColor(Color.parseColor("#efefef"));
+
+
+                //frameLayout1.setPadding(2,2,2,2);
                 params1.gravity = Gravity.CENTER;
                 frameLayout1.setLayoutParams(params1);
                 final FrameLayout frameLayout2 = new FrameLayout(linearLayout.getContext());
-                FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,FrameLayout.LayoutParams.FILL_PARENT);
+                FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
                 frameLayout2.setBackgroundColor(Color.parseColor("#333333"));
                 //frameLayout2.setPadding(3,3,3,3);
                 params2.gravity = Gravity.CENTER;

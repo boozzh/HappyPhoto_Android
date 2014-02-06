@@ -27,7 +27,7 @@
                 android:numColumns="auto_fit"
                 android:verticalSpacing="2dp"
                 android:horizontalSpacing="2dp"
-                android:columnWidth="104dp"
+                android:columnWidth="100dp"
                 android:stretchMode="columnWidth"
                 android:gravity="center"
 
@@ -48,7 +48,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:text="@string/activity_album_list_view_mine_voted"
-            android:id="@+id/btn_activity_album_list_view_mine_voted"
+            android:id="@+id/btn_view_my_voted"
             style="@style/ButtonStyle"
             android:textSize="20dp"
             android:layout_marginLeft="5dp"

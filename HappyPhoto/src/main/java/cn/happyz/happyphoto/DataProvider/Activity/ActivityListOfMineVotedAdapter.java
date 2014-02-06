@@ -15,9 +15,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import cn.happyz.happyphoto.AppApplication;
 import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumSelectGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityDetailGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityListGen;
+import cn.happyz.happyphoto.Gen.Activity.ActivityVoteRecordListOfMyVotedGen;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.FormatObject;
@@ -46,15 +48,14 @@ public class ActivityListOfMineVotedAdapter extends ArrayAdapter<Activity> {
     }
 
     private View LoadData(int position, View convertView, ViewGroup parent){
-        ActivityListGen.activityPositionsOfListAll = position;
-
         LayoutInflater layoutInflater = LayoutInflater.from(_context);
         final LinearLayout linearLayout = (LinearLayout)layoutInflater.inflate(_resource, null);
         if(linearLayout != null)
         {
             linearLayout.setPadding(10,10,10,10);
 
-            String titlePic = _activityCollections.get(position).getTitlePic();
+            final Activity activity = _activityCollections.get(position);
+            String titlePic = activity.getTitlePic();
             if(!"".equals(titlePic)){
                 final ImageView ivTitlePicOfListItem = new ImageView(linearLayout.getContext());
                 ViewGroup.LayoutParams imageParam = new ViewGroup.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,FrameLayout.LayoutParams.FILL_PARENT);
@@ -83,6 +84,8 @@ public class ActivityListOfMineVotedAdapter extends ArrayAdapter<Activity> {
                         ivTitlePicOfListItem.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                ((AppApplication)_context.getApplicationContext()).setNowSelectActivity(activity);
+
                                 Intent intent = new Intent(linearLayout.getContext(), ActivityDetailGen.class);
                                 linearLayout.getContext().startActivity(intent);
                             }
@@ -93,12 +96,14 @@ public class ActivityListOfMineVotedAdapter extends ArrayAdapter<Activity> {
                         linearLayout.addView(frameLayout1);
 
                         Button button = new Button(linearLayout.getContext());
-                        button.setText(R.string.activity_join);
+                        button.setText(R.string.activity_list_of_mine_voted_button_view_my_voted_album);
                         button.setBackgroundColor(Color.parseColor("#efefef"));
                         button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(linearLayout.getContext(), ActivityAlbumSelectGen.class);
+                                ((AppApplication)_context.getApplicationContext()).setNowSelectActivity(activity);
+
+                                Intent intent = new Intent(linearLayout.getContext(), ActivityVoteRecordListOfMyVotedGen.class);
                                 linearLayout.getContext().startActivity(intent);
                             }
                         });
@@ -114,6 +119,7 @@ public class ActivityListOfMineVotedAdapter extends ArrayAdapter<Activity> {
             tvActivitySubjectOfListItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    ((AppApplication)_context.getApplicationContext()).setNowSelectActivity(activity);
                     Intent intent = new Intent(linearLayout.getContext(), ActivityDetailGen.class);
                     linearLayout.getContext().startActivity(intent);
                 }

@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#999999">
+    android:background="#111d49">
 
 
 
@@ -11,14 +11,14 @@
         android:id="@+id/main_pull_refresh_view"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#999999"
+        android:background="#111d49"
         android:layout_weight="20">
 
         <ListView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/listViewOfActivityList"
-            android:background="#999999"/>
+            android:background="#111d49"/>
 
     </cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView>
 

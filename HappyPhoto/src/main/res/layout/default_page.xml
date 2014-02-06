@@ -28,7 +28,8 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#111d49">
+        android:background="#111d49"
+        android:layout_marginTop="5dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -50,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/default_block_1_name"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textColor="#CBD1D1"
                     android:layout_gravity="center|top"
                     android:layout_marginTop="25dp" />
@@ -69,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/default_block_2_name_2"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textColor="#CBD1D1"
                     android:layout_gravity="center|top"
                     android:layout_marginTop="25dp" />
@@ -95,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/default_block_3_name"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textColor="#CBD1D1"
                     android:layout_gravity="center|top"
                     android:layout_marginTop="25dp" />
@@ -114,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/default_block_4_name"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textColor="#CBD1D1"
                     android:layout_gravity="center|top"
                     android:layout_marginTop="25dp" />
@@ -143,7 +144,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/default_block_5_name"
                     android:layout_gravity="center|top"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textColor="#CBD1D1"
                     android:layout_marginTop="25dp" />
 
@@ -162,7 +163,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/default_block_6_name"
                     android:layout_gravity="center|top"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textColor="#CBD1D1"
                     android:layout_marginTop="25dp" />
             </FrameLayout>

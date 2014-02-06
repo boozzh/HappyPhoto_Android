@@ -22,6 +22,7 @@ public class UserInfoGen extends BaseGen {
     private ImageButton btnBack;
     private Button btnLogout;
     private TextView txtUserOp;
+    private TextView textViewOfUserPoint;
     private ImageButton ibtnUserInfo;
 
     @Override
@@ -40,6 +41,8 @@ public class UserInfoGen extends BaseGen {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(UserInfoGen.this, DefaultGen.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -62,5 +65,9 @@ public class UserInfoGen extends BaseGen {
                 finish();
             }
         });
+
+        textViewOfUserPoint = (TextView) findViewById(R.id.textViewOfUserPoint);
+        int nowUserPoint = super.GetNowUserPoint(this);
+        textViewOfUserPoint.setText(Integer.toString(nowUserPoint));
     }
 }

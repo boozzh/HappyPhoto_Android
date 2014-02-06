@@ -17,10 +17,9 @@
             android:numColumns="auto_fit"
             android:verticalSpacing="2dp"
             android:horizontalSpacing="2dp"
-            android:columnWidth="104dp"
+            android:columnWidth="100dp"
             android:stretchMode="columnWidth"
             android:gravity="center"
-
             />
 
     </cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView>

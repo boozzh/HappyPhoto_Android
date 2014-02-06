@@ -37,7 +37,9 @@ import cn.happyz.happyphoto.Gen.User.UserLoginGen;
 import cn.happyz.happyphoto.Gen.User.UserLoginRequestActivity;
 import cn.happyz.happyphoto.Tools.AppAutoUpdate;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
+import cn.happyz.happyphoto.Tools.FormatObject;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
+import cn.happyz.happyphoto.Tools.ToastObject;
 
 
 public class DefaultGen extends BaseGen {
@@ -75,6 +77,13 @@ public class DefaultGen extends BaseGen {
         btnMoney = (FrameLayout) findViewById(R.id.btnMoney);
 
         ibtnUserInfo = (ImageButton) findViewById(R.id.ibtnUserInfo);
+        ibtnUserInfo.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(DefaultGen.this, UserInfoGen.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         btnUserAlbumShow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -142,7 +151,14 @@ public class DefaultGen extends BaseGen {
         DocumentNewsData documentNewsData = new DocumentNewsData(httpUrl, loadImagesHandler);
         documentNewsData.GetDataFromHttp(DocumentNewsDataOperateType.GetList);
 
+        //初始化一些系统值
 
+        int displayWidth = FormatObject.GetDisplayWidth(this);
+        ((AppApplication)getApplication()).setDisplayWidth(displayWidth);
+
+
+
+        //check update
         AppAutoUpdate appAutoUpdate = new AppAutoUpdate(this);
         appAutoUpdate.CheckAndUpdate();
 
@@ -182,14 +198,23 @@ public class DefaultGen extends BaseGen {
 
                             asyncImageLoader.loadDrawable(imageUrl, new AsyncImageLoader.ImageCallback() {
                                 public void imageLoaded(Drawable imageDrawable, String imageUrl) {
-                                    ImageButton imageButton = new ImageButton(DefaultGen.this);
-                                    LinearLayout.LayoutParams ibParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,
-                                            LinearLayout.LayoutParams.FILL_PARENT);
-                                    imageButton.setLayoutParams(ibParams);
-                                    imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                                    imageButton.setImageDrawable(imageDrawable);
-                                    imageButton.setBackgroundColor(Color.parseColor("#111d49"));
-                                    viewFlipper.addView(imageButton);
+                                    //ImageButton imageButton = new ImageButton(DefaultGen.this);
+                                    //LinearLayout.LayoutParams ibParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                    //        LinearLayout.LayoutParams.MATCH_PARENT);
+                                    //imageButton.setLayoutParams(ibParams);
+                                    //imageButton.setScaleType(ImageView.ScaleType.FIT_START);
+                                    //imageButton.setImageDrawable(imageDrawable);
+                                    //imageButton.setBackgroundColor(Color.parseColor("#111d49"));
+                                    //viewFlipper.addView(imageButton);
+
+                                    ImageView imageView = new ImageView(DefaultGen.this);
+                                    imageView.setImageDrawable(imageDrawable);
+                                    LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                                    LinearLayout.LayoutParams.MATCH_PARENT);
+                                    imageView.setLayoutParams(imageViewParams);
+                                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                    imageView.setBackgroundColor(Color.parseColor("#111d49"));
+                                    viewFlipper.addView(imageView);
                                 }
                             });
 

@@ -6,6 +6,7 @@ package cn.happyz.happyphoto.DataProvider.Activity;
 public enum ActivityVoteRecordDataOperateType {
     Null,
     GetList,
+    GetListOfMyVote,
     Create,
     Delete
 }

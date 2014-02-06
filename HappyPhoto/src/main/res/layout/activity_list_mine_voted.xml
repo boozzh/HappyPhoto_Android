@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#999999">
+    android:background="#111d49">
 
 
 
@@ -11,41 +11,15 @@
         android:id="@+id/main_pull_refresh_view"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#999999"
+        android:background="#111d49"
         android:layout_weight="20">
 
         <ListView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/listViewOfActivityList"
-            android:background="#999999"/>
+            android:background="#111d49"/>
 
     </cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:gravity="bottom">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="@string/activity_list_btn_my_joined_activity"
-            android:id="@+id/btnMyJoinedActivity"
-            android:layout_weight="1"
-            style="@style/ButtonStyle"
-            android:layout_margin="1dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="@string/activity_list_btn_my_voted_activity"
-            android:id="@+id/btnMyVotedActivity"
-            android:layout_weight="1"
-            style="@style/ButtonStyle"
-            android:layout_margin="1dp" />
-    </LinearLayout>
 </LinearLayout>

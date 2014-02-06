@@ -1,8 +1,12 @@
 package cn.happyz.happyphoto.Tools;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 
 import java.security.MessageDigest;
+
+import cn.happyz.happyphoto.DataProvider.Activity.Activity;
+import cn.happyz.happyphoto.Gen.BaseGen;
 
 /**
  * Created by zcmzc on 13-11-18.
@@ -43,13 +47,32 @@ public class FormatObject {
         return hexValue.toString();
     }
 
+    /**
+     * 将dip值转换为px值
+     * @param context
+     * @param dipValue
+     * @return
+     */
     public static int DipToPx(Context context, float dipValue){
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int)(dipValue * scale + 0.5f);
     }
 
+    /**
+     * 将px值转换为dip值
+     * @param context
+     * @param pxValue
+     * @return
+     */
     public static int PxToDip(Context context, float pxValue){
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int)(pxValue / scale + 0.5f);
+    }
+
+    public static int GetDisplayWidth(BaseGen activity){
+        DisplayMetrics metrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;// 屏幕的宽dp
+        return width;
     }
 }

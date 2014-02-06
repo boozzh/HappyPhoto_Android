@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import cn.happyz.happyphoto.AppApplication;
 import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumSelectGen;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
@@ -46,27 +47,31 @@ public class UserAlbumListForSelectAdapter extends ArrayAdapter<UserAlbum> {
         final LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(_resource, null);
         if (linearLayout != null) {
             linearLayout.setBackgroundColor(Color.parseColor("#333333"));
-            linearLayout.setPadding(10, 10, 10, 10);
+            linearLayout.setPadding(5, 5, 5, 5);
 
             String coverPicUrl = _context.getString(R.string.config_site_url) + "/" + _userAlbumCollections.get(position).getCoverPicUrl();
             final int nowPosition = position;
             if (!"".equals(coverPicUrl)) {
                 final ImageView ivCoverPicUrlOfListItem = new ImageView(linearLayout.getContext());
-                ViewGroup.LayoutParams imageParam = new ViewGroup.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, FrameLayout.LayoutParams.FILL_PARENT);
+                ViewGroup.LayoutParams imageParam = new ViewGroup.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
                 ivCoverPicUrlOfListItem.setLayoutParams(imageParam);
                 ivCoverPicUrlOfListItem.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 final FrameLayout frameLayout1 = new FrameLayout(linearLayout.getContext());
-                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, FormatObject.DipToPx(linearLayout.getContext(), 100));
+                int displayWidth = ((AppApplication)_context.getApplicationContext()).getDisplayWidth();
+                //每行三个
+                int imageWidth = displayWidth/3 - FormatObject.DipToPx(linearLayout.getContext(), 12); //px
+
+                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(imageWidth,imageWidth);
                 frameLayout1.setBackgroundColor(Color.parseColor("#efefef"));
-                frameLayout1.setPadding(
-                        FormatObject.DipToPx(linearLayout.getContext(), 2)
-                        , FormatObject.DipToPx(linearLayout.getContext(), 2)
-                        , FormatObject.DipToPx(linearLayout.getContext(), 2)
-                        , FormatObject.DipToPx(linearLayout.getContext(), 2));
+                //frameLayout1.setPadding(
+                //        FormatObject.DipToPx(linearLayout.getContext(), 2)
+                //        , FormatObject.DipToPx(linearLayout.getContext(), 2)
+                //        , FormatObject.DipToPx(linearLayout.getContext(), 2)
+                //        , FormatObject.DipToPx(linearLayout.getContext(), 2));
                 params1.gravity = Gravity.CENTER;
                 frameLayout1.setLayoutParams(params1);
                 final FrameLayout frameLayout2 = new FrameLayout(linearLayout.getContext());
-                FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, FrameLayout.LayoutParams.FILL_PARENT);
+                FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
                 frameLayout2.setBackgroundColor(Color.parseColor("#333333"));
                 //frameLayout2.setPadding(3,3,3,3);
                 params2.gravity = Gravity.CENTER;
@@ -89,7 +94,7 @@ public class UserAlbumListForSelectAdapter extends ArrayAdapter<UserAlbum> {
                                     //已经有这个作品了，进行取消操作
                                     ActivityAlbumSelectGen.selectedUserAlbumId =
                                             ActivityAlbumSelectGen.selectedUserAlbumId.replace(addToString, "");
-                                    paddingValue = 2;
+                                    frameLayout1.setPadding(0,0,0,0);
                                 } else {
                                     //还没有这个作品，进行添加操作
                                     if (ActivityAlbumSelectGen.selectedUserAlbumId == null) {
@@ -98,13 +103,14 @@ public class UserAlbumListForSelectAdapter extends ArrayAdapter<UserAlbum> {
                                         ActivityAlbumSelectGen.selectedUserAlbumId += '|' + Integer.toString(userAlbumId);
                                     }
                                     paddingValue = 6;
+                                    frameLayout1.setPadding(
+                                            FormatObject.DipToPx(linearLayout.getContext(), paddingValue)
+                                            , FormatObject.DipToPx(linearLayout.getContext(), paddingValue)
+                                            , FormatObject.DipToPx(linearLayout.getContext(), paddingValue)
+                                            , FormatObject.DipToPx(linearLayout.getContext(), paddingValue));
                                 }
 
-                                frameLayout1.setPadding(
-                                        FormatObject.DipToPx(linearLayout.getContext(), paddingValue)
-                                        , FormatObject.DipToPx(linearLayout.getContext(), paddingValue)
-                                        , FormatObject.DipToPx(linearLayout.getContext(), paddingValue)
-                                        , FormatObject.DipToPx(linearLayout.getContext(), paddingValue));
+
                             }
                         });
                     }

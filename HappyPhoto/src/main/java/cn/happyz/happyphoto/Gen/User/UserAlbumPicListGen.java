@@ -4,14 +4,13 @@ import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,26 +20,22 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import java.util.Date;
-
-import cn.happyz.happyphoto.DataProvider.Activity.ActivityAlbumListAdapter;
+import cn.happyz.happyphoto.AppApplication;
+import cn.happyz.happyphoto.DataProvider.Activity.Activity;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityVoteRecordData;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityVoteRecordDataOperateType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbum;
-import cn.happyz.happyphoto.DataProvider.User.UserAlbumCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumPicCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumPicData;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumPicDataOperateType;
 import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumListGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityListGen;
+import cn.happyz.happyphoto.Gen.Activity.ActivityVoteRecordListOfMyVotedGen;
 import cn.happyz.happyphoto.Gen.BaseGen;
-import cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.DialogHelper;
@@ -78,6 +73,7 @@ public class UserAlbumPicListGen extends BaseGen implements GestureDetector.OnGe
     private int nowUserId;
     private String nowUserName;
     private String nowUserPass;
+    private int nowUserPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +132,14 @@ public class UserAlbumPicListGen extends BaseGen implements GestureDetector.OnGe
         }else if(BaseGen.userAlbumPicListShowModule == UserAlbumPicListShowModule.UserAlbumOfActivityAlbumList){ //某活动报名作品
             userAlbum = ActivityAlbumListGen.userAlbumCollectionsOfActivityAlbumList.get(ActivityAlbumListGen.ImagePositionsOfActivityAlbum);
             //隐藏删除按钮
-            ibtnDeletePic.setVisibility(View.INVISIBLE);
+            ibtnDeletePic.setVisibility(View.GONE);
+            btnVote.setVisibility(View.VISIBLE);
+        }else if(BaseGen.userAlbumPicListShowModule == UserAlbumPicListShowModule.UserAlbumOfActivityVoteRecordListOfMyVoted){ //某活动我投票的作品
+            userAlbum = ActivityVoteRecordListOfMyVotedGen.userAlbumCollectionsOfActivityVoteRecordListOfMyVoted
+                    .get(ActivityVoteRecordListOfMyVotedGen.ImagePositionsOfActivityVoteRecordOfMyVoted);
+            //隐藏删除按钮
+            ibtnDeletePic.setVisibility(View.GONE);
+            btnVote.setVisibility(View.GONE);
         }
         if(userAlbum != null){
             userAlbumId = userAlbum.getUserAlbumId();
@@ -185,9 +188,9 @@ public class UserAlbumPicListGen extends BaseGen implements GestureDetector.OnGe
             nowUserId = super.GetNowUserId(this);
             nowUserName = super.GetNowUserName(this);
             nowUserPass = super.GetNowUserPass(this);
-            int userPoint = super.GetNowUserPoint(this);
+            nowUserPoint = super.GetNowUserPoint(this);
             String message = getString(R.string.user_album_pic_list_vote_dialog_message);
-            message = message.replace("{user_point}", Integer.toString(userPoint));
+            message = message.replace("{user_point}", Integer.toString(nowUserPoint));
             //弹出确认框
             DialogHelper.Confirm(UserAlbumPicListGen.this,
                     getString(R.string.user_album_pic_list_vote_dialog_title),
@@ -197,17 +200,15 @@ public class UserAlbumPicListGen extends BaseGen implements GestureDetector.OnGe
                     R.string.user_album_pic_list_vote_dialog_cancel,
                     new CancelToUpdateListener()
             );
-
-
-
         }
     }
 
     private class ConfirmToVoteListener implements android.content.DialogInterface.OnClickListener{
         public void onClick(DialogInterface dialog, int which) {
+            Activity activity = ((AppApplication) getApplication()).getNowSelectActivity();
 
-            if(ActivityListGen.activityCollectionsOfListAll != null && ActivityListGen.activityCollectionsOfListAll.size()>0){
-                int activityId = ActivityListGen.activityCollectionsOfListAll.get(ActivityListGen.activityPositionsOfListAll).getActivityId();
+            if(activity != null){
+                int activityId = activity.getActivityId();
                 if(activityId>0 && userAlbumId>0){
                     String httpUrl = getString(R.string.config_activity_vote_record_create_url);
                     int siteId = Integer.parseInt(getString(R.string.config_siteid));
@@ -259,6 +260,13 @@ public class UserAlbumPicListGen extends BaseGen implements GestureDetector.OnGe
                         int needUserPoint = 10;
                         successMessage = successMessage.replace("{user_point}", Integer.toString(needUserPoint));
                         ToastObject.Show(UserAlbumPicListGen.this,successMessage);
+
+                        //更新当前乐图币值
+                        if(needUserPoint > 0 && nowUserPoint >= needUserPoint){
+                            int newUserPoint = nowUserPoint - needUserPoint;
+                            SharedPreferences sp = getSharedPreferences("USER_INFO", MODE_PRIVATE);
+                            sp.edit().putInt("USER_POINT", newUserPoint).commit();
+                        }
                     }else if(createResult == -5){
                         ToastObject.Show(UserAlbumPicListGen.this,getString(R.string.user_album_pic_list_vote_result_has_vote));
                     }else if(createResult == -10){

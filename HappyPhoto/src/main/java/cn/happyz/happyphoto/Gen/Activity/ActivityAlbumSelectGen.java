@@ -18,6 +18,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
 
+import cn.happyz.happyphoto.AppApplication;
 import cn.happyz.happyphoto.DataProvider.Activity.Activity;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityAlbumData;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityAlbumDataOperateType;
@@ -46,6 +47,8 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
     int PageSize = 18;
     int PageIndex = 1;
     UserAlbumListForSelectAdapter userAlbumListForSelectAdapter;
+    private boolean finishCreateActivityUser = false;
+    private boolean finishCraeteActivityAlbum = false;
 
     /**
      * 已经选择的作品id,以|分隔
@@ -99,25 +102,22 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
 
     private void SubmitActivityAlbum(int nowUserId, String nowUserName, String nowUserPass) throws UnsupportedEncodingException {
         if (selectedUserAlbumId != null && !selectedUserAlbumId.equals("")) {
-            int activityPositionsOfListAll = ActivityListGen.activityPositionsOfListAll;
-            if (ActivityListGen.activityCollectionsOfListAll != null && activityPositionsOfListAll >= 0) {
-                Activity activity = ActivityListGen.activityCollectionsOfListAll.get(activityPositionsOfListAll);
-                if (activity != null) {
-                    int activityId = activity.getActivityId();
-                    if (activityId > 0) {
-                        String httpUrl = getString(R.string.config_activity_album_create_url);
-                        httpUrl = httpUrl.replace("{activity_id}", Integer.toString(activityId));
-                        String user_album_id = "";
-                        user_album_id = URLEncoder.encode(selectedUserAlbumId, "UTF-8");
-                        httpUrl = httpUrl.replace("{user_album_id}", user_album_id);
-                        httpUrl = httpUrl.replace("{user_id}", Integer.toString(nowUserId));
-                        httpUrl = httpUrl.replace("{site_id}", getString(R.string.config_siteid));
-                        httpUrl = httpUrl.replace("{user_name}", nowUserName);
-                        httpUrl = httpUrl.replace("{user_pass}", nowUserPass);
-                        ActivityAlbumCreateHandler activityAlbumCreateHandler = new ActivityAlbumCreateHandler();
-                        ActivityAlbumData activityAlbumData = new ActivityAlbumData(httpUrl, activityAlbumCreateHandler);
-                        activityAlbumData.GetDataFromHttp(ActivityAlbumDataOperateType.Create);
-                    }
+            Activity activity = ((AppApplication) getApplication()).getNowSelectActivity();
+            if (activity != null) {
+                int activityId = activity.getActivityId();
+                if (activityId > 0) {
+                    String httpUrl = getString(R.string.config_activity_album_create_url);
+                    httpUrl = httpUrl.replace("{activity_id}", Integer.toString(activityId));
+                    String user_album_id = "";
+                    user_album_id = URLEncoder.encode(selectedUserAlbumId, "UTF-8");
+                    httpUrl = httpUrl.replace("{user_album_id}", user_album_id);
+                    httpUrl = httpUrl.replace("{user_id}", Integer.toString(nowUserId));
+                    httpUrl = httpUrl.replace("{site_id}", getString(R.string.config_siteid));
+                    httpUrl = httpUrl.replace("{user_name}", nowUserName);
+                    httpUrl = httpUrl.replace("{user_pass}", nowUserPass);
+                    ActivityAlbumCreateHandler activityAlbumCreateHandler = new ActivityAlbumCreateHandler();
+                    ActivityAlbumData activityAlbumData = new ActivityAlbumData(httpUrl, activityAlbumCreateHandler);
+                    activityAlbumData.GetDataFromHttp(ActivityAlbumDataOperateType.Create);
                 }
             }
         }
@@ -125,26 +125,24 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
 
     private void SubmitActivityUser(int nowUserId, String nowUserName, String nowUserPass) {
         if (selectedUserAlbumId != null && !selectedUserAlbumId.equals("")) {
-            int activityPositionsOfListAll = ActivityListGen.activityPositionsOfListAll;
-            if (ActivityListGen.activityCollectionsOfListAll != null && activityPositionsOfListAll >= 0) {
-                Activity activity = ActivityListGen.activityCollectionsOfListAll.get(activityPositionsOfListAll);
-                if (activity != null) {
-                    int activityId = activity.getActivityId();
-                    if (activityId > 0) {
-                        String httpUrl = getString(R.string.config_activity_user_create_url);
-                        httpUrl = httpUrl.replace("{activity_id}", Integer.toString(activityId));
-                        httpUrl = httpUrl.replace("{user_id}", Integer.toString(nowUserId));
-                        httpUrl = httpUrl.replace("{site_id}", getString(R.string.config_siteid));
-                        httpUrl = httpUrl.replace("{user_name}", nowUserName);
-                        httpUrl = httpUrl.replace("{user_pass}", nowUserPass);
-                        ActivityUserCreateHandler activityUserCreateHandler = new ActivityUserCreateHandler();
-                        ActivityUserData activityUserData = new ActivityUserData(httpUrl, activityUserCreateHandler);
-                        activityUserData.GetDataFromHttp(ActivityUserDataOperateType.Create);
+            Activity activity = ((AppApplication) getApplication()).getNowSelectActivity();
+            if (activity != null) {
+                int activityId = activity.getActivityId();
+                if (activityId > 0) {
+                    String httpUrl = getString(R.string.config_activity_user_create_url);
+                    httpUrl = httpUrl.replace("{activity_id}", Integer.toString(activityId));
+                    httpUrl = httpUrl.replace("{user_id}", Integer.toString(nowUserId));
+                    httpUrl = httpUrl.replace("{site_id}", getString(R.string.config_siteid));
+                    httpUrl = httpUrl.replace("{user_name}", nowUserName);
+                    httpUrl = httpUrl.replace("{user_pass}", nowUserPass);
+                    ActivityUserCreateHandler activityUserCreateHandler = new ActivityUserCreateHandler();
+                    ActivityUserData activityUserData = new ActivityUserData(httpUrl, activityUserCreateHandler);
+                    activityUserData.GetDataFromHttp(ActivityUserDataOperateType.Create);
 
-                        //ToastObject.Show(ActivityAlbumSelectGen.this,activityId + "," + selectedUserAlbumId);
+                    //ToastObject.Show(ActivityAlbumSelectGen.this,activityId + "," + selectedUserAlbumId);
 
-                    }
                 }
+
             }
         }
     }
@@ -222,8 +220,15 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
                 case FINISH_GET:
                     ToastObject.Show(ActivityAlbumSelectGen.this, getString(R.string.activity_album_select_submit_activity_user_success));
 
-                    Intent intent = new Intent(ActivityAlbumSelectGen.this, ActivityListOfMineJoinedGen.class);
-                    startActivity(intent);
+
+                    finishCreateActivityUser = true;
+
+                    if(finishCreateActivityUser && finishCraeteActivityAlbum){
+                        finish();
+                        Intent intent = new Intent(ActivityAlbumSelectGen.this, ActivityListOfMineJoinedGen.class);
+                        startActivity(intent);
+                    }
+
                     break;
                 case ERROR_GET:
                     break;
@@ -243,7 +248,15 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
                 case START_GET:
                     break;
                 case FINISH_GET:
-                    //ToastObject.Show(ActivityAlbumSelectGen.this,getString(R.string.activity_album_select_submit_activity_user_success));
+
+                    finishCraeteActivityAlbum = true;
+
+                    if(finishCreateActivityUser && finishCraeteActivityAlbum){
+                        finish();
+                        Intent intent = new Intent(ActivityAlbumSelectGen.this, ActivityListOfMineJoinedGen.class);
+                        startActivity(intent);
+                    }
+
                     break;
                 case ERROR_GET:
                     break;

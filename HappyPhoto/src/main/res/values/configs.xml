@@ -17,7 +17,7 @@
         <![CDATA[http://hp.mysense.cn/index.php?&a=doc&f=news&m=listformobile&p=1&ps=5&cid=2]]>
     </string>
     <string name="config_user_login_url">
-        <![CDATA[http://hp.mysense.cn/index.php?&a=user&f=asyncloginforclient&username={username}&userpass={userpass}&siteid={siteid}]]>
+        <![CDATA[http://hp.mysense.cn/index.php?&a=user&f=asyncloginforclient&username={user_name}&userpass={user_pass}&siteid={site_id}]]>
     </string>
     <string name="config_user_register_url">
         <![CDATA[http://hp.mysense.cn/index.php?&a=user&f=asyncregisterforclient&username={username}&userpass={userpass}&siteid={siteid}]]>
@@ -55,6 +55,9 @@
     <string name="config_activity_get_list_of_mine_joined_url">
         <![CDATA[http://hp.mysense.cn/index.php?a=activity&f=client_list_of_mine_joined&user_id={user_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
     </string>
+    <string name="config_activity_get_list_of_mine_voted_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=activity&f=client_list_of_mine_voted&user_id={user_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
+    </string>
     <string name="config_activity_user_create_url">
         <![CDATA[http://hp.mysense.cn/index.php?a=activity_user&m=client_create&activity_id={activity_id}&user_id={user_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
     </string>
@@ -70,7 +73,13 @@
     <string name="config_activity_album_list_url">
         <![CDATA[http://hp.mysense.cn/index.php?a=activity_album&m=client_list&activity_id={activity_id}&site_id={site_id}]]>
     </string>
+    <string name="config_activity_album_list_of_mine_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=activity_album&m=client_list_of_mine&activity_id={activity_id}&site_id={site_id}&user_id={user_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
+    </string>
     <string name="config_activity_vote_record_create_url">
         <![CDATA[http://hp.mysense.cn/index.php?a=activity_vote_record&f=client_create&activity_id={activity_id}&site_id={site_id}&user_album_id={user_album_id}&user_id={user_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
+    </string>
+    <string name="config_activity_vote_record_list_of_my_voted_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=activity_vote_record&f=client_list_of_my_voted&activity_id={activity_id}&activity_round={activity_round}&user_id={user_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
     </string>
 </resources>

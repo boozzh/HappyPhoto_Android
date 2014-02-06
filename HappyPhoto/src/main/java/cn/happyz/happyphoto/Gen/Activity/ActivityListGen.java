@@ -29,7 +29,7 @@ import cn.happyz.happyphoto.Tools.ToastObject;
 /**
  * Created by homezc on 14-1-14.
  */
-public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHeaderRefreshListener,PullToRefreshView.OnFooterRefreshListener {
+public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHeaderRefreshListener, PullToRefreshView.OnFooterRefreshListener {
 
     private ImageButton btnBack;
     private Button btnMyJoinedActivity;
@@ -37,10 +37,9 @@ public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHead
     PullToRefreshView pullToRefreshView;
     int PageSize = 18;
     int PageIndex = 1;
-    public static ActivityCollections activityCollectionsOfListAll;
+    ActivityCollections activityCollectionsOfListAll;
     ActivityListAdapter activityListAdapter;
     private ListView listViewOfActivityList;
-    public static int activityPositionsOfListAll;
 
 
     @Override
@@ -67,6 +66,7 @@ public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHead
         btnMyJoinedActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 Intent intent = new Intent(ActivityListGen.this, ActivityListOfMineJoinedGen.class);
                 startActivity(intent);
             }
@@ -76,6 +76,7 @@ public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHead
         btnMyVotedActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 Intent intent = new Intent(ActivityListGen.this, ActivityListOfMineVotedGen.class);
                 startActivity(intent);
             }
@@ -90,16 +91,16 @@ public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHead
         });
 
         listViewOfActivityList = (ListView) findViewById(R.id.listViewOfActivityList);
-        pullToRefreshView = (PullToRefreshView)findViewById(R.id.main_pull_refresh_view);
+        pullToRefreshView = (PullToRefreshView) findViewById(R.id.main_pull_refresh_view);
         //pullToRefreshView.setBackgroundColor(Color.parseColor("#333333"));
 
         LoadData(PageIndex, PageSize);
     }
 
-    private void LoadData(int pageIndex,int pageSize){
+    private void LoadData(int pageIndex, int pageSize) {
         String activityGetListOfAllUrl = getString(R.string.config_activity_get_list_of_all_url);
         ActivityOfAllHandler activityOfAllHandler = new ActivityOfAllHandler();
-        ActivityData activityData = new ActivityData(activityGetListOfAllUrl,activityOfAllHandler);
+        ActivityData activityData = new ActivityData(activityGetListOfAllUrl, activityOfAllHandler);
         activityData.setPageIndex(pageIndex);
         activityData.setPageSize(pageSize);
         activityData.GetDataFromHttp(ActivityDataOperateType.GetList);
@@ -109,16 +110,14 @@ public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHead
         @Override
         public void dispatchMessage(Message msg) {
             HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
-            switch(httpClientStatus){
+            switch (httpClientStatus) {
                 case START_GET:
                     ToastObject.Show(ActivityListGen.this, getString(R.string.message_load_begin));
                     break;
                 case FINISH_GET:
-
-                    activityCollectionsOfListAll = (ActivityCollections)msg.obj;
-                    activityListAdapter = new ActivityListAdapter(ActivityListGen.this,R.layout.activity_list_all_item, activityCollectionsOfListAll);
+                    activityCollectionsOfListAll = (ActivityCollections) msg.obj;
+                    activityListAdapter = new ActivityListAdapter(ActivityListGen.this, R.layout.activity_list_all_item, activityCollectionsOfListAll);
                     listViewOfActivityList.setAdapter(activityListAdapter);
-                    listViewOfActivityList.setOnItemClickListener(new ListViewItemClick());
                     pullToRefreshView.setOnHeaderRefreshListener(ActivityListGen.this);
                     pullToRefreshView.setOnFooterRefreshListener(ActivityListGen.this);
                     pullToRefreshView.setLastUpdated(new Date().toLocaleString());
@@ -141,35 +140,27 @@ public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHead
             @Override
             public void run() {
                 pullToRefreshView.onFooterRefreshComplete();
-                if(activityCollectionsOfListAll.size() == PageSize){ //只有当前页的数据等于每页显示数时，才进行加载
+                if (activityCollectionsOfListAll.size() == PageSize) { //只有当前页的数据等于每页显示数时，才进行加载
                     PageIndex++;
-                    LoadData(PageIndex,PageSize);
+                    LoadData(PageIndex, PageSize);
                 }
             }
-        },1000);
+        }, 1000);
     }
+
     @Override
     public void onHeaderRefresh(PullToRefreshView view) {
         pullToRefreshView.postDelayed(new Runnable() {
 
             @Override
             public void run() {
-                pullToRefreshView.onHeaderRefreshComplete(getString(R.string.pull_to_refresh_update_tips)+new Date().toLocaleString());
+                pullToRefreshView.onHeaderRefreshComplete(getString(R.string.pull_to_refresh_update_tips) + new Date().toLocaleString());
 //				mPullToRefreshView.onHeaderRefreshComplete();
-                if(activityCollectionsOfListAll != null){
+                if (activityCollectionsOfListAll != null) {
                     activityCollectionsOfListAll.clear();
                 }
-                LoadData(PageIndex,PageSize);
+                LoadData(PageIndex, PageSize);
             }
-        },1000);
-    }
-
-    private class ListViewItemClick implements AdapterView.OnItemClickListener {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id){
-            //点击操作
-            activityPositionsOfListAll = position;
-            Intent intent = new Intent(ActivityListGen.this, ActivityDetailGen.class);
-            startActivity(intent);
-        }
+        }, 1000);
     }
 }

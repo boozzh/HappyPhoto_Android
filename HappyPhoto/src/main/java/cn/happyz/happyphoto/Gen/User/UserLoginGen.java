@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -104,9 +105,10 @@ public class UserLoginGen extends BaseGen {
                 }
 
                 String userLoginUrl = getString(R.string.config_user_login_url);
-                userLoginUrl = userLoginUrl.replace("{username}", txtUserName.getText());
-                userLoginUrl = userLoginUrl.replace("{userpass}", FormatObject.MD5(txtUserPass.getText().toString()));
-                userLoginUrl = userLoginUrl.replace("{siteid}", getString(R.string.config_siteid));
+                userLoginUrl = userLoginUrl.replace("{user_name}", txtUserName.getText());
+                userLoginUrl = userLoginUrl.replace("{user_pass}", FormatObject.MD5(txtUserPass.getText().toString()));
+                userLoginUrl = userLoginUrl.replace("{site_id}", getString(R.string.config_siteid));
+
 
                 UserLoginHandler userLoginHandler = new UserLoginHandler();
                 UserData userData = new UserData(userLoginUrl, userLoginHandler);

@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import cn.happyz.happyphoto.AppApplication;
+import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumListOfMineGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityDetailGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityListGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityListOfMineJoinedGen;
@@ -57,6 +59,7 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
             linearLayout.setPadding(10,10,10,10);
 
             String titlePic = _activityCollections.get(position).getTitlePic();
+            final Activity activity = _activityCollections.get(position);
             if(!"".equals(titlePic)){
                 final ImageView ivTitlePicOfListItem = new ImageView(linearLayout.getContext());
                 ViewGroup.LayoutParams imageParam = new ViewGroup.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,FrameLayout.LayoutParams.FILL_PARENT);
@@ -85,6 +88,7 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
                         ivTitlePicOfListItem.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                ((AppApplication)_context.getApplicationContext()).setNowSelectActivity(activity);
                                 Intent intent = new Intent(linearLayout.getContext(), ActivityDetailGen.class);
                                 linearLayout.getContext().startActivity(intent);
                             }
@@ -104,7 +108,10 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
                         buttonViewMyPhoto.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //查看参赛作品
+                                //查看我参赛的作品
+                                ((AppApplication)_context.getApplicationContext()).setNowSelectActivity(activity);
+                                Intent intent = new Intent(linearLayout.getContext(), ActivityAlbumListOfMineGen.class);
+                                linearLayout.getContext().startActivity(intent);
                             }
                         });
 
@@ -116,20 +123,20 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
                         buttonCancel.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                view.setEnabled(false);
                                 //取消报名
+                                ((AppApplication)_context.getApplicationContext()).setNowSelectActivity(activity);
                                 int userId = ActivityListOfMineJoinedGen.nowUserId;
                                 String userName = ActivityListOfMineJoinedGen.nowUserName;
                                 String userPass = ActivityListOfMineJoinedGen.nowUserPass;
 
                                 String activityUserDeleteUrl = linearLayout.getContext().getString(R.string.config_activity_user_delete_url);
 
-                                int acitivtyId = _activityCollections.get(ActivityListOfMineJoinedGen.activityPositionsOfMineJoined).getActivityId();
-
                                 activityUserDeleteUrl = activityUserDeleteUrl.replace("{user_id}", Integer.toString(userId));
                                 activityUserDeleteUrl = activityUserDeleteUrl.replace("{site_id}", linearLayout.getContext().getString(R.string.config_siteid));
                                 activityUserDeleteUrl = activityUserDeleteUrl.replace("{user_name}", userName);
                                 activityUserDeleteUrl = activityUserDeleteUrl.replace("{user_pass}", userPass);
-                                activityUserDeleteUrl = activityUserDeleteUrl.replace("{activity_id}", Integer.toString(acitivtyId));
+                                activityUserDeleteUrl = activityUserDeleteUrl.replace("{activity_id}", Integer.toString(activity.getActivityId()));
 
                                 ActivityUserDeleteHandler activityUserDeleteHandler = new ActivityUserDeleteHandler();
                                 ActivityUserData activityUserData = new ActivityUserData(activityUserDeleteUrl,activityUserDeleteHandler);
@@ -141,7 +148,7 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
                                 activityAlbumDeleteUrl = activityAlbumDeleteUrl.replace("{site_id}", linearLayout.getContext().getString(R.string.config_siteid));
                                 activityAlbumDeleteUrl = activityAlbumDeleteUrl.replace("{user_name}", userName);
                                 activityAlbumDeleteUrl = activityAlbumDeleteUrl.replace("{user_pass}", userPass);
-                                activityAlbumDeleteUrl = activityAlbumDeleteUrl.replace("{activity_id}", Integer.toString(acitivtyId));
+                                activityAlbumDeleteUrl = activityAlbumDeleteUrl.replace("{activity_id}", Integer.toString(activity.getActivityId()));
 
                                 ActivityAlbumDeleteHandler activityAlbumDeleteHandler = new ActivityAlbumDeleteHandler();
                                 ActivityAlbumData activityAlbumData = new ActivityAlbumData(activityAlbumDeleteUrl,activityAlbumDeleteHandler);
@@ -165,6 +172,7 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
             tvActivitySubjectOfListItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    ((AppApplication)_context.getApplicationContext()).setNowSelectActivity(activity);
                     Intent intent = new Intent(linearLayout.getContext(), ActivityDetailGen.class);
                     linearLayout.getContext().startActivity(intent);
                 }
@@ -182,7 +190,7 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
                 case START_GET:
                     break;
                 case FINISH_GET:
-                    ActivityListOfMineJoinedGen.activityCollectionsOfMineJoined.remove(ActivityListGen.activityPositionsOfListAll);
+                    ActivityListOfMineJoinedGen.activityCollectionsOfMineJoined.remove(ActivityListOfMineJoinedGen.activityPositionsOfMineJoined);
                     ActivityListOfMineJoinedAdapter.this.notifyDataSetChanged();
                     break;
                 case ERROR_GET:

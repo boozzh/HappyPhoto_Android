@@ -6,6 +6,7 @@ package cn.happyz.happyphoto.DataProvider.Activity;
 public enum ActivityAlbumDataOperateType {
     Null,
     GetList,
+    GetListOfMine,
     Create,
     Delete
 }

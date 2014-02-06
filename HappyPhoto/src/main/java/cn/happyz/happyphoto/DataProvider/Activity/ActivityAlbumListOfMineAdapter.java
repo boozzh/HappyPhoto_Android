@@ -20,14 +20,14 @@ import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.FormatObject;
 
 /**
- * Created by zcmzc on 14-2-4.
+ * Created by homezc on 14-2-6.
  */
-public class ActivityAlbumListAdapter extends ArrayAdapter<UserAlbum> {
+public class ActivityAlbumListOfMineAdapter extends ArrayAdapter<UserAlbum> {
     private UserAlbumCollections _userAlbumCollections;
     private Context _context;
     private int _resource;
 
-    public ActivityAlbumListAdapter(Context context,int resource,UserAlbumCollections userAlbumCollections) {
+    public ActivityAlbumListOfMineAdapter(Context context, int resource, UserAlbumCollections userAlbumCollections) {
         super(context, resource, userAlbumCollections);
         this._context = context;
         this._resource = resource;

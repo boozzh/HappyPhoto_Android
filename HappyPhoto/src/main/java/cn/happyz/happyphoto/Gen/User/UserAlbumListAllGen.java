@@ -38,12 +38,12 @@ public class UserAlbumListAllGen extends BaseGen implements PullToRefreshView.On
     PullToRefreshView pullToRefreshView;
     int PageSize = 18;
     int PageIndex = 1;
-    private LinearLayout llUserAlbumListLeftMenu;
+    private LinearLayout llUserAlbumListRightMenu;
     public static UserAlbumCollections userAlbumCollectionsOfShow;
     UserAlbumListAdapter userAlbumListAdapterOfShow;
     GridView gvUserAlbumListOfAll;
     Button btnUserAlbumListShowAll;
-
+    private ImageButton btnBack;
 
     /**
      * 点击的照片在数组中的索引位置
@@ -63,6 +63,15 @@ public class UserAlbumListAllGen extends BaseGen implements PullToRefreshView.On
         TextView tvTitleBarTitle = (TextView) findViewById(R.id.txtTitleBarWithMenu);
         tvTitleBarTitle.setText(R.string.user_album_list_all_title); //修改title文字
 
+        btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
+        btnBack.setVisibility(0);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         gvUserAlbumListOfAll = (GridView) findViewById(R.id.gvUserAlbumListOfAll);
         gvUserAlbumListOfAll.setBackgroundColor(Color.parseColor("#333333"));
 
@@ -71,13 +80,13 @@ public class UserAlbumListAllGen extends BaseGen implements PullToRefreshView.On
 
 
         userAlbumListSideDrawer = new UserAlbumListSideDrawer(this);
-        userAlbumListSideDrawer.setLeftBehindContentView(R.layout.user_album_list_side_menu);
+        userAlbumListSideDrawer.setRightBehindContentView(R.layout.user_album_list_side_menu);
         ibtnMenuTitleBarWithMenu = (ImageButton) findViewById(R.id.ibtnMenuTitleBarWithMenu);
         ibtnMenuTitleBarWithMenu.setVisibility(0);
         ibtnMenuTitleBarWithMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userAlbumListSideDrawer.toggleLeftDrawer();
+                userAlbumListSideDrawer.toggleRightDrawer();
             }
         });
 
@@ -113,8 +122,8 @@ public class UserAlbumListAllGen extends BaseGen implements PullToRefreshView.On
 
 
     private void LoadData(int userAlbumTypeId, int pageIndex,int pageSize){
-        for(int i=0;i<llUserAlbumListLeftMenu.getChildCount();i++){
-            View view = llUserAlbumListLeftMenu.getChildAt(i);
+        for(int i=0;i< llUserAlbumListRightMenu.getChildCount();i++){
+            View view = llUserAlbumListRightMenu.getChildAt(i);
             view.setEnabled(false);
         }
         ////////////////////////////////////取得相册数据/////////////////////////
@@ -138,7 +147,7 @@ public class UserAlbumListAllGen extends BaseGen implements PullToRefreshView.On
     }
 
     private void LoadUserAlbumTypeList(){
-        llUserAlbumListLeftMenu = (LinearLayout) findViewById(R.id.llUserAlbumListLeftMenu);
+        llUserAlbumListRightMenu = (LinearLayout) findViewById(R.id.llUserAlbumListLeftMenu);
         if(DefaultGen.globalUserAlbumTypeCollections != null && DefaultGen.globalUserAlbumTypeCollections.size()>0){
             for(int i=0;i< DefaultGen.globalUserAlbumTypeCollections.size();i++){
                 Button button = new Button(UserAlbumListAllGen.this);
@@ -161,7 +170,7 @@ public class UserAlbumListAllGen extends BaseGen implements PullToRefreshView.On
                         LoadData(nowUserAlbumTypeId,PageIndex,PageSize);
                     }
                 });
-                llUserAlbumListLeftMenu.addView(button);
+                llUserAlbumListRightMenu.addView(button);
             }
         }
         LoadData(nowUserAlbumTypeId, PageIndex,PageSize);
@@ -176,8 +185,8 @@ public class UserAlbumListAllGen extends BaseGen implements PullToRefreshView.On
                     ToastObject.Show(UserAlbumListAllGen.this, getString(R.string.message_load_begin));
                     break;
                 case FINISH_GET:
-                    for(int i=0;i<llUserAlbumListLeftMenu.getChildCount();i++){
-                        View view = llUserAlbumListLeftMenu.getChildAt(i);
+                    for(int i=0;i< llUserAlbumListRightMenu.getChildCount();i++){
+                        View view = llUserAlbumListRightMenu.getChildAt(i);
                         view.setEnabled(true);
                     }
 

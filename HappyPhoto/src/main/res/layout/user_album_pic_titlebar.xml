@@ -78,6 +78,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ibtnDeletePic"
         style="@style/ButtonStyleOfPic"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        android:visibility="invisible" />
 
 </RelativeLayout>

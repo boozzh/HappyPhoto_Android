@@ -7,5 +7,6 @@ public enum UserAlbumPicListShowModule {
     UserAlbumOfAll,
     UserAlbumOfType,
     UserAlbumOfMine,
-    UserAlbumOfActivityAlbumList
+    UserAlbumOfActivityAlbumList,
+    UserAlbumOfActivityVoteRecordListOfMyVoted
 }

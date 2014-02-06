@@ -91,11 +91,16 @@
     <string name="activity_list_btn_my_voted_activity">我投票的比赛</string>
 
 
-    <string name="activity_list_of_mine_title">我参加的比赛</string>
+
+
+    <string name="activity_list_of_mine_joined_title">我参加的比赛</string>
     <string name="activity_cancel">取消报名</string>
-    <string name="activity_view_user_album">查看参赛作品</string>
+    <string name="activity_view_user_album">查看我参赛的作品</string>
     <string name="activity_list_of_mine_btn_all_activity">全部比赛</string>
 
+
+    <string name="activity_list_of_mine_voted_title">我投票的比赛</string>
+    <string name="activity_list_of_mine_voted_button_view_my_voted_album">我投票的作品</string>
 
     <string name="activity_album_select_title">选择参加比赛的作品</string>
     <string name="activity_album_select_confirm">确认</string>
@@ -103,6 +108,13 @@
 
     <string name="activity_album_list_title">参赛作品</string>
     <string name="activity_album_list_view_mine_voted">查看我投票的作品</string>
+
+
+    <string name="activity_album_list_of_mine_title">我参赛的作品</string>
+
+
+    <string name="activity_vote_record_of_my_voted_title">我投票的作品</string>
+
 
 
     <string name="pull_to_refresh_pull_label">下拉刷新</string>

@@ -1,13 +1,11 @@
 package cn.happyz.happyphoto.Gen.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +15,7 @@ import java.util.Date;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityCollections;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityData;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityDataOperateType;
+import cn.happyz.happyphoto.DataProvider.Activity.ActivityListOfMineJoinedAdapter;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityListOfMineVotedAdapter;
 import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView;
@@ -38,6 +37,10 @@ public class ActivityListOfMineVotedGen extends BaseGen implements PullToRefresh
     private ListView listViewOfActivityList;
     public static int activityPositionsOfMineVoted;
 
+    public static int nowUserId;
+    public static String nowUserName;
+    public static String nowUserPass;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,7 @@ public class ActivityListOfMineVotedGen extends BaseGen implements PullToRefresh
 
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
         TextView tvTitleBarTitle = (TextView) findViewById(R.id.txtTitleBar);
-        tvTitleBarTitle.setText(R.string.activity_list_all_title);
+        tvTitleBarTitle.setText(R.string.activity_list_of_mine_voted_title);
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
         btnBack.setVisibility(0);
@@ -62,20 +65,36 @@ public class ActivityListOfMineVotedGen extends BaseGen implements PullToRefresh
         listViewOfActivityList = (ListView) findViewById(R.id.listViewOfActivityList);
         pullToRefreshView = (PullToRefreshView)findViewById(R.id.main_pull_refresh_view);
 
-        LoadData(PageIndex, PageSize);
+        nowUserId = super.GetNowUserId(this);
+        nowUserName = super.GetNowUserName(this);
+        nowUserPass = super.GetNowUserPass(this);
+
+        if(nowUserId > 0){
+            LoadData(PageIndex, PageSize);
+        }
     }
 
 
     private void LoadData(int pageIndex,int pageSize){
-        String activityGetListOfAllUrl = getString(R.string.config_activity_get_list_of_all_url);
-        ActivityOfAllHandler activityOfAllHandler = new ActivityOfAllHandler();
-        ActivityData activityData = new ActivityData(activityGetListOfAllUrl,activityOfAllHandler);
+        int nowUserId = super.GetNowUserId(this);
+        String nowUserName = super.GetNowUserName(this);
+        String nowUserPass = super.GetNowUserPass(this);
+
+        String activityGetListOfMineVotedUrl = getString(R.string.config_activity_get_list_of_mine_voted_url);
+        activityGetListOfMineVotedUrl = activityGetListOfMineVotedUrl.replace("{user_id}", Integer.toString(nowUserId));
+        activityGetListOfMineVotedUrl = activityGetListOfMineVotedUrl.replace("{site_id}", getString(R.string.config_siteid));
+        activityGetListOfMineVotedUrl = activityGetListOfMineVotedUrl.replace("{user_name}", nowUserName);
+        activityGetListOfMineVotedUrl = activityGetListOfMineVotedUrl.replace("{user_pass}", nowUserPass);
+
+
+        ActivityOfMineVotedHandler activityOfMineJoinedHandler = new ActivityOfMineVotedHandler();
+        ActivityData activityData = new ActivityData(activityGetListOfMineVotedUrl,activityOfMineJoinedHandler);
         activityData.setPageIndex(pageIndex);
         activityData.setPageSize(pageSize);
-        activityData.GetDataFromHttp(ActivityDataOperateType.GetList);
+        activityData.GetDataFromHttp(ActivityDataOperateType.GetListOfMineJoined);
     }
 
-    private class ActivityOfAllHandler extends Handler {
+    private class ActivityOfMineVotedHandler extends Handler {
         @Override
         public void dispatchMessage(Message msg) {
             HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
@@ -84,11 +103,10 @@ public class ActivityListOfMineVotedGen extends BaseGen implements PullToRefresh
                     ToastObject.Show(ActivityListOfMineVotedGen.this, getString(R.string.message_load_begin));
                     break;
                 case FINISH_GET:
-
                     activityCollectionsOfMineVoted = (ActivityCollections)msg.obj;
                     activityListOfMineVotedAdapter = new ActivityListOfMineVotedAdapter(ActivityListOfMineVotedGen.this,R.layout.activity_list_mine_voted_item, activityCollectionsOfMineVoted);
                     listViewOfActivityList.setAdapter(activityListOfMineVotedAdapter);
-                    listViewOfActivityList.setOnItemClickListener(new ListViewItemClick());
+                    //listViewOfActivityList.setOnItemClickListener(new ListViewItemClick());
                     pullToRefreshView.setOnHeaderRefreshListener(ActivityListOfMineVotedGen.this);
                     pullToRefreshView.setOnFooterRefreshListener(ActivityListOfMineVotedGen.this);
                     pullToRefreshView.setLastUpdated(new Date().toLocaleString());
@@ -132,12 +150,4 @@ public class ActivityListOfMineVotedGen extends BaseGen implements PullToRefresh
             }
         },1000);
     }
-
-    private class ListViewItemClick implements AdapterView.OnItemClickListener {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id){
-            //点击操作
-            activityPositionsOfMineVoted = position;
-            Intent intent = new Intent(ActivityListOfMineVotedGen.this, ActivityDetailGen.class);
-            startActivity(intent);
-        }
-    }}
+}

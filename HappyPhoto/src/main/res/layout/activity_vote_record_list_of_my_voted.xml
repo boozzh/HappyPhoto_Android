@@ -37,23 +37,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="9"
-        android:background="#333333"
-        >
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:text="@string/activity_album_select_confirm"
-            android:id="@+id/activity_album_select_confirm"
-            style="@style/ButtonStyle"
-            android:textSize="20dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp" />
-    </LinearLayout>
+
 
 </LinearLayout>

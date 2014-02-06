@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import cn.happyz.happyphoto.AppApplication;
 import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumListGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumSelectGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityDetailGen;
@@ -47,7 +48,7 @@ public class ActivityListAdapter extends ArrayAdapter<Activity> {
     }
 
     private View LoadData(int position, View convertView, ViewGroup parent){
-        ActivityListGen.activityPositionsOfListAll = position;
+        //ActivityListGen.activityPositionsOfListAll = position;
 
         LayoutInflater layoutInflater = LayoutInflater.from(_context);
         final LinearLayout linearLayout = (LinearLayout)layoutInflater.inflate(_resource, null);
@@ -56,6 +57,7 @@ public class ActivityListAdapter extends ArrayAdapter<Activity> {
             linearLayout.setPadding(10,10,10,10);
 
             String titlePic = _activityCollections.get(position).getTitlePic();
+            final Activity activity = _activityCollections.get(position);
             if(!"".equals(titlePic)){
                 final ImageView ivTitlePicOfListItem = new ImageView(linearLayout.getContext());
                 ViewGroup.LayoutParams imageParam = new ViewGroup.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,FrameLayout.LayoutParams.FILL_PARENT);
@@ -84,6 +86,7 @@ public class ActivityListAdapter extends ArrayAdapter<Activity> {
                         ivTitlePicOfListItem.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                ((AppApplication)_context.getApplicationContext()).setNowSelectActivity(activity);
                                 Intent intent = new Intent(linearLayout.getContext(), ActivityDetailGen.class);
                                 linearLayout.getContext().startActivity(intent);
                             }
@@ -104,8 +107,12 @@ public class ActivityListAdapter extends ArrayAdapter<Activity> {
                         buttonOfJoin.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                view.setEnabled(false);
+                                ((AppApplication)_context.getApplicationContext()).setNowSelectActivity(activity);
+
                                 Intent intent = new Intent(linearLayout.getContext(), ActivityAlbumSelectGen.class);
                                 linearLayout.getContext().startActivity(intent);
+
                             }
                         });
                         linearLayoutOfButton.addView(buttonOfJoin);
@@ -117,6 +124,9 @@ public class ActivityListAdapter extends ArrayAdapter<Activity> {
                         buttonOfViewAlbum.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
+                                ((AppApplication)_context.getApplicationContext()).setNowSelectActivity(activity);
+
                                 Intent intent = new Intent(linearLayout.getContext(), ActivityAlbumListGen.class);
                                 linearLayout.getContext().startActivity(intent);
                             }

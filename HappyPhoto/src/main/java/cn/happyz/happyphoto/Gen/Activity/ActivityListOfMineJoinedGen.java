@@ -7,7 +7,7 @@ import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +19,7 @@ import cn.happyz.happyphoto.DataProvider.Activity.ActivityData;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityDataOperateType;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityListOfMineJoinedAdapter;
 import cn.happyz.happyphoto.Gen.BaseGen;
+import cn.happyz.happyphoto.Gen.User.UserAlbumPicListGen;
 import cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
@@ -52,7 +53,7 @@ public class ActivityListOfMineJoinedGen extends BaseGen implements PullToRefres
 
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
         TextView tvTitleBarTitle = (TextView) findViewById(R.id.txtTitleBar);
-        tvTitleBarTitle.setText(R.string.activity_list_of_mine_title);
+        tvTitleBarTitle.setText(R.string.activity_list_of_mine_joined_title);
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
         btnBack.setVisibility(0);
@@ -62,6 +63,26 @@ public class ActivityListOfMineJoinedGen extends BaseGen implements PullToRefres
                 finish();
             }
         });
+
+        Button btnAllActivity = (Button) findViewById(R.id.btnAllActivity);
+        btnAllActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                Intent intent = new Intent(ActivityListOfMineJoinedGen.this, ActivityListGen.class);
+                startActivity(intent);
+            }
+        });
+        Button btnMyVotedActivity = (Button) findViewById(R.id.btnMyVotedActivity);
+        btnMyVotedActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                Intent intent = new Intent(ActivityListOfMineJoinedGen.this, ActivityListOfMineVotedGen.class);
+                startActivity(intent);
+            }
+        });
+
 
         listViewOfActivityList = (ListView) findViewById(R.id.listViewOfActivityList);
         pullToRefreshView = (PullToRefreshView)findViewById(R.id.main_pull_refresh_view);
@@ -114,7 +135,6 @@ public class ActivityListOfMineJoinedGen extends BaseGen implements PullToRefres
                     break;
 
                 case ERROR_GET:
-                    ToastObject.Show(ActivityListOfMineJoinedGen.this, getString(R.string.message_load_failure));
                     break;
 
                 default:
