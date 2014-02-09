@@ -1,4 +1,4 @@
-package cn.happyz.happyphoto.DataProvider.User;
+package cn.happyz.happyphoto.Gen.User;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import cn.happyz.happyphoto.DataProvider.User.UserAlbumType;
+import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeCollections;
 import cn.happyz.happyphoto.R;
 
 /**

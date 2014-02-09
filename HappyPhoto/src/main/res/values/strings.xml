@@ -59,6 +59,7 @@
     <string name="message_load_begin">开始加载</string>
     <string name="message_load_success">加载成功</string>
     <string name="message_load_failure">加载失败</string>
+    <string name="message_load_user_error">会员验证出错，请重新登录！</string>
     <string name="message_takephoto_nosdcard">没有检查到存储卡，不能拍摄照片</string>
     <string name="message_user_album_create_useralbumname_is_null">请输入作品标题</string>
     <string name="message_user_album_create_useralbumtype_is_null">未读取到作品分类</string>
@@ -94,12 +95,15 @@
 
 
     <string name="activity_list_of_mine_joined_title">我参加的比赛</string>
+    <string name="activity_list_of_mine_joined_no_data">您还没有参加任何比赛</string>
     <string name="activity_cancel">取消报名</string>
     <string name="activity_view_user_album">查看我参赛的作品</string>
     <string name="activity_list_of_mine_btn_all_activity">全部比赛</string>
 
 
     <string name="activity_list_of_mine_voted_title">我投票的比赛</string>
+    <string name="activity_list_of_mine_voted_no_data">您还没有对任何作品投票</string>
+
     <string name="activity_list_of_mine_voted_button_view_my_voted_album">我投票的作品</string>
 
     <string name="activity_album_select_title">选择参加比赛的作品</string>

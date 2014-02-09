@@ -20,7 +20,7 @@
         <![CDATA[http://hp.mysense.cn/index.php?&a=user&f=asyncloginforclient&username={user_name}&userpass={user_pass}&siteid={site_id}]]>
     </string>
     <string name="config_user_register_url">
-        <![CDATA[http://hp.mysense.cn/index.php?&a=user&f=asyncregisterforclient&username={username}&userpass={userpass}&siteid={siteid}]]>
+        <![CDATA[http://hp.mysense.cn/index.php?&a=user&f=asyncregisterforclient&username={user_name}&userpass={user_pass}&siteid={site_id}]]>
     </string>
     <string name="config_user_album_create_url">
         <![CDATA[http://hp.mysense.cn/index.php?a=user&f=useralbum&m=client_create]]>

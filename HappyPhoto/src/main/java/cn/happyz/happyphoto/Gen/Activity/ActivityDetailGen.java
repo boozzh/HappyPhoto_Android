@@ -33,7 +33,7 @@ public class ActivityDetailGen extends BaseGen {
         tvTitleBarTitle.setText(R.string.activity_list_all_title); //修改title文字
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
-        btnBack.setVisibility(0);
+        btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

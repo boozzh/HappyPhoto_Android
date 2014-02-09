@@ -1,4 +1,4 @@
-package cn.happyz.happyphoto.DataProvider.Activity;
+package cn.happyz.happyphoto.Gen.Activity;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -20,14 +20,14 @@ import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.FormatObject;
 
 /**
- * Created by homezc on 14-2-6.
+ * Created by zcmzc on 14-2-4.
  */
-public class ActivityAlbumListOfMineAdapter extends ArrayAdapter<UserAlbum> {
+public class ActivityAlbumListAdapter extends ArrayAdapter<UserAlbum> {
     private UserAlbumCollections _userAlbumCollections;
     private Context _context;
     private int _resource;
 
-    public ActivityAlbumListOfMineAdapter(Context context, int resource, UserAlbumCollections userAlbumCollections) {
+    public ActivityAlbumListAdapter(Context context,int resource,UserAlbumCollections userAlbumCollections) {
         super(context, resource, userAlbumCollections);
         this._context = context;
         this._resource = resource;

@@ -24,9 +24,9 @@ import cn.happyz.happyphoto.Tools.HttpClientStatus;
 import cn.happyz.happyphoto.Tools.ToastObject;
 
 /**
- * Created by homezc on 14-1-14.
+ * Created by home zc on 14-2-9.
  */
-public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHeaderRefreshListener, PullToRefreshView.OnFooterRefreshListener {
+public class ActivityListOfEndGen extends BaseGen implements PullToRefreshView.OnHeaderRefreshListener, PullToRefreshView.OnFooterRefreshListener {
 
     private ImageButton btnBack;
     private Button btnMyJoinedActivity;
@@ -64,7 +64,7 @@ public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHead
             @Override
             public void onClick(View view) {
                 finish();
-                Intent intent = new Intent(ActivityListGen.this, ActivityListOfMineJoinedGen.class);
+                Intent intent = new Intent(ActivityListOfEndGen.this, ActivityListOfMineJoinedGen.class);
                 startActivity(intent);
             }
         });
@@ -74,7 +74,7 @@ public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHead
             @Override
             public void onClick(View view) {
                 finish();
-                Intent intent = new Intent(ActivityListGen.this, ActivityListOfMineVotedGen.class);
+                Intent intent = new Intent(ActivityListOfEndGen.this, ActivityListOfMineVotedGen.class);
                 startActivity(intent);
             }
         });
@@ -109,19 +109,19 @@ public class ActivityListGen extends BaseGen implements PullToRefreshView.OnHead
             HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
             switch (httpClientStatus) {
                 case START_GET:
-                    ToastObject.Show(ActivityListGen.this, getString(R.string.message_load_begin));
+                    ToastObject.Show(ActivityListOfEndGen.this, getString(R.string.message_load_begin));
                     break;
                 case FINISH_GET:
                     activityCollectionsOfListAll = (ActivityCollections) msg.obj;
-                    activityListAdapter = new ActivityListAdapter(ActivityListGen.this, R.layout.activity_list_all_item, activityCollectionsOfListAll);
+                    activityListAdapter = new ActivityListAdapter(ActivityListOfEndGen.this, R.layout.activity_list_all_item, activityCollectionsOfListAll);
                     listViewOfActivityList.setAdapter(activityListAdapter);
-                    pullToRefreshView.setOnHeaderRefreshListener(ActivityListGen.this);
-                    pullToRefreshView.setOnFooterRefreshListener(ActivityListGen.this);
+                    pullToRefreshView.setOnHeaderRefreshListener(ActivityListOfEndGen.this);
+                    pullToRefreshView.setOnFooterRefreshListener(ActivityListOfEndGen.this);
                     pullToRefreshView.setLastUpdated(new Date().toLocaleString());
                     break;
 
                 case ERROR_GET:
-                    ToastObject.Show(ActivityListGen.this, getString(R.string.message_load_failure));
+                    ToastObject.Show(ActivityListOfEndGen.this, getString(R.string.message_load_failure));
                     break;
 
                 default:

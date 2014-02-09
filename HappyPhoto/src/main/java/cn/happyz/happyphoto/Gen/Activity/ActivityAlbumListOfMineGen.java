@@ -1,6 +1,5 @@
 package cn.happyz.happyphoto.Gen.Activity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +18,6 @@ import cn.happyz.happyphoto.AppApplication;
 import cn.happyz.happyphoto.DataProvider.Activity.Activity;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityAlbumData;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityAlbumDataOperateType;
-import cn.happyz.happyphoto.DataProvider.Activity.ActivityAlbumListOfMineAdapter;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumCollections;
 import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView;
@@ -51,7 +49,7 @@ public class ActivityAlbumListOfMineGen extends BaseGen implements PullToRefresh
         tvTitleBarTitle.setText(R.string.activity_album_list_of_mine_title); //修改title文字
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
-        btnBack.setVisibility(0);
+        btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

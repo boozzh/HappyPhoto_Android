@@ -1,4 +1,4 @@
-package cn.happyz.happyphoto.DataProvider.User;
+package cn.happyz.happyphoto.Gen.User;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import cn.happyz.happyphoto.AppApplication;
+import cn.happyz.happyphoto.DataProvider.User.UserAlbum;
+import cn.happyz.happyphoto.DataProvider.User.UserAlbumCollections;
 import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumSelectGen;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;

@@ -15,8 +15,6 @@ import java.util.Date;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityCollections;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityData;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityDataOperateType;
-import cn.happyz.happyphoto.DataProvider.Activity.ActivityListOfMineJoinedAdapter;
-import cn.happyz.happyphoto.DataProvider.Activity.ActivityListOfMineVotedAdapter;
 import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView;
 import cn.happyz.happyphoto.R;
@@ -54,7 +52,7 @@ public class ActivityListOfMineVotedGen extends BaseGen implements PullToRefresh
         tvTitleBarTitle.setText(R.string.activity_list_of_mine_voted_title);
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
-        btnBack.setVisibility(0);
+        btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +89,7 @@ public class ActivityListOfMineVotedGen extends BaseGen implements PullToRefresh
         ActivityData activityData = new ActivityData(activityGetListOfMineVotedUrl,activityOfMineJoinedHandler);
         activityData.setPageIndex(pageIndex);
         activityData.setPageSize(pageSize);
-        activityData.GetDataFromHttp(ActivityDataOperateType.GetListOfMineJoined);
+        activityData.GetDataFromHttp(ActivityDataOperateType.GetListOfMineVoted);
     }
 
     private class ActivityOfMineVotedHandler extends Handler {
@@ -111,7 +109,12 @@ public class ActivityListOfMineVotedGen extends BaseGen implements PullToRefresh
                     pullToRefreshView.setOnFooterRefreshListener(ActivityListOfMineVotedGen.this);
                     pullToRefreshView.setLastUpdated(new Date().toLocaleString());
                     break;
-
+                case FINISH_GET_BUT_NO_DATA:
+                    ToastObject.Show(ActivityListOfMineVotedGen.this, getString(R.string.activity_list_of_mine_voted_no_data));
+                    break;
+                case FINISH_GET_BUT_USER_ERROR:
+                    ToastObject.Show(ActivityListOfMineVotedGen.this, getString(R.string.message_load_user_error));
+                    break;
                 case ERROR_GET:
                     ToastObject.Show(ActivityListOfMineVotedGen.this, getString(R.string.message_load_failure));
                     break;

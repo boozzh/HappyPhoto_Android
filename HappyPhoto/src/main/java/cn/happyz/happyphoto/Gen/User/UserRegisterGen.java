@@ -18,6 +18,7 @@ import cn.happyz.happyphoto.DataProvider.User.User;
 import cn.happyz.happyphoto.DataProvider.User.UserCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserData;
 import cn.happyz.happyphoto.DataProvider.User.UserDataOperateType;
+import cn.happyz.happyphoto.DefaultGen;
 import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
@@ -48,10 +49,12 @@ public class UserRegisterGen extends BaseGen {
 
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
-        btnBack.setVisibility(0);
+        btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(UserRegisterGen.this, DefaultGen.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -67,7 +70,6 @@ public class UserRegisterGen extends BaseGen {
         });
 
         txtUserPass = (EditText) findViewById(R.id.user_register_txtUserPass);
-        txtUserPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         txtUserPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,10 +114,10 @@ public class UserRegisterGen extends BaseGen {
                 }
 
                 String userRegisterUrl = getString(R.string.config_user_register_url);
-                userRegisterUrl = userRegisterUrl.replace("{username}",txtUserName.getText());
+                userRegisterUrl = userRegisterUrl.replace("{user_name}",txtUserName.getText());
                 //注册的时候，密码不用md5加密
-                userRegisterUrl = userRegisterUrl.replace("{userpass}",txtUserPass.getText().toString());
-                userRegisterUrl = userRegisterUrl.replace("{siteid}",getString(R.string.config_siteid));
+                userRegisterUrl = userRegisterUrl.replace("{user_pass}",txtUserPass.getText().toString());
+                userRegisterUrl = userRegisterUrl.replace("{site_id}",getString(R.string.config_siteid));
 
                 UserRegisterHandler userRegisterHandler = new UserRegisterHandler();
                 UserData userData = new UserData(userRegisterUrl,userRegisterHandler);
@@ -144,14 +146,21 @@ public class UserRegisterGen extends BaseGen {
                             String userName = user.getUserName();
                             String userPass = user.getUserPass();
                             Integer state = user.getState();
+                            int userPoint = user.getUserPoint();
                             if(userId>0){
                                 ToastObject.Show(UserRegisterGen.this, getString(R.string.user_register_result_success));
 
-                                SharedPreferences sp = getSharedPreferences("USERINFO", MODE_PRIVATE);
-                                sp.edit().putInt("USERID",userId).commit();
-                                sp.edit().putString("USERNAME",userName).commit();
-                                sp.edit().putString("USERPASS",userPass).commit();
-                                sp.edit().putInt("STATE",state).commit();
+                                SharedPreferences sp = getSharedPreferences("USER_INFO", MODE_PRIVATE);
+                                sp.edit().putInt("USER_ID",userId).commit();
+                                sp.edit().putString("USER_NAME", userName).commit();
+                                sp.edit().putString("USER_PASS",userPass).commit();
+                                sp.edit().putInt("STATE", state).commit();
+                                sp.edit().putInt("USER_POINT", userPoint).commit();
+
+
+                                Intent intent = new Intent(UserRegisterGen.this, DefaultGen.class);
+                                startActivity(intent);
+
                                 UserRegisterGen.this.finish();
                             }else{
                                 btnUserRegister.setEnabled(true);

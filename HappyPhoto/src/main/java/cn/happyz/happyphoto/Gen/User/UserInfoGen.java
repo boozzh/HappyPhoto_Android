@@ -37,7 +37,7 @@ public class UserInfoGen extends BaseGen {
         tvTitleBarTitle.setText(R.string.user_info_title); //修改title文字
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
-        btnBack.setVisibility(0);
+        btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

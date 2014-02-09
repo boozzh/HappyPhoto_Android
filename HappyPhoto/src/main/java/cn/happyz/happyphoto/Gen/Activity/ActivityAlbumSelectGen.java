@@ -27,7 +27,7 @@ import cn.happyz.happyphoto.DataProvider.Activity.ActivityUserDataOperateType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumData;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumDataOperateType;
-import cn.happyz.happyphoto.DataProvider.User.UserAlbumListForSelectAdapter;
+import cn.happyz.happyphoto.Gen.User.UserAlbumListForSelectAdapter;
 import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.Gen.User.UserLoginGen;
 import cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView;
@@ -67,7 +67,7 @@ public class ActivityAlbumSelectGen extends BaseGen implements PullToRefreshView
         tvTitleBarTitle.setText(R.string.activity_album_select_title); //修改title文字
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
-        btnBack.setVisibility(0);
+        btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -34,7 +34,52 @@ public class UserData extends BaseData implements Runnable {
                     UserCollections userCollections = new UserCollections();
 
                     JSONObject jsonObject = new JSONObject(result).getJSONObject("user");
-                    JSONArray jsonArray = jsonObject.getJSONArray("userlist");
+                    JSONArray jsonArray = jsonObject.getJSONArray("user_list");
+
+                    for(int i=0;i<jsonArray.length();i++){
+                        JSONObject jsonObject2 = (JSONObject)jsonArray.opt(i);
+                        Integer userId = jsonObject2.getInt("UserId");
+                        User user = null;
+                        if(userId>0){
+                            user = new User(
+                                    jsonObject2.getInt("UserId"),
+                                    jsonObject2.getString("UserName"),
+                                    jsonObject2.getString("UserPass"),
+                                    jsonObject2.getInt("State")
+                            );
+                            user.setUserPoint(jsonObject2.getInt("UserPoint"));
+                        }else{
+                            user = new User(
+                                    userId,
+                                    "",
+                                    "",
+                                    -1
+                            );
+                        }
+                        userCollections.add(user);
+                    }
+
+                    Message msg = _handler.obtainMessage();
+                    msg.what = HttpClientStatus.FINISH_GET.ordinal();
+                    msg.obj = userCollections;
+
+                    _handler.sendMessage(msg);
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                    _handler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
+                }
+
+            }
+        }else if(this._userDataOperateType == UserDataOperateType.Register){
+
+            String result = super.RunGet(_httpUrl, _handler);
+
+            if(result != null){
+                try {
+                    UserCollections userCollections = new UserCollections();
+
+                    JSONObject jsonObject = new JSONObject(result).getJSONObject("user");
+                    JSONArray jsonArray = jsonObject.getJSONArray("user_list");
 
                     for(int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject2 = (JSONObject)jsonArray.opt(i);

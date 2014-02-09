@@ -21,32 +21,33 @@ public class ActivityData extends BaseData implements Runnable {
     private int _pageIndex = 1;
     private int _pageSize = 12;
 
-    public void setPageIndex(int pageIndex){
+    public void setPageIndex(int pageIndex) {
         _pageIndex = pageIndex;
     }
-    public void setPageSize(int pageSize){
+
+    public void setPageSize(int pageSize) {
         _pageSize = pageSize;
     }
 
-    public ActivityData(String httpUrl, Handler handler){
+    public ActivityData(String httpUrl, Handler handler) {
         HttpUrl = httpUrl;
         MyHandler = handler;
     }
 
     @Override
     public void run() {
-        if(MyOperateType == ActivityDataOperateType.GetList){
+        if (MyOperateType == ActivityDataOperateType.GetList) {
             HttpUrl += "&p=" + _pageIndex + "&ps=" + _pageSize;
             String result = super.RunGet(HttpUrl, MyHandler);
-            if(result != null){
+            if (result != null) {
                 try {
                     ActivityCollections activityCollections = new ActivityCollections();
                     Activity activity;
                     JSONObject jsonObject = new JSONObject(result).getJSONObject("activity");
                     JSONArray jsonArray = jsonObject.getJSONArray("activity_list");
 
-                    for(int i=0;i<jsonArray.length();i++){
-                        JSONObject jsonObject2 = (JSONObject)jsonArray.opt(i);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject2 = (JSONObject) jsonArray.opt(i);
                         activity = new Activity();
                         activity.setActivityId(jsonObject2.getInt("ActivityID"));
                         activity.setActivitySubject(jsonObject2.getString("ActivitySubject"));
@@ -60,46 +61,86 @@ public class ActivityData extends BaseData implements Runnable {
                     msg.obj = activityCollections;
 
                     MyHandler.sendMessage(msg);
-                } catch (Exception ex){
+                } catch (Exception ex) {
                     ex.printStackTrace();
                     MyHandler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
                 }
             }
-        }else if(MyOperateType == ActivityDataOperateType.GetListOfMineJoined){
+        } else if (MyOperateType == ActivityDataOperateType.GetListOfMineJoined) {
             HttpUrl += "&p=" + _pageIndex + "&ps=" + _pageSize;
             String result = super.RunGet(HttpUrl, MyHandler);
-            if(result != null){
-                try {
-                    ActivityCollections activityCollections = new ActivityCollections();
-                    Activity activity;
-                    JSONObject jsonObject = new JSONObject(result).getJSONObject("activity");
-                    JSONArray jsonArray = jsonObject.getJSONArray("activity_list");
+            if (result != null) {
+                if (result.equals("")) { //查询正确，但没有数据
+                    MyHandler.sendEmptyMessage(HttpClientStatus.FINISH_GET_BUT_NO_DATA.ordinal());
+                } else if (result == "-10") { //会员验证失败
+                    MyHandler.sendEmptyMessage(HttpClientStatus.FINISH_GET_BUT_USER_ERROR.ordinal());
+                } else if (result.length() > 0) {
+                    try {
+                        ActivityCollections activityCollections = new ActivityCollections();
+                        Activity activity;
+                        JSONObject jsonObject = new JSONObject(result).getJSONObject("activity");
+                        JSONArray jsonArray = jsonObject.getJSONArray("activity_list");
 
-                    for(int i=0;i<jsonArray.length();i++){
-                        JSONObject jsonObject2 = (JSONObject)jsonArray.opt(i);
-                        activity = new Activity();
-                        activity.setActivityId(jsonObject2.getInt("ActivityID"));
-                        activity.setActivitySubject(jsonObject2.getString("ActivitySubject"));
-                        activity.setTitlePic(jsonObject2.getString("TitlePic"));
-                        activity.setActivityContent(jsonObject2.getString("ActivityContent"));
-                        activityCollections.add(activity);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject2 = (JSONObject) jsonArray.opt(i);
+                            activity = new Activity();
+                            activity.setActivityId(jsonObject2.getInt("ActivityID"));
+                            activity.setActivitySubject(jsonObject2.getString("ActivitySubject"));
+                            activity.setTitlePic(jsonObject2.getString("TitlePic"));
+                            activity.setActivityContent(jsonObject2.getString("ActivityContent"));
+                            activityCollections.add(activity);
+                        }
+                        Message msg = MyHandler.obtainMessage();
+                        msg.what = HttpClientStatus.FINISH_GET.ordinal();
+                        msg.obj = activityCollections;
+                        MyHandler.sendMessage(msg);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        MyHandler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
                     }
 
-                    Message msg = MyHandler.obtainMessage();
-                    msg.what = HttpClientStatus.FINISH_GET.ordinal();
-                    msg.obj = activityCollections;
+                }
+            }
+        } else if (MyOperateType == ActivityDataOperateType.GetListOfMineVoted) {
+            HttpUrl += "&p=" + _pageIndex + "&ps=" + _pageSize;
+            String result = super.RunGet(HttpUrl, MyHandler);
+            if (result != null) {
+                if (result.equals("")) { //查询正确，但没有数据
+                    MyHandler.sendEmptyMessage(HttpClientStatus.FINISH_GET_BUT_NO_DATA.ordinal());
+                } else if (result == "-10") { //会员验证失败
+                    MyHandler.sendEmptyMessage(HttpClientStatus.FINISH_GET_BUT_USER_ERROR.ordinal());
+                } else if (result.length() > 0) {
+                    try {
+                        ActivityCollections activityCollections = new ActivityCollections();
+                        Activity activity;
+                        JSONObject jsonObject = new JSONObject(result).getJSONObject("activity");
+                        JSONArray jsonArray = jsonObject.getJSONArray("activity_list");
 
-                    MyHandler.sendMessage(msg);
-                } catch (Exception ex){
-                    ex.printStackTrace();
-                    MyHandler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject2 = (JSONObject) jsonArray.opt(i);
+                            activity = new Activity();
+                            activity.setActivityId(jsonObject2.getInt("ActivityID"));
+                            activity.setActivitySubject(jsonObject2.getString("ActivitySubject"));
+                            activity.setTitlePic(jsonObject2.getString("TitlePic"));
+                            activity.setActivityContent(jsonObject2.getString("ActivityContent"));
+                            activityCollections.add(activity);
+                        }
+                        Message msg = MyHandler.obtainMessage();
+                        msg.what = HttpClientStatus.FINISH_GET.ordinal();
+                        msg.obj = activityCollections;
+                        MyHandler.sendMessage(msg);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        MyHandler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
+                    }
+
                 }
             }
         }
 
     }
 
-    public void GetDataFromHttp(ActivityDataOperateType activityDataOperateType){
+    public void GetDataFromHttp(ActivityDataOperateType activityDataOperateType) {
         this.MyOperateType = activityDataOperateType;
         ThreadPoolUtils.execute(this);
     }

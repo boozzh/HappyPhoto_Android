@@ -1,4 +1,4 @@
-package cn.happyz.happyphoto.DataProvider.Activity;
+package cn.happyz.happyphoto.Gen.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cn.happyz.happyphoto.AppApplication;
+import cn.happyz.happyphoto.DataProvider.Activity.Activity;
+import cn.happyz.happyphoto.DataProvider.Activity.ActivityCollections;
 import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumSelectGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityDetailGen;
 import cn.happyz.happyphoto.Gen.Activity.ActivityListGen;

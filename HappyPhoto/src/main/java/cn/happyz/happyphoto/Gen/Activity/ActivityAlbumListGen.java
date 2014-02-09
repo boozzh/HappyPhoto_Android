@@ -14,29 +14,19 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Date;
 
 import cn.happyz.happyphoto.AppApplication;
 import cn.happyz.happyphoto.DataProvider.Activity.Activity;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityAlbumData;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityAlbumDataOperateType;
-import cn.happyz.happyphoto.DataProvider.Activity.ActivityAlbumListAdapter;
-import cn.happyz.happyphoto.DataProvider.Activity.ActivityUserData;
-import cn.happyz.happyphoto.DataProvider.Activity.ActivityUserDataOperateType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumCollections;
-import cn.happyz.happyphoto.DataProvider.User.UserAlbumData;
-import cn.happyz.happyphoto.DataProvider.User.UserAlbumDataOperateType;
-import cn.happyz.happyphoto.DataProvider.User.UserAlbumListForSelectAdapter;
 import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.Gen.User.UserAlbumPicListGen;
 import cn.happyz.happyphoto.Gen.User.UserAlbumPicListShowModule;
-import cn.happyz.happyphoto.Gen.User.UserLoginGen;
 import cn.happyz.happyphoto.Plugins.PullToRefresh.PullToRefreshView;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.HttpClientStatus;
-import cn.happyz.happyphoto.Tools.ToastObject;
 
 /**
  * Created by zcmzc on 14-2-3.
@@ -68,7 +58,7 @@ public class ActivityAlbumListGen extends BaseGen implements PullToRefreshView.O
         tvTitleBarTitle.setText(R.string.activity_album_list_title); //修改title文字
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
-        btnBack.setVisibility(0);
+        btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

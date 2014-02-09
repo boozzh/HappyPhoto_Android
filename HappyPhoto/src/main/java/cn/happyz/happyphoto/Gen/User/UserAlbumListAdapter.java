@@ -1,4 +1,4 @@
-package cn.happyz.happyphoto.DataProvider.Activity;
+package cn.happyz.happyphoto.Gen.User;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -18,16 +18,17 @@ import cn.happyz.happyphoto.DataProvider.User.UserAlbumCollections;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.FormatObject;
+import cn.happyz.happyphoto.Tools.ToastObject;
 
 /**
- * Created by zcmzc on 14-2-4.
+ *
  */
-public class ActivityAlbumListAdapter extends ArrayAdapter<UserAlbum> {
+public class UserAlbumListAdapter extends ArrayAdapter<UserAlbum> {
     private UserAlbumCollections _userAlbumCollections;
     private Context _context;
     private int _resource;
 
-    public ActivityAlbumListAdapter(Context context,int resource,UserAlbumCollections userAlbumCollections) {
+    public UserAlbumListAdapter(Context context,int resource,UserAlbumCollections userAlbumCollections) {
         super(context, resource, userAlbumCollections);
         this._context = context;
         this._resource = resource;
@@ -59,12 +60,16 @@ public class ActivityAlbumListAdapter extends ArrayAdapter<UserAlbum> {
                 ivCoverPicUrlOfListItem.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 final FrameLayout frameLayout1 = new FrameLayout(linearLayout.getContext());
 
+
                 int displayWidth = ((AppApplication)_context.getApplicationContext()).getDisplayWidth();
                 //每行三个
                 int imageWidth = displayWidth/3 - FormatObject.DipToPx(linearLayout.getContext(), 12); //px
 
-                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(imageWidth, imageWidth);
+                FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(imageWidth,imageWidth);
+                //frameLayout1.setBackgroundColor(Color.parseColor("#efefef"));
 
+
+                //frameLayout1.setPadding(2,2,2,2);
                 params1.gravity = Gravity.CENTER;
                 frameLayout1.setLayoutParams(params1);
                 final FrameLayout frameLayout2 = new FrameLayout(linearLayout.getContext());

@@ -20,7 +20,6 @@ import java.util.Date;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumData;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumDataOperateType;
-import cn.happyz.happyphoto.DataProvider.User.UserAlbumListAdapter;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeData;
 import cn.happyz.happyphoto.DefaultGen;
@@ -64,7 +63,7 @@ public class UserAlbumListAllGen extends BaseGen implements PullToRefreshView.On
         tvTitleBarTitle.setText(R.string.user_album_list_all_title); //修改title文字
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
-        btnBack.setVisibility(0);
+        btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

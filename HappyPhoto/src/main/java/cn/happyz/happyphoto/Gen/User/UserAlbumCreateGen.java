@@ -38,7 +38,6 @@ import cn.happyz.happyphoto.DataProvider.User.UserAlbumPicDataOperateType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeCollections;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeData;
-import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeListAdapter;
 import cn.happyz.happyphoto.DefaultGen;
 import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.R;
@@ -83,7 +82,7 @@ public class UserAlbumCreateGen extends BaseGen {
         tvTitleBarTitle.setText(R.string.user_album_create_title); //修改title文字
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
-        btnBack.setVisibility(0);
+        btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

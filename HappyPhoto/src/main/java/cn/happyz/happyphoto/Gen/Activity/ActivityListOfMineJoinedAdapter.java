@@ -1,4 +1,4 @@
-package cn.happyz.happyphoto.DataProvider.Activity;
+package cn.happyz.happyphoto.Gen.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,10 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cn.happyz.happyphoto.AppApplication;
-import cn.happyz.happyphoto.Gen.Activity.ActivityAlbumListOfMineGen;
-import cn.happyz.happyphoto.Gen.Activity.ActivityDetailGen;
-import cn.happyz.happyphoto.Gen.Activity.ActivityListGen;
-import cn.happyz.happyphoto.Gen.Activity.ActivityListOfMineJoinedGen;
+import cn.happyz.happyphoto.DataProvider.Activity.Activity;
+import cn.happyz.happyphoto.DataProvider.Activity.ActivityAlbumData;
+import cn.happyz.happyphoto.DataProvider.Activity.ActivityAlbumDataOperateType;
+import cn.happyz.happyphoto.DataProvider.Activity.ActivityCollections;
+import cn.happyz.happyphoto.DataProvider.Activity.ActivityUserData;
+import cn.happyz.happyphoto.DataProvider.Activity.ActivityUserDataOperateType;
 import cn.happyz.happyphoto.R;
 import cn.happyz.happyphoto.Tools.AsyncImageLoader;
 import cn.happyz.happyphoto.Tools.FormatObject;
@@ -51,7 +53,6 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
     }
 
     private View LoadData(int position, View convertView, ViewGroup parent){
-        ActivityListOfMineJoinedGen.activityPositionsOfMineJoined = position;
         LayoutInflater layoutInflater = LayoutInflater.from(_context);
         final LinearLayout linearLayout = (LinearLayout)layoutInflater.inflate(_resource, null);
         if(linearLayout != null)
@@ -190,7 +191,8 @@ public class ActivityListOfMineJoinedAdapter extends ArrayAdapter<Activity> {
                 case START_GET:
                     break;
                 case FINISH_GET:
-                    ActivityListOfMineJoinedGen.activityCollectionsOfMineJoined.remove(ActivityListOfMineJoinedGen.activityPositionsOfMineJoined);
+                    Activity activity = ((AppApplication)_context.getApplicationContext()).getNowSelectActivity();
+                    ActivityListOfMineJoinedGen.activityCollections.remove(activity);
                     ActivityListOfMineJoinedAdapter.this.notifyDataSetChanged();
                     break;
                 case ERROR_GET:

@@ -46,16 +46,18 @@ public class UserLoginGen extends BaseGen {
         setContentView(R.layout.user_login);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);  //titlebar为自己标题栏的布局
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);  //title bar为自己标题栏的布局
         TextView tvTitleBarTitle = (TextView) findViewById(R.id.txtTitleBar);
         tvTitleBarTitle.setText(R.string.user_login_title); //修改title文字
 
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
-        btnBack.setVisibility(0);
+        btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(UserLoginGen.this, DefaultGen.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -74,7 +76,6 @@ public class UserLoginGen extends BaseGen {
         ibtnUserInfo = (ImageButton) findViewById(R.id.ibtnUserInfo);
 
         txtUserPass = (EditText) findViewById(R.id.user_login_txtUserPass);
-        txtUserPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         txtUserPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,13 +92,15 @@ public class UserLoginGen extends BaseGen {
             @Override
             public void onClick(View view) {
                 btnUserLogin.setEnabled(false);
-                String userName = txtUserName.getText().toString().trim();
+                String userName;
+                userName = txtUserName.getText().toString().trim();
                 if (userName == null || userName.equals("")) {
                     ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_tips_no_username));
                     btnUserLogin.setEnabled(true);
                     return;
                 }
-                String userPass = txtUserPass.getText().toString().trim();
+                String userPass;
+                userPass = txtUserPass.getText().toString().trim();
                 if (userPass == null || userPass.equals("")) {
                     ToastObject.Show(UserLoginGen.this, getString(R.string.user_login_tips_no_userpass));
                     btnUserLogin.setEnabled(true);
@@ -130,8 +133,13 @@ public class UserLoginGen extends BaseGen {
 
 
     private class UserLoginHandler extends Handler {
+
+
+        private Message msg;
+
         @Override
         public void dispatchMessage(Message msg) {
+            this.msg = msg;
 
             HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
 

@@ -17,7 +17,6 @@ import java.util.Date;
 
 import cn.happyz.happyphoto.AppApplication;
 import cn.happyz.happyphoto.DataProvider.Activity.Activity;
-import cn.happyz.happyphoto.DataProvider.Activity.ActivityAlbumListOfMineAdapter;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityVoteRecordData;
 import cn.happyz.happyphoto.DataProvider.Activity.ActivityVoteRecordDataOperateType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumCollections;
@@ -57,7 +56,7 @@ public class ActivityVoteRecordListOfMyVotedGen extends BaseGen implements PullT
         tvTitleBarTitle.setText(R.string.activity_vote_record_of_my_voted_title); //修改title文字
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
-        btnBack.setVisibility(0);
+        btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

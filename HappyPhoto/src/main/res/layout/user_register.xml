@@ -75,12 +75,12 @@
             android:background="@drawable/edittext_bg"
             android:password="false"
             android:textColor="#666666"
-            android:inputType="text"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="10dp"
-            android:layout_toRightOf="@+id/textView" />
+            android:layout_toRightOf="@+id/textView"
+            android:inputType="textPassword" />
     </RelativeLayout>
 
     <LinearLayout
