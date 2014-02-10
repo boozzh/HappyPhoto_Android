@@ -52,6 +52,9 @@
     <string name="config_activity_get_list_of_all_url">
         <![CDATA[http://hp.mysense.cn/index.php?a=activity&f=client_list_of_all]]>
     </string>
+    <string name="config_activity_get_list_of_end_url">
+        <![CDATA[http://hp.mysense.cn/index.php?a=activity&f=client_list_of_end]]>
+    </string>
     <string name="config_activity_get_list_of_mine_joined_url">
         <![CDATA[http://hp.mysense.cn/index.php?a=activity&f=client_list_of_mine_joined&user_id={user_id}&site_id={site_id}&user_name={user_name}&user_pass={user_pass}]]>
     </string>

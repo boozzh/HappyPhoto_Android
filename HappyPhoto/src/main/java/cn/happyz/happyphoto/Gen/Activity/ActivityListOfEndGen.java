@@ -34,7 +34,7 @@ public class ActivityListOfEndGen extends BaseGen implements PullToRefreshView.O
     PullToRefreshView pullToRefreshView;
     int PageSize = 18;
     int PageIndex = 1;
-    ActivityCollections activityCollectionsOfListAll;
+    ActivityCollections activityCollections;
     ActivityListAdapter activityListAdapter;
     private ListView listViewOfActivityList;
 
@@ -48,7 +48,7 @@ public class ActivityListOfEndGen extends BaseGen implements PullToRefreshView.O
 
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);  //titlebar为自己标题栏的布局
         TextView tvTitleBarTitle = (TextView) findViewById(R.id.txtTitleBar);
-        tvTitleBarTitle.setText(R.string.activity_list_all_title); //修改title文字
+        tvTitleBarTitle.setText(R.string.activity_list_of_end_title); //修改title文字
 
         btnBack = (ImageButton) findViewById(R.id.titlebar_ibtnBack);
         btnBack.setVisibility(View.VISIBLE);
@@ -95,15 +95,15 @@ public class ActivityListOfEndGen extends BaseGen implements PullToRefreshView.O
     }
 
     private void LoadData(int pageIndex, int pageSize) {
-        String activityGetListOfAllUrl = getString(R.string.config_activity_get_list_of_all_url);
-        ActivityOfAllHandler activityOfAllHandler = new ActivityOfAllHandler();
-        ActivityData activityData = new ActivityData(activityGetListOfAllUrl, activityOfAllHandler);
+        String activityGetListOfAllUrl = getString(R.string.config_activity_get_list_of_end_url);
+        ActivityListHandler activityListHandler = new ActivityListHandler();
+        ActivityData activityData = new ActivityData(activityGetListOfAllUrl, activityListHandler);
         activityData.setPageIndex(pageIndex);
         activityData.setPageSize(pageSize);
-        activityData.GetDataFromHttp(ActivityDataOperateType.GetList);
+        activityData.GetDataFromHttp(ActivityDataOperateType.GetListOfEnd);
     }
 
-    private class ActivityOfAllHandler extends Handler {
+    private class ActivityListHandler extends Handler {
         @Override
         public void dispatchMessage(Message msg) {
             HttpClientStatus httpClientStatus = HttpClientStatus.values()[msg.what];
@@ -112,8 +112,8 @@ public class ActivityListOfEndGen extends BaseGen implements PullToRefreshView.O
                     ToastObject.Show(ActivityListOfEndGen.this, getString(R.string.message_load_begin));
                     break;
                 case FINISH_GET:
-                    activityCollectionsOfListAll = (ActivityCollections) msg.obj;
-                    activityListAdapter = new ActivityListAdapter(ActivityListOfEndGen.this, R.layout.activity_list_all_item, activityCollectionsOfListAll);
+                    activityCollections = (ActivityCollections) msg.obj;
+                    activityListAdapter = new ActivityListAdapter(ActivityListOfEndGen.this, R.layout.activity_list_all_item, activityCollections);
                     listViewOfActivityList.setAdapter(activityListAdapter);
                     pullToRefreshView.setOnHeaderRefreshListener(ActivityListOfEndGen.this);
                     pullToRefreshView.setOnFooterRefreshListener(ActivityListOfEndGen.this);
@@ -121,7 +121,7 @@ public class ActivityListOfEndGen extends BaseGen implements PullToRefreshView.O
                     break;
 
                 case ERROR_GET:
-                    ToastObject.Show(ActivityListOfEndGen.this, getString(R.string.message_load_failure));
+                    ToastObject.Show(ActivityListOfEndGen.this, getString(R.string.activity_list_of_end_no_data));
                     break;
 
                 default:
@@ -137,7 +137,7 @@ public class ActivityListOfEndGen extends BaseGen implements PullToRefreshView.O
             @Override
             public void run() {
                 pullToRefreshView.onFooterRefreshComplete();
-                if (activityCollectionsOfListAll.size() == PageSize) { //只有当前页的数据等于每页显示数时，才进行加载
+                if (activityCollections.size() == PageSize) { //只有当前页的数据等于每页显示数时，才进行加载
                     PageIndex++;
                     LoadData(PageIndex, PageSize);
                 }
@@ -152,8 +152,8 @@ public class ActivityListOfEndGen extends BaseGen implements PullToRefreshView.O
             @Override
             public void run() {
                 pullToRefreshView.onHeaderRefreshComplete(getString(R.string.pull_to_refresh_update_tips) + new Date().toLocaleString());
-                if (activityCollectionsOfListAll != null) {
-                    activityCollectionsOfListAll.clear();
+                if (activityCollections != null) {
+                    activityCollections.clear();
                 }
                 LoadData(PageIndex, PageSize);
             }

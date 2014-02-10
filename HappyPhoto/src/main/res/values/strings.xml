@@ -92,6 +92,9 @@
     <string name="activity_list_btn_my_voted_activity">我投票的比赛</string>
 
 
+    <string name="activity_list_of_end_title">往期比赛</string>
+    <string name="activity_list_of_end_no_data">没有往期比赛</string>
+
 
 
     <string name="activity_list_of_mine_joined_title">我参加的比赛</string>

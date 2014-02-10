@@ -28,6 +28,7 @@ import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsData;
 import cn.happyz.happyphoto.DataProvider.DocumentNews.DocumentNewsDataOperateType;
 import cn.happyz.happyphoto.DataProvider.User.UserAlbumTypeCollections;
 import cn.happyz.happyphoto.Gen.Activity.ActivityListGen;
+import cn.happyz.happyphoto.Gen.Activity.ActivityListOfEndGen;
 import cn.happyz.happyphoto.Gen.BaseGen;
 import cn.happyz.happyphoto.Gen.User.UserAlbumCreateGen;
 import cn.happyz.happyphoto.Gen.User.UserAlbumListAllGen;
@@ -112,6 +113,14 @@ public class DefaultGen extends BaseGen {
             public void onClick(View v) {
                 Intent intent = new Intent(DefaultGen.this, UserAlbumCreateGen.class);
                 startActivity(intent);
+            }
+        });
+
+        btnOldGame.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(DefaultGen.this, ActivityListOfEndGen.class);
+                startActivity(intent);
+                //finish();
             }
         });
 

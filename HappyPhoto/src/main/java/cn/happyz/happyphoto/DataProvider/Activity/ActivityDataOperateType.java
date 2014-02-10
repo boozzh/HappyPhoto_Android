@@ -7,5 +7,6 @@ public enum ActivityDataOperateType {
     GetList,
     GetListOfMineJoined,
     GetListOfMineVoted,
+    GetListOfEnd,
     Null
 }

@@ -66,6 +66,11 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".Gen.Activity.ActivityListOfEndGen"
+            android:theme="@style/UserTheme"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".Gen.Activity.ActivityDetailGen"
             android:theme="@style/UserTheme"
             android:screenOrientation="portrait" >

@@ -66,6 +66,36 @@ public class ActivityData extends BaseData implements Runnable {
                     MyHandler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
                 }
             }
+        } else if (MyOperateType == ActivityDataOperateType.GetListOfEnd) {
+            HttpUrl += "&p=" + _pageIndex + "&ps=" + _pageSize;
+            String result = super.RunGet(HttpUrl, MyHandler);
+            if (result != null) {
+                try {
+                    ActivityCollections activityCollections = new ActivityCollections();
+                    Activity activity;
+                    JSONObject jsonObject = new JSONObject(result).getJSONObject("activity");
+                    JSONArray jsonArray = jsonObject.getJSONArray("activity_list");
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject2 = (JSONObject) jsonArray.opt(i);
+                        activity = new Activity();
+                        activity.setActivityId(jsonObject2.getInt("ActivityID"));
+                        activity.setActivitySubject(jsonObject2.getString("ActivitySubject"));
+                        activity.setTitlePic(jsonObject2.getString("TitlePic"));
+                        activity.setActivityContent(jsonObject2.getString("ActivityContent"));
+                        activityCollections.add(activity);
+                    }
+
+                    Message msg = MyHandler.obtainMessage();
+                    msg.what = HttpClientStatus.FINISH_GET.ordinal();
+                    msg.obj = activityCollections;
+
+                    MyHandler.sendMessage(msg);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    MyHandler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
+                }
+            }
         } else if (MyOperateType == ActivityDataOperateType.GetListOfMineJoined) {
             HttpUrl += "&p=" + _pageIndex + "&ps=" + _pageSize;
             String result = super.RunGet(HttpUrl, MyHandler);
@@ -98,7 +128,6 @@ public class ActivityData extends BaseData implements Runnable {
                         ex.printStackTrace();
                         MyHandler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
                     }
-
                 }
             }
         } else if (MyOperateType == ActivityDataOperateType.GetListOfMineVoted) {
@@ -133,11 +162,9 @@ public class ActivityData extends BaseData implements Runnable {
                         ex.printStackTrace();
                         MyHandler.sendEmptyMessage(HttpClientStatus.ERROR_GET.ordinal());
                     }
-
                 }
             }
         }
-
     }
 
     public void GetDataFromHttp(ActivityDataOperateType activityDataOperateType) {
