@@ -7,8 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="C:\OpenProject\HappyPhoto_Android" />
-            <option value="C:\OpenProject\HappyPhoto_Android\HappyPhoto" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/HappyPhoto" />
           </set>
         </option>
       </GradleProjectSettings>
