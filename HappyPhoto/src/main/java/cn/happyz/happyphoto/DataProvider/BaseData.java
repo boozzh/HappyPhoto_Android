@@ -57,14 +57,11 @@ public class BaseData {
         handler.sendEmptyMessage(HttpClientStatus.START_GET.ordinal());
 
         try {
-
             HttpResponse httpResponse = HttpClientHelper.GetHttpClient().execute(httpGet);
-
             byte[] bytes = EntityUtils.toByteArray(httpResponse.getEntity());
             //在大多数情况下，这个下载下来的是XML或者Json。应该解析完组装成对象再放置到Message中。
             //这里简单起见，直接变成字符串打印了
-            String result = new String(bytes);
-            return result;
+            return new String(bytes);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -75,11 +72,12 @@ public class BaseData {
 
     /**
      * 运行HTTP Post操作
-     *
-     * @param httpUrl   请求网址
-     * @param handler   发送结果消息的句柄
+     * @param httpUrl 请求网址
+     * @param handler 发送结果消息的句柄
+     * @param params  参数
      * @param isBigData 是否是大数据操作
-     * @return
+     * @return 结果字符串或NULL
+     * @throws UnsupportedEncodingException
      */
     public String RunPost(String httpUrl, Handler handler, Map<String, Object> params, boolean isBigData) throws UnsupportedEncodingException {
         if(httpUrl == null){
