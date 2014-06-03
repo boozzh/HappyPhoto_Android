@@ -1,7 +1,5 @@
 package cn.happyz.happyphoto.DataProvider.Activity;
 
-import android.support.v7.appcompat.R;
-
 /**
  * Created by homezc on 14-1-14.
  */
